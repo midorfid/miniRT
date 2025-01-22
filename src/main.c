@@ -15,17 +15,17 @@
     t^2d*d - 2td(C - Q) + (C - Q)(C - Q) - r^2 = 0 then we need to find discriminant
 */  
 double hit_sphere(const point3_t center, double radius, const ray_t *ray) {
-    vec3_t oc = ray->orig;
-    vec3_sub(&oc, center); 
-    double a = vec3_dot(ray->dir,ray->dir);//
-    double b = 2.0 * vec3_dot(ray->dir, oc);
-    double c = vec3_dot(oc, oc) - radius*radius;
+    vec3_t oc = center;
+    vec3_sub(&oc, ray->orig); 
+    double a = vec3_len_squared(ray->dir);
+    double h = vec3_dot(ray->dir, oc);
+    double c = vec3_len_squared(oc) - radius*radius;
 
-    double discriminant = b*b - 4*a*c;
+    double discriminant = h*h - a*c;
     if (discriminant < 0)
         return (-1.0);
     else
-        return ((-b - sqrt(discriminant)) / 2.0 * a);
+        return ((h - sqrt(discriminant)) / a);
 }
 
 color_t     ray_color(const ray_t *r) {
