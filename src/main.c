@@ -9,25 +9,6 @@
 #define SCREEN_WIDTH 1000
 #define SCREEN_HEIGHT 1000
 
-/*  (C - P)(C - P) = r^2 , where C = center of the sphere and P = any point that satisfies this equation is on the sphere
-    (C - (Q + td))(C - (Q + td)) = r^2 , where Q = origin, d = direction, t = our unknown, basically scalar for which this equation is true
-    (-td + (C - Q))(-td + (C - Q)) = r^2 , then we calculate dot product of a vector with it self
-    t^2d*d - 2td(C - Q) + (C - Q)(C - Q) - r^2 = 0 then we need to find discriminant
-*/  
-double hit_sphere(const point3_t center, double radius, const ray_t *ray) {
-    vec3_t oc = center;
-    vec3_sub(&oc, ray->orig); 
-    double a = vec3_len_squared(ray->dir);
-    double h = vec3_dot(ray->dir, oc);
-    double c = vec3_len_squared(oc) - radius*radius;
-
-    double discriminant = h*h - a*c;
-    if (discriminant < 0)
-        return (-1.0);
-    else
-        return ((h - sqrt(discriminant)) / a);
-}
-
 color_t     ray_color(const ray_t *r) {
     double t = hit_sphere(point3(0,0,-1), 0.5, r);
     if (t > 0.0) {
