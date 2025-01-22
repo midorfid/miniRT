@@ -15,8 +15,6 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-// # include "./ft_printf/include/ft_printf.h"
-# include "../get_next_line/include/get_next_line.h"
 
 static inline void	ft_ignore_result(long long int unused_result){
 	(void)unused_result;

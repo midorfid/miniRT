@@ -41,22 +41,26 @@ static inline void vec3_sub(vec3_t *a, vec3_t b) {
     a->z -= b.z;
 }
 
+static inline vec3_t vec3_sub_return(vec3_t a, vec3_t b) {
+    return vec3(a.x - b.x, a.y - b.y, a.z - b.z);
+}
+
 static inline void vec3_scale(vec3_t *a, double b) {
-    a->x *= b.x;
-    a->y *= b.y;
-    a->z *= b.z;
+    a->x *= b;
+    a->y *= b;
+    a->z *= b;
 }
 
 static inline vec3_t vec3_scaled_return(vec3_t a, double b) {
-    return (a.x * b, a.y * b, a.z * b);
+    return vec3(a.x * b, a.y * b, a.z * b);
 }
 
 static inline vec3_t vec3_negative(const vec3_t *a) {
-    return (-a->x, -a->y, -a->z);
+    return vec3(-a->x, -a->y, -a->z);
 }
 
 static inline vec3_t vec3_sum(vec3_t a, vec3_t b) {
-    return (a.x + b.x, a.y + b.y, a.z + b.z);
+    return vec3(a.x + b.x, a.y + b.y, a.z + b.z);
 }
 
 static inline double vec3_dot(vec3_t a, vec3_t b) {
@@ -64,11 +68,11 @@ static inline double vec3_dot(vec3_t a, vec3_t b) {
 }
 
 static inline vec3_t vec3_cross(vec3_t a, vec3_t b) {
-    return (a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x);
+    return vec3(a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x);
 }
 
 static inline vec3_t vec3_multi(vec3_t a, vec3_t b) {
-    return (a.x * b.x, a.y * b.y, a.z * b.z);
+    return vec3(a.x * b.x, a.y * b.y, a.z * b.z);
 }
 
 static inline double vec3_len_squared(vec3_t a) {
@@ -78,5 +82,14 @@ static inline double vec3_len_squared(vec3_t a) {
 static inline double vec3_len(vec3_t a) {
     return (sqrt(vec3_len_squared(a)));
 }
+
+static inline vec3_t vec3_normalize(vec3_t a) {
+    return (vec3_scaled_return(a, 1.0 / vec3_len(a)));
+}
+
+// Point layer for vec3_t
+typedef vec3_t point3_t;
+#define point3(x, y ,z) vec3((x), (y), (z))
+
 
 #endif
