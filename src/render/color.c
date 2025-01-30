@@ -9,3 +9,8 @@ int     return_color(color_t pixel_color) {
 
     return (color);
 }
+
+static inline color_t color_in(double r, double g, double b) {
+    color_t result = {.x = r, .y = g, .z = b};
+    return (result);
+}

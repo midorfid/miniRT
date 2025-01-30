@@ -9,7 +9,9 @@ set (SRCS_MAIN
 set (SRCS
     src/render/color.c
     src/render/hit_record.c
-    src/render/hittable.c)
+    src/render/hittable.c
+    src/render/sphere.c
+    src/render/hittable_list.c)
 
 set (EXEC_NAME miniRT)
 
