@@ -13,6 +13,6 @@ typedef struct hit_record_s {
     bool        front_face;
 } hit_record_t;
 
-static inline void  set_front_face(const ray_t *r, const vec3_t *outward_normal, hit_record_t *rec);
+void  set_front_face(const ray_t *r, const vec3_t *outward_normal, hit_record_t *rec);
 
 #endif

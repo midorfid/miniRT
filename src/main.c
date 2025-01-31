@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <assert.h>
 #include "../include/render/color.h"
 #include "../include/render/ray.h"
 #include "../include/render/hit_record.h"
@@ -14,15 +15,10 @@
 #define SCREEN_HEIGHT 1000
 
 color_t     ray_color(const ray_t *r, const hittable_list_t *world) {
-    hit_record_t    *rec;
-    if (!hittable_list_hit_test(r, world, 0, INFINITY, rec))
-        return (vec3_scaled_return(vec3_sum(rec->normal, vec3(1,1,1)), 0.5));
-    // double t = hit_sphere(sphere_init(vec3(0,0,-1), 0.5), r);
-    // if (t > 0.0) {
-    //     vec3_t n = vec3_normalize(vec3_sub_return(ray_at(r->orig,r->dir,t), vec3(0,0,-1)));
-    //     return (vec3_scaled_return(vec3(n.x + 1, n.y + 1, n.z + 1), 0.5));
-    // }
-
+    hit_record_t    rec;
+    if (hittable_list_hit_test(r, world, 0, INFINITY, &rec)) {
+        return (vec3_scaled_return(vec3_sum(rec.normal, vec3(1,1,1)), 0.5));
+    }
     vec3_t  unit_direction = vec3_normalize(r->dir);
     double  a = 0.5 * (unit_direction.y + 1.0);
     return(vec3_sum(vec3_scaled_return(vec3(1.0,1.0,1.0), 1.0-a), vec3_scaled_return(vec3(0.5,0.7,1.0), a)));
