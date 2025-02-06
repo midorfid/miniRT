@@ -47,6 +47,8 @@ int main(void) {
     double              viewport_height = 2;
     double              viewport_width = viewport_height * ((double)image_width/image_height);
     point3_t            camera_center = point3(0, 0, 0);
+    int                 samples_per_pixel = 10;
+    double              pixel_sample_scale = 1.0 / samples_per_pixel; 
 
     // Vectors across horizontal and down the vertical viewport edges
 

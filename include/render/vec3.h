@@ -4,6 +4,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdint.h>
+#include "utils.h"
 
 typedef enum vec3_axis_e
 {
@@ -85,6 +86,14 @@ static inline double vec3_len(vec3_t a) {
 
 static inline vec3_t vec3_normalize(vec3_t a) {
     return (vec3_scaled_return(a, 1.0 / vec3_len(a)));
+}
+
+static inline vec3_t vec3_random(double min, double max) {
+    return vec3(random_double(min, max), random_double(min, max), random_double(min, max));
+}
+
+static inline vec3_t vec3_sample_square() {
+    return vec3(random_double())
 }
 
 // Point layer for vec3_t

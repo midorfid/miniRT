@@ -1,9 +1,9 @@
 #include "../../include/render/color.h"
 
 int     return_color(color_t pixel_color) {
-    int ir = (int)(255.999 * pixel_color.x);
-    int ig = (int)(255.999 * pixel_color.y);
-    int ib = (int)(255.999 * pixel_color.z);
+    int ir = (int)(256 * clamp(pixel_color.x, 0.000, 0.999));
+    int ig = (int)(256 * clamp(pixel_color.y, 0.000, 0.999));
+    int ib = (int)(256 * clamp(pixel_color.z, 0.000, 0.999));
 
     int color = (ib << 8) | (ig << 16) | (ir << 24)| (0xFF);
     return (color);
