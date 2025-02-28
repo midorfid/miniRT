@@ -17,7 +17,10 @@
 color_t     ray_color(const ray_t *r, const hittable_list_t *world) {
     hit_record_t    rec;
     if (hittable_list_hit_test(r, world, 0, INFINITY, &rec)) {
-        return (vec3_scaled_return(vec3_sum(rec.normal, vec3(1,1,1)), 0.5));
+        vec3_t direction = vec3_random_on_hemisphere(&rec.normal);
+        ray_t diffused_r = ray(rec.p, direction);
+        ray_t *r_ref = &diffused_r;
+        return (vec3_scaled_return(ray_color(r_ref, world), 0.5));
     }
     vec3_t  unit_direction = vec3_normalize(r->dir);
     double  a = 0.5 * (unit_direction.y + 1.0);

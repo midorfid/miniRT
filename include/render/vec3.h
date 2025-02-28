@@ -88,8 +88,30 @@ static inline vec3_t vec3_normalize(vec3_t a) {
     return (vec3_scaled_return(a, 1.0 / vec3_len(a)));
 }
 
-static inline vec3_t vec3_random(double min, double max) {
+static inline vec3_t vec3_random_limits(double min, double max) {
     return vec3(random_double(min, max), random_double(min, max), random_double(min, max));
+}
+
+static inline vec3_t vec3_random(void) {
+    return vec3(random_double_nolimits(), random_double_nolimits(), random_double_nolimits());
+}
+
+static inline vec3_t vec3_random_unit_vec() {
+    while (1) {
+        vec3_t p = vec3_random();
+        double lensq = vec3_len_squared(p);
+        if (1e-160 < lensq && lensq <= 1) {
+            return vec3_scaled_return(p, 1.0 / sqrt(lensq));
+        }
+    }
+}
+
+static inline vec3_t vec3_random_on_hemisphere(vec3_t *normal) {
+    vec3_t on_unit_shpere = vec3_random_unit_vec();
+    if (vec3_dot(on_unit_shpere, *normal) > 0.0)
+        return (on_unit_shpere);
+    else
+        return (vec3_scaled_return(on_unit_shpere, -1.0));
 }
 
 // Point layer for vec3_t
