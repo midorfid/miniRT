@@ -34,7 +34,7 @@ int main(void) {
     // Image
 
     double      aspect_ratio = 16.0 / 9.0;
-    int         image_width = 400;
+    int         image_width = 1000;
 
     // Calculate image height
 
@@ -85,12 +85,13 @@ int main(void) {
     // mlx_close_hook(mlx, &esc_exit, NULL);
     for (int j = 0;j<image_height;++j){
         for (int i = 0;i<image_width;++i) {
-            int color = 0;
+            vec3_t color = vec3(0.0, 0.0, 0.0);
             for (int sample = 0;sample < samples_per_pixel;++sample) {
                 ray_t r = get_ray(i, j, pixel00_loc, pixel_delta_u, pixel_delta_v, camera_center); 
-                color += return_color(ray_color(&r, world));
+                color = vec3_sum(color, ray_color(&r, world));
             }
-            mlx_put_pixel(image, i, j, color * pixel_sample_scale);
+            color = vec3_scaled_return(color, pixel_sample_scale);
+            mlx_put_pixel(image, i, j, return_color(color));
         }
     }
     mlx_loop(mlx);
