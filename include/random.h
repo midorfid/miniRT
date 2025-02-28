@@ -11,6 +11,6 @@
 
 void random_seed(uint64_t seed);
 
-uint64_t random(void);
+uint64_t rt_random(void);
 
 #endif

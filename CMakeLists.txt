@@ -12,7 +12,6 @@ set (SRCS
     src/render/hittable.c
     src/render/sphere.c
     src/render/hittable_list.c
-    src/double.c
     src/random.c )
 
 set (EXEC_NAME miniRT)

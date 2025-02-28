@@ -3,7 +3,7 @@
 
 #include "hittable.h"
 
-#define PI (double)3.1415926535897932385
+// #define PI (double)3.1415926535897932385
 
 typedef enum hittable_type_e
 {

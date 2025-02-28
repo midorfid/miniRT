@@ -85,12 +85,12 @@ int main(void) {
     // mlx_close_hook(mlx, &esc_exit, NULL);
     for (int j = 0;j<image_height;++j){
         for (int i = 0;i<image_width;++i) {
-            vec3_t      pixel_center = vec3_sum(vec3_sum(pixel00_loc, vec3_scaled_return(pixel_delta_u, i)), vec3_scaled_return(pixel_delta_v, j));
-            point3_t    ray_direction = vec3_sub_return(pixel_center, camera_center);
-            ray_t       r = ray(camera_center, ray_direction);
-
-            int color = return_color(ray_color(&r, world));
-            mlx_put_pixel(image, i, j, color);
+            int color = 0;
+            for (int sample = 0;sample < samples_per_pixel;++sample) {
+                ray_t r = get_ray(i, j, pixel00_loc, pixel_delta_u, pixel_delta_v, camera_center); 
+                color += return_color(ray_color(&r, world));
+            }
+            mlx_put_pixel(image, i, j, color * pixel_sample_scale);
         }
     }
     mlx_loop(mlx);

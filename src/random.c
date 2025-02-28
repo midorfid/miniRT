@@ -20,7 +20,7 @@ struct rt_mt19937_s
     uint64_t *MT;
 };
 
-static RT_THREAD_LOCAL struct rt_mt19937_s gs_generator = {
+static struct rt_mt19937_s gs_generator = {
     .index = UINT64_MAX
 };
 
@@ -69,7 +69,7 @@ uint64_t rt_random(void)
     {
         if (gs_generator.index > gs_generator.n)
         {
-            rt_random_seed(RT_RANDOM_DEFAULT_SEED);
+            rt_random_seed(RANDOM_DEFAULT_SEED);
         }
 
         twist(&gs_generator);

@@ -92,10 +92,6 @@ static inline vec3_t vec3_random(double min, double max) {
     return vec3(random_double(min, max), random_double(min, max), random_double(min, max));
 }
 
-static inline vec3_t vec3_sample_square() {
-    return vec3(random_double())
-}
-
 // Point layer for vec3_t
 typedef vec3_t point3_t;
 #define point3(x, y ,z) vec3((x), (y), (z))
