@@ -14,13 +14,16 @@
 #define SCREEN_WIDTH 1000
 #define SCREEN_HEIGHT 1000
 
-color_t     ray_color(const ray_t *r, const hittable_list_t *world) {
+color_t     ray_color(const ray_t *r, const hittable_list_t *world, int depth) {
     hit_record_t    rec;
-    if (hittable_list_hit_test(r, world, 0, INFINITY, &rec)) {
-        vec3_t direction = vec3_random_on_hemisphere(&rec.normal);
+
+    if (depth <= 0)
+        return vec3(0.0, 0.0, 0.0);
+    if (hittable_list_hit_test(r, world, 0.001, INFINITY, &rec)) {
+        vec3_t direction = vec3_sum(rec.normal, vec3_random_unit_vec());
         ray_t diffused_r = ray(rec.p, direction);
         ray_t *r_ref = &diffused_r;
-        return (vec3_scaled_return(ray_color(r_ref, world), 0.5));
+        return (vec3_scaled_return(ray_color(r_ref, world, depth-1), 0.5));
     }
     vec3_t  unit_direction = vec3_normalize(r->dir);
     double  a = 0.5 * (unit_direction.y + 1.0);
@@ -52,6 +55,7 @@ int main(void) {
     point3_t            camera_center = point3(0, 0, 0);
     int                 samples_per_pixel = 10;
     double              pixel_sample_scale = 1.0 / samples_per_pixel; 
+    int                 max_depth = 50;
 
     // Vectors across horizontal and down the vertical viewport edges
 
@@ -91,7 +95,7 @@ int main(void) {
             vec3_t color = vec3(0.0, 0.0, 0.0);
             for (int sample = 0;sample < samples_per_pixel;++sample) {
                 ray_t r = get_ray(i, j, pixel00_loc, pixel_delta_u, pixel_delta_v, camera_center); 
-                color = vec3_sum(color, ray_color(&r, world));
+                color = vec3_sum(color, ray_color(&r, world, max_depth));
             }
             color = vec3_scaled_return(color, pixel_sample_scale);
             mlx_put_pixel(image, i, j, return_color(color));

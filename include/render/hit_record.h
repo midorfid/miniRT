@@ -5,12 +5,15 @@
 #include "ray.h"
 #include <stdbool.h>
 
-typedef struct hit_record_s {
-    point3_t    p;
-    vec3_t      normal;
-    double      t;
+typedef struct material_s material_t;
 
-    bool        front_face;
+typedef struct hit_record_s {
+    point3_t        p;
+    vec3_t          normal;
+    double          t;
+    material_t      mat;
+
+    bool            front_face;
 } hit_record_t;
 
 void  set_front_face(const ray_t *r, const vec3_t *outward_normal, hit_record_t *rec);
