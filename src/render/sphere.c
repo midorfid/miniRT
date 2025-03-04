@@ -9,7 +9,7 @@
     (-td + (C - Q))(-td + (C - Q)) = r^2 , then we calculate dot product of a vector with it self
     t^2d*d - 2td(C - Q) + (C - Q)(C - Q) - r^2 = 0 then we need to find discriminant
 */  
-static inline bool sphere_hit_test_generic(point3_t center, double radius, const ray_t *ray, double tmin, double tmax, hit_record_t *rec) {
+static inline bool sphere_hit_test_generic(point3_t center, double radius, material_t *material, const ray_t *ray, double tmin, double tmax, hit_record_t *rec) {
     vec3_t oc = center;
     vec3_sub(&oc, ray->orig); 
     double a = vec3_len_squared(ray->dir);
@@ -29,27 +29,30 @@ static inline bool sphere_hit_test_generic(point3_t center, double radius, const
             return (false);
     }
 
-    rec->t = root;
-    rec->p = ray_at(ray->orig, ray->dir, rec->t);
-    vec3_t outward_normal = vec3_scaled_return(vec3_sub_return(rec->p, center), 1.0/radius);
-    set_front_face(ray, &outward_normal, rec);
+    if (rec != NULL) {
+        rec->mat = material;
+        rec->t = root;
+        rec->p = ray_at(ray->orig, ray->dir, rec->t);
+        vec3_t outward_normal = vec3_scaled_return(vec3_sub_return(rec->p, center), 1.0/radius);
+        set_front_face(ray, &outward_normal, rec);
+    }
     return (true);
 }
 
-static inline sphere_t  sphere_init(point3_t center, double radius) {
-    sphere_t    result = {.center = center, .radius = radius};
+static inline sphere_t  sphere_init(point3_t center, double radius, material_t *material) {
+    sphere_t    result = {.center = center, .radius = radius, .material = material};
 
     hittable_innit(&result.base, HITTABLE_TYPE_SHPERE, sphere_hit);
     return (result);
 }
 
-hittable_t    *sphere_new(point3_t center, double radius) {
+hittable_t    *sphere_new(point3_t center, double radius, material_t *material) {
     sphere_t        *new_sphere = calloc(1, sizeof(sphere_t));
     if (new_sphere == NULL) {
         printf("Memory allocation failed");
         return (NULL);
     }
-    *new_sphere = sphere_init(center, radius);
+    *new_sphere = sphere_init(center, radius, material);
     return (hittable_t *)new_sphere;
 }
 
@@ -59,5 +62,5 @@ static inline bool     sphere_hit(const hittable_t *hittable, const ray_t *ray, 
         return (false);
     }
     sphere_t *sphere = (sphere_t *)hittable;
-    return (sphere_hit_test_generic(sphere->center, sphere->radius, ray, tmin, tmax, rec));
+    return (sphere_hit_test_generic(sphere->center, sphere->radius, sphere->material, ray, tmin, tmax, rec));
 }

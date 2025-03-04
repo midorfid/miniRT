@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "utils.h"
+#include <stdbool.h>
 
 typedef enum vec3_axis_e
 {
@@ -112,6 +113,17 @@ static inline vec3_t vec3_random_on_hemisphere(vec3_t *normal) {
         return (on_unit_shpere);
     else
         return (vec3_scaled_return(on_unit_shpere, -1.0));
+}
+
+static inline bool vec3_near_zero(const vec3_t *a) {
+    // Return true if the vector is close to zero in all dimensions
+    int s = 1e-8;
+    return ((abs(a->x) < s) && (abs(a->y) < s) && (abs(a->z) < s));
+}
+
+static inline vec3_t mirrored_reflect(const vec3_t *v, const vec3_t *n) {
+    double scale = 2 * vec3_dot(*v, *n);
+    return (vec3_sub_return(*v, vec3_scaled_return(*n, scale)));
 }
 
 // Point layer for vec3_t

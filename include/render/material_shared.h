@@ -9,10 +9,15 @@ typedef enum material_type_e
 {
     MATERIAL_TYPE_UNKNOWN = 0,
     MATERIAL_TYPE_DIFFUSE_LAMBERTIAN = 1,
+    MATERIAL_TYPE_METAL = 2,
 } material_type_t;
 
 
-typedef bool (*material_scatter_met)(const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered);
+typedef bool (*material_scatter_met)(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered);
+
+typedef color_t (*material_emmit_met)(const material_t *material, double u, double v, const point3_t *p);
+
+typedef void (*material_delete_met)(material_t *material);
 
 struct material_s {
     material_type_t     type;

@@ -11,7 +11,7 @@ typedef struct hit_record_s {
     point3_t        p;
     vec3_t          normal;
     double          t;
-    material_t      mat;
+    void            *mat;
 
     bool            front_face;
 } hit_record_t;
