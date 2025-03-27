@@ -20,7 +20,7 @@ static void     mt_lambertian_delete(material_t *material);
 material_t      *mt_lambertian_new(color_t albedo) {
     lambertian_t    *material = calloc(1, sizeof(lambertian_t));
     if (material == NULL)
-        return (material);
+        return (NULL);
     material->albedo = albedo;
     material_base_innit(&material->base, MATERIAL_TYPE_DIFFUSE_LAMBERTIAN, mt_lambertian_scatter, NULL, mt_lambertian_delete);
 
