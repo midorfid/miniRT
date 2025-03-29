@@ -10,6 +10,7 @@ typedef enum material_type_e
     MATERIAL_TYPE_UNKNOWN = 0,
     MATERIAL_TYPE_DIFFUSE_LAMBERTIAN = 1,
     MATERIAL_TYPE_METAL = 2,
+    MATERIAL_TYPE_DIELECTRIC = 3
 } material_type_t;
 
 

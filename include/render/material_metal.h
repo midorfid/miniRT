@@ -34,7 +34,7 @@ static bool     mt_metal_scatter(const material_t *material, const ray_t *ray_in
 
     metal_t    *diffuse = (metal_t *)material;
 
-    vec3_t reflected = mirrored_reflect(&ray_in->dir, &rec->normal);
+    vec3_t reflected = reflect(&ray_in->dir, &rec->normal);
     reflected = vec3_sum(vec3_normalize(reflected), vec3_scaled_return(vec3_random_unit_vec(), diffuse->fuzz));
     *scattered = ray(rec->p, reflected);
     *attenuation = diffuse->albedo;

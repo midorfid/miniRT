@@ -12,6 +12,7 @@
 #include "../include/render/material.h"
 #include "../include/render/material_metal.h"
 #include "../include/render/material_lambertian.h"
+#include "../include/render/material_dielectric.h"
 
 
 #define SCREEN_WIDTH 1000
@@ -85,7 +86,7 @@ int main(void) {
 
     material_t  *material_ground = mt_lambertian_new(color_in(0.8, 0.8, 0.0));
     material_t  *material_center = mt_lambertian_new(color_in(0.1, 0.2, 0.5));
-    material_t  *material_left = mt_metal_new(color_in(0.8, 0.8, 0.8), 0.3);
+    material_t  *material_left = mt_dielectric_new(1.50);
     material_t  *material_right = mt_metal_new(color_in(0.8, 0.6, 0.2), 1.0);
 
     hittable_list_add(world, sphere_new(vec3(0.0,-100.5,-1.0), 100.0, material_ground));

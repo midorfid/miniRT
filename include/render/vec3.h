@@ -121,9 +121,17 @@ static inline bool vec3_near_zero(const vec3_t *a) {
     return ((abs(a->x) < s) && (abs(a->y) < s) && (abs(a->z) < s));
 }
 
-static inline vec3_t mirrored_reflect(const vec3_t *v, const vec3_t *n) {
+static inline vec3_t reflect(const vec3_t *v, const vec3_t *n) {
     double scale = 2 * vec3_dot(*v, *n);
     return (vec3_sub_return(*v, vec3_scaled_return(*n, scale)));
+}
+/* Snell's Law
+    eta * sin(theta) = eta prime * sin(theta prime)*/
+static inline vec3_t refract(const vec3_t *uv, const vec3_t *n, double eta_over_etap) {
+    double cos_theta = fmin(vec3_dot(vec3_negative(uv), *n), 1);
+    vec3_t r_out_perp = vec3_scaled_return(vec3_sum(*uv, vec3_scaled_return(*n, cos_theta)), eta_over_etap);
+    vec3_t r_out_parallel = vec3_scaled_return(*n, -1 * sqrt(fabs(1 - vec3_len_squared(r_out_perp))));
+    return(vec3_sum(r_out_perp, r_out_parallel));
 }
 
 // Point layer for vec3_t
