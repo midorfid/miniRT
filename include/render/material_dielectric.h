@@ -30,6 +30,12 @@ material_t      *mt_dielectric_new(double refraction_index) {
     return (material_t *)material;
 }
 
+static double reflectance(double cosine, double refraction_index) {
+    double r0 = (1 - refraction_index) / (1 + refraction_index);
+    r0 = r0*r0;
+    return (r0 + (1-r0)*pow((1 - cosine),5));
+}
+
 static bool     mt_dielectric_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered) {
     (void)ray_in;
 
@@ -39,9 +45,20 @@ static bool     mt_dielectric_scatter(const material_t *material, const ray_t *r
     double ri = rec->front_face ? (1.0/dielectric->refraction_index) : dielectric->refraction_index;
 
     vec3_t unit_direction = vec3_normalize(ray_in->dir);
-    vec3_t refracted = refract(&unit_direction, &rec->normal, ri);
+    double cos_theta = fmin(vec3_dot(vec3_negative(&unit_direction), rec->normal), 1.0);
+    double sin_theta = sqrt(1 - cos_theta*cos_theta);
 
-    *scattered = ray(rec->p, refracted);
+    bool cannot_refract = ri * sin_theta > 1.0;
+    vec3_t  direction;
+
+    if (cannot_refract || reflectance(cos_theta, ri) > random_double_nolimits()) {
+        direction = reflect(&ray_in->dir, &rec->normal);
+    }
+    else {
+        vec3_t direction = refract(&unit_direction, &rec->normal, ri); 
+    }
+
+    *scattered = ray(rec->p, direction);
     return (true);
 }
 
