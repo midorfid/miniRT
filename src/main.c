@@ -54,18 +54,34 @@ int main(void) {
 
     // Camera
 
-    double              focal_length = 1.0;
-    double              viewport_height = 2;
-    double              viewport_width = viewport_height * ((double)image_width/image_height);
-    point3_t            camera_center = point3(0, 0, 0);
     int                 samples_per_pixel = 10;
     double              pixel_sample_scale = 1.0 / samples_per_pixel; 
     int                 max_depth = 50;
+    point3_t            lookfrom = point3(-2,2,1);
+    point3_t            lookat = point3(0,0,-1);
+    vec3_t              vup = vec3(0,1,0);
+
+    vec3_t              u,v,w; // camera frame basis vectors
+
+    w = vec3_normalize(vec3_sub_return(lookfrom, lookat));
+    u = vec3_cross(vup, w);
+    v = vec3_cross(w, u);
+
+    point3_t            camera_center = lookfrom;
+
+    // Determine viewpoint dimensions
+
+    double              vfov = 20;
+    double              focal_length = vec3_len(vec3_sub_return(lookfrom, lookat));
+    double              theta = DEG_TO_RAD(vfov);
+    double              h = tan(theta/2);
+    double              viewport_height = 2 * h * focal_length;
+    double              viewport_width = viewport_height * ((double)image_width/image_height);
 
     // Vectors across horizontal and down the vertical viewport edges
 
-    vec3_t viewport_u = vec3(viewport_width, 0, 0); 
-    vec3_t viewport_v = vec3(0, -viewport_height, 0);
+    vec3_t viewport_u = vec3_scaled_return(u, viewport_width);
+    vec3_t viewport_v = vec3_scaled_return(vec3_negative(&v), viewport_height);
 
     // Pixel delta vectors
 
@@ -77,12 +93,21 @@ int main(void) {
 
     // Location of upper left pixel
 
-    vec3_t      viewport_upper_left_pixel = vec3_sub_return(vec3_sub_return(vec3_sub_return(camera_center, vec3(0, 0, focal_length)), vec3_scaled_return(viewport_u, 0.5)), vec3_scaled_return(viewport_v, 0.5));
+    vec3_t      viewport_upper_left_pixel = vec3_sub_return(vec3_sub_return(vec3_sub_return(camera_center, vec3_scaled_return(w, focal_length)), vec3_scaled_return(viewport_u, 0.5)), vec3_scaled_return(viewport_v, 0.5));
     point3_t    pixel00_loc = vec3_sum(viewport_upper_left_pixel, vec3_scaled_return(vec3_sum(pixel_delta_u, pixel_delta_v), 0.5));
 
     // World
 
     hittable_list_t     *world = hittable_list_innit(4);
+
+    // TOuching spheres
+    // double R = cos(PI/4);
+// 
+    // material_t  *material_left = mt_lambertian_new(color_in(0,0,1));
+    // material_t  *material_right = mt_lambertian_new(color_in(1,0,0));
+// 
+    // hittable_list_add(world, sphere_new(vec3(-R,0,-1.0), R, material_left));
+    // hittable_list_add(world, sphere_new(vec3(R,0,-1.0), R, material_right));
 
     material_t  *material_ground = mt_lambertian_new(color_in(0.8, 0.8, 0.0));
     material_t  *material_center = mt_lambertian_new(color_in(0.1, 0.2, 0.5));
