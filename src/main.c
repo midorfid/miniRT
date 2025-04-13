@@ -45,7 +45,7 @@ int main(void) {
     // Image
 
     double      aspect_ratio = 16.0 / 9.0;
-    int         image_width = 1000;
+    int         image_width = 400;
 
     // Calculate image height
 
@@ -61,7 +61,12 @@ int main(void) {
     point3_t            lookat = point3(0,0,-1);
     vec3_t              vup = vec3(0,1,0);
 
+    double              defocus_angle = 10.0; // Variation angle of rays through each pixel
+    double              focus_dist = 3.4; // Distance from camera lookfrom point to plane of perfect focus
+
     vec3_t              u,v,w; // camera frame basis vectors
+    vec3_t              defocus_disk_u; // defocus disk horizontal radius
+    vec3_t              defocus_disk_v; // defoucs disk vertical radius
 
     w = vec3_normalize(vec3_sub_return(lookfrom, lookat));
     u = vec3_cross(vup, w);
@@ -72,10 +77,9 @@ int main(void) {
     // Determine viewpoint dimensions
 
     double              vfov = 20;
-    double              focal_length = vec3_len(vec3_sub_return(lookfrom, lookat));
     double              theta = DEG_TO_RAD(vfov);
     double              h = tan(theta/2);
-    double              viewport_height = 2 * h * focal_length;
+    double              viewport_height = 2 * h * focus_dist;
     double              viewport_width = viewport_height * ((double)image_width/image_height);
 
     // Vectors across horizontal and down the vertical viewport edges
@@ -93,8 +97,13 @@ int main(void) {
 
     // Location of upper left pixel
 
-    vec3_t      viewport_upper_left_pixel = vec3_sub_return(vec3_sub_return(vec3_sub_return(camera_center, vec3_scaled_return(w, focal_length)), vec3_scaled_return(viewport_u, 0.5)), vec3_scaled_return(viewport_v, 0.5));
+    vec3_t      viewport_upper_left_pixel = vec3_sub_return(vec3_sub_return(vec3_sub_return(camera_center, vec3_scaled_return(w, focus_dist)), vec3_scaled_return(viewport_u, 0.5)), vec3_scaled_return(viewport_v, 0.5));
     point3_t    pixel00_loc = vec3_sum(viewport_upper_left_pixel, vec3_scaled_return(vec3_sum(pixel_delta_u, pixel_delta_v), 0.5));
+
+    // Calculate camera defocus disk basis vectors
+    double      defocus_radius = focus_dist * tan(DEG_TO_RAD(defocus_angle / 2));
+    defocus_disk_u = vec3_scaled_return(u, defocus_radius);
+    defocus_disk_v = vec3_scaled_return(v, defocus_radius);
 
     // World
 
@@ -134,7 +143,7 @@ int main(void) {
         for (int i = 0;i<image_width;++i) {
             vec3_t color = vec3(0.0, 0.0, 0.0);
             for (int sample = 0;sample < samples_per_pixel;++sample) {
-                ray_t r = get_ray(i, j, pixel00_loc, pixel_delta_u, pixel_delta_v, camera_center); 
+                ray_t r = get_ray(i, j, pixel00_loc, pixel_delta_u, pixel_delta_v, camera_center, defocus_angle, defocus_disk_u, defocus_disk_v); 
                 color = vec3_sum(color, ray_color(&r, world, max_depth));
             }
             color = vec3_scaled_return(color, pixel_sample_scale);

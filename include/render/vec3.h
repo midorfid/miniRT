@@ -115,6 +115,14 @@ static inline vec3_t vec3_random_on_hemisphere(vec3_t *normal) {
         return (vec3_scaled_return(on_unit_shpere, -1.0));
 }
 
+static inline vec3_t random_in_unit_disk() {
+    while(true) {
+        vec3_t p = vec3(random_double(-1,1), random_double(-1,1), 0);
+        if (vec3_len_squared(p) < 1)
+            return (p);
+    }
+}
+
 static inline bool vec3_near_zero(const vec3_t *a) {
     // Return true if the vector is close to zero in all dimensions
     int s = 1e-8;
