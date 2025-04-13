@@ -2,6 +2,8 @@
 #define RAY_H
 
 #include "vec3.h"
+#include "../camera/defocus_blur.h"
+#include "../render/render_plane.h"
 
 typedef struct ray_s {
     point3_t      orig;
@@ -28,13 +30,13 @@ static inline point3_t defocus_disk_sample(point3_t center, vec3_t defocus_disk_
     return (vec3_sum(vec3_sum(center, (vec3_scaled_return(defocus_disk_u, p.x) )), vec3_scaled_return(defocus_disk_v, p.y)));
 }
 
-static inline ray_t get_ray(int i, int j, point3_t pixel00_loc, vec3_t pixel_delta_u, vec3_t pixel_delta_v, point3_t center, double defocus_angle, vec3_t defocus_disk_u, vec3_t defocus_disk_v) {
+static inline ray_t get_ray(int i, int j, const render_plane_t *render_p, point3_t center, const defocus_blur_t *lens) {
     // Constructs a ray originating from the defocus disk and directed at ramdomly
     // sampled point around the pixel location i, j
     vec3_t offset = sample_square();
-    point3_t pixel_sample = vec3_sum(vec3_sum(pixel00_loc, vec3_scaled_return(pixel_delta_u, (i + offset.x))),
-                                     vec3_scaled_return(pixel_delta_v, (j + offset.y)));
-    point3_t ray_origin = (defocus_angle <= 0) ? center : defocus_disk_sample(center, defocus_disk_u, defocus_disk_v);
+    point3_t pixel_sample = vec3_sum(vec3_sum(render_p->pixel00_loc, vec3_scaled_return(render_p->pixel_delta_u, (i + offset.x))),
+                                     vec3_scaled_return(render_p->pixel_delta_v, (j + offset.y)));
+    point3_t ray_origin = (lens->defocus_angle <= 0) ? center : defocus_disk_sample(center, lens->defocus_disk_u, lens->defocus_disk_v);
     point3_t ray_dir = vec3_sub_return(pixel_sample, ray_origin);
 
     return ray(ray_origin, ray_dir);
