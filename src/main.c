@@ -7,6 +7,7 @@
 #include "../include/render/ray.h"
 #include "../include/render/hit_record.h"
 #include "../include/render/sphere.h"
+#include "../include/render/moving_sphere.h"
 #include "../include/render/utils.h"
 #include "../include/render/hittable_list.h"
 #include "../include/render/material.h"
@@ -59,8 +60,8 @@ int main(void) {
     int                 samples_per_pixel = 10;
     double              pixel_sample_scale = 1.0 / samples_per_pixel; 
     int                 max_depth = 50;
-    point3_t            lookfrom = point3(-2,2,1);
-    point3_t            lookat = point3(0,0,-1);
+    point3_t            lookfrom = point3(13,2,3);
+    point3_t            lookat = point3(0,0,0);
     vec3_t              vup = vec3(0,1,0);
 
     point3_t            camera_center = lookfrom;
@@ -74,8 +75,8 @@ int main(void) {
 
     defocus_blur_t      lens;
 
-    lens.defocus_angle = 10.0; // Variation angle of rays through each pixel
-    double              focus_dist = 3.4; // Distance from camera lookfrom point to plane of perfect focus
+    lens.defocus_angle = 0.6; // Variation angle of rays through each pixel
+    double              focus_dist = 10.0; // Distance from camera lookfrom point to plane of perfect focus
 
     // Calculate camera defocus disk basis vectors
     double      defocus_radius = focus_dist * tan(DEG_TO_RAD(lens.defocus_angle / 2));
@@ -112,7 +113,50 @@ int main(void) {
 
     // World
 
-    hittable_list_t     *world = hittable_list_innit(4);
+    hittable_list_t     *world = hittable_list_innit(22*22 + 1);
+
+    material_t  *material_ground = mt_lambertian_new(color_in(0.5, 0.5, 0.5));
+    hittable_list_add(world, sphere_new(vec3(0.0,-1000.0, 0.0), 1000.0, material_ground));
+
+    for (int a = -11; a < 11; ++a) {
+        for (int b = -11; b < 11; ++b) {
+            double choose_mat = random_double_nolimits();
+            point3_t center = point3(a + 0.9 * random_double_nolimits(), 0.2, b + 0.9 * random_double_nolimits());
+
+            if (vec3_len(vec3_sub_return(center, point3(4, 0.2, 0))) > 0.9) {
+                material_t *material;
+
+                if (choose_mat < 0.8) {
+                    // diffuse
+                    color_t albedo = vec3_multi(vec3_random(), vec3_random());
+                    material = mt_lambertian_new(albedo);
+                    point3_t center2 = (vec3_sum(center, vec3(0, random_double(0,.5), 0)));
+                    hittable_list_add(world, mv_sphere_new(center, center2, 0, 1, 0.2, material));
+                }
+                else if (choose_mat < 0.95) {
+                    // metal
+                    color_t albedo2 = vec3_random_limits(0.5, 1);
+                    double fuzz = random_double(0, 0.5);
+                    material = mt_metal_new(albedo2, fuzz);
+                    hittable_list_add(world, sphere_new(center, 0.2, material));
+                }
+                else {
+                    // glass
+                    material = mt_dielectric_new(1.5);
+                    hittable_list_add(world, sphere_new(center, 0.2, material));
+                }
+                }
+            }
+        }
+
+    material_t *material1 = mt_dielectric_new(1.5);
+    hittable_list_add(world, sphere_new(point3(0,1,0), 1.0, material1));
+
+    material_t *material2 = mt_lambertian_new(color_in(0.4, 0.2, 0.1));
+    hittable_list_add(world, sphere_new(point3(-4,1,0), 1.0, material2));
+
+    material_t *material3 = mt_metal_new(color_in(0.7,0.6,0.5), 0.0);
+    hittable_list_add(world, sphere_new(point3(4,1,0), 1.0, material3));
 
     // TOuching spheres
     // double R = cos(PI/4);
@@ -123,17 +167,17 @@ int main(void) {
     // hittable_list_add(world, sphere_new(vec3(-R,0,-1.0), R, material_left));
     // hittable_list_add(world, sphere_new(vec3(R,0,-1.0), R, material_right));
 
-    material_t  *material_ground = mt_lambertian_new(color_in(0.8, 0.8, 0.0));
-    material_t  *material_center = mt_lambertian_new(color_in(0.1, 0.2, 0.5));
-    material_t  *material_left = mt_dielectric_new(1.50);
-    material_t  *material_bubble = mt_dielectric_new(1.00 / 1.50);
-    material_t  *material_right = mt_metal_new(color_in(0.8, 0.6, 0.2), 1.0);
+    // material_t  *material_ground = mt_lambertian_new(color_in(0.8, 0.8, 0.0));
+    // material_t  *material_center = mt_lambertian_new(color_in(0.1, 0.2, 0.5));
+    // material_t  *material_left = mt_dielectric_new(1.50);
+    // material_t  *material_bubble = mt_dielectric_new(1.00 / 1.50);
+    // material_t  *material_right = mt_metal_new(color_in(0.8, 0.6, 0.2), 1.0);
 
-    hittable_list_add(world, sphere_new(vec3(0.0,-100.5,-1.0), 100.0, material_ground));
-    hittable_list_add(world, sphere_new(vec3(0.0,0.0,-1.2), 0.5, material_center));
-    hittable_list_add(world, sphere_new(vec3(-1.0,0.0,-1.0), 0.5, material_left));
-    hittable_list_add(world, sphere_new(vec3(-1.0,0.0,-1.0), 0.4, material_bubble));
-    hittable_list_add(world, sphere_new(vec3(1.0,0.0,-1.0), 0.5, material_right));
+    // hittable_list_add(world, sphere_new(vec3(0.0,-100.5,-1.0), 100.0, material_ground));
+    // hittable_list_add(world, sphere_new(vec3(0.0,0.0,-1.2), 0.5, material_center));
+    // hittable_list_add(world, sphere_new(vec3(-1.0,0.0,-1.0), 0.5, material_left));
+    // hittable_list_add(world, sphere_new(vec3(-1.0,0.0,-1.0), 0.4, material_bubble));
+    // hittable_list_add(world, sphere_new(vec3(1.0,0.0,-1.0), 0.5, material_right));
 
     // Render
 

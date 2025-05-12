@@ -35,7 +35,7 @@ static bool     mt_lambertian_scatter(const material_t *material, const ray_t *r
     vec3_t scatter_dir = vec3_sum(rec->normal, vec3_random_unit_vec());
     if (vec3_near_zero(&scatter_dir))
         scatter_dir = rec->normal;
-    *scattered = ray(rec->p, scatter_dir);
+    *scattered = ray(rec->p, scatter_dir, ray_in->time);
     *attenuation = diffuse->albedo;
 
     return (true);

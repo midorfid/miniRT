@@ -9,7 +9,7 @@
     (-td + (C - Q))(-td + (C - Q)) = r^2 , then we calculate dot product of a vector with it self
     t^2d*d - 2td(C - Q) + (C - Q)(C - Q) - r^2 = 0 then we need to find discriminant
 */  
-static inline bool sphere_hit_test_generic(point3_t center, double radius, material_t *material, const ray_t *ray, double tmin, double tmax, hit_record_t *rec) {
+bool sphere_hit_test_generic(point3_t center, double radius, material_t *material, const ray_t *ray, double tmin, double tmax, hit_record_t *rec) {
     vec3_t oc = center;
     vec3_sub(&oc, ray->orig); 
     double a = vec3_len_squared(ray->dir);
@@ -39,7 +39,7 @@ static inline bool sphere_hit_test_generic(point3_t center, double radius, mater
     return (true);
 }
 
-static inline sphere_t  sphere_init(point3_t center, double radius, material_t *material) {
+static  sphere_t  sphere_init(point3_t center, double radius, material_t *material) {
     sphere_t    result = {.center = center, .radius = radius, .material = material};
 
     hittable_innit(&result.base, HITTABLE_TYPE_SHPERE, sphere_hit);
@@ -56,7 +56,7 @@ hittable_t    *sphere_new(point3_t center, double radius, material_t *material) 
     return (hittable_t *)new_sphere;
 }
 
-static inline bool     sphere_hit(const hittable_t *hittable, const ray_t *ray, double tmin, double tmax, hit_record_t *rec) {
+static  bool     sphere_hit(const hittable_t *hittable, const ray_t *ray, double tmin, double tmax, hit_record_t *rec) {
     if (hittable->type != HITTABLE_TYPE_SHPERE) {
         printf("WRONG TYPE (SPHERE)\n");
         return (false);

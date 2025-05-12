@@ -11,6 +11,7 @@ set (SRCS
     src/render/hit_record.c
     src/render/hittable.c
     src/render/sphere.c
+    src/render/moving_sphere.c
     src/render/hittable_list.c
     src/random.c
     src/render/material.c )

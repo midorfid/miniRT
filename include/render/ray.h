@@ -8,11 +8,11 @@
 typedef struct ray_s {
     point3_t      orig;
     vec3_t        dir;
-    // double      t;
+    double        time;
 } ray_t;
 
-static inline ray_t ray(point3_t orig, vec3_t dir) {
-    ray_t result = {.orig = orig, .dir = dir};
+static inline ray_t ray(point3_t orig, vec3_t dir, double time) {
+    ray_t result = {.orig = orig, .dir = dir, .time = time};
     return (result);
 }
 
@@ -38,8 +38,9 @@ static inline ray_t get_ray(int i, int j, const render_plane_t *render_p, point3
                                      vec3_scaled_return(render_p->pixel_delta_v, (j + offset.y)));
     point3_t ray_origin = (lens->defocus_angle <= 0) ? center : defocus_disk_sample(center, lens->defocus_disk_u, lens->defocus_disk_v);
     point3_t ray_dir = vec3_sub_return(pixel_sample, ray_origin);
+    double time = random_double_nolimits();
 
-    return ray(ray_origin, ray_dir);
+    return ray(ray_origin, ray_dir, time);
 }
 
 #endif

@@ -58,7 +58,7 @@ static bool     mt_dielectric_scatter(const material_t *material, const ray_t *r
         vec3_t direction = refract(&unit_direction, &rec->normal, ri); 
     }
 
-    *scattered = ray(rec->p, direction);
+    *scattered = ray(rec->p, direction, ray_in->time);
     return (true);
 }
 
