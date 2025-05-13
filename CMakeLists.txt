@@ -13,6 +13,8 @@ set (SRCS
     src/render/sphere.c
     src/render/moving_sphere.c
     src/render/hittable_list.c
+    src/render/aabb.c
+    src/render/bvh.c
     src/random.c
     src/render/material.c )
 

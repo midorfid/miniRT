@@ -10,6 +10,7 @@ typedef enum hittable_type_e
     HITTABLE_TYPE_UNKNOWN = -1,
     HITTABLE_TYPE_SHPERE = 0,
     HITTABLE_TYPE_MOVING_SHPERE = 1,
+    HITTABLE_TYPE_BVH_NODE = 2
 } hittable_type_t;
 
 

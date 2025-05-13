@@ -51,3 +51,7 @@ bool    hittable_list_hit_test(const ray_t *ray, const hittable_list_t *list, do
     }
     return (hit_occured);
 }
+
+hittable_t          **get_hittables(const hittable_list_t *list) {
+    return list->hittables;
+}

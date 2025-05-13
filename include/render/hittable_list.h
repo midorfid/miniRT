@@ -17,4 +17,6 @@ void                delete_hittable_list(hittable_list_t *list);
 
 bool                hittable_list_hit_test(const ray_t *ray, const hittable_list_t *list, double tmin, double tmax, hit_record_t *rec);
 
+hittable_t          **get_hittables(const hittable_list_t *list);
+
 #endif
