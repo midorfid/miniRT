@@ -1,2 +1,0 @@
-/usr/bin/ar qc libget_next_line.a CMakeFiles/get_next_line.dir/get_next_line.c.o CMakeFiles/get_next_line.dir/get_next_line_utils.c.o
-/usr/bin/ranlib libget_next_line.a

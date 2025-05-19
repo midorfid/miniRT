@@ -19,6 +19,10 @@ static inline double random_double(double min, double max)
     return min + (max - min) * rt_random() / (RANDOM_MAX + 0.0);
 }
 
+static int     my_random_int(int min, int max) {
+    return (int)(random_double(min, max+1));
+}
+
 static inline double random_double_nolimits(void)
 {
     return rt_random() / (RANDOM_MAX + 0.0);

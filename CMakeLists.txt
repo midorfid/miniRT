@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.21.0)
+cmake_minimum_required(VERSION 3.16.3)
+
 
 project(miniRT)
 
@@ -33,3 +34,4 @@ target_link_libraries(${EXEC_NAME} PRIVATE ft)
 target_link_libraries(${EXEC_NAME} PRIVATE mlx42)
 target_link_libraries(${EXEC_NAME} PRIVATE get_next_line)
 target_link_libraries(${EXEC_NAME} PRIVATE m)
+target_link_libraries(${EXEC_NAME} PRIVATE dl)

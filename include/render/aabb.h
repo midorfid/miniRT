@@ -11,6 +11,11 @@ typedef struct aabb_s {
 
 bool                aabb_hit(const aabb_t *aabb, double tmin, double tmax, const ray_t *ray);
 
-aabb_t              aabb_surrounding_bbox(const aabb_t *a, const aabb_t *b);
+aabb_t              aabb_surrounding_bbox(aabb_t a, aabb_t b);
+
+
+int                box_x_compare(const void *a, const void *b);
+int                box_y_compare(const void *a, const void *b);
+int                box_z_compare(const void *a, const void *b);
 
 #endif

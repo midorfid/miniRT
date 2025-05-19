@@ -9,7 +9,7 @@ static mv_sphere_t      mv_sphere_init(point3_t center_start, point3_t center_en
         .radius = radius,
         .material = material};
 
-    hittable_innit(&result.base, HITTABLE_TYPE_MOVING_SHPERE, mv_sphere_hit);
+    hittable_innit(&result.base, HITTABLE_TYPE_MOVING_SHPERE, mv_sphere_hit, bb_base, delete_base);
     return (result);
 }
 

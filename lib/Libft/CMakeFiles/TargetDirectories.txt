@@ -1,3 +1,0 @@
-/home/anton/projects/miniRT/lib/Libft/CMakeFiles/ft.dir
-/home/anton/projects/miniRT/lib/Libft/CMakeFiles/edit_cache.dir
-/home/anton/projects/miniRT/lib/Libft/CMakeFiles/rebuild_cache.dir
