@@ -112,58 +112,57 @@ int main(void) {
     render_p.pixel00_loc = vec3_sum(viewport_upper_left_pixel, vec3_scaled_return(vec3_sum(render_p.pixel_delta_u, render_p.pixel_delta_v), 0.5));
 
     // World
-
-    hittable_list_t     *world = hittable_list_innit(22*22 + 1);
+    hittable_list_t     *world = hittable_list_innit(1);
 
     material_t  *material_ground = mt_lambertian_new(color_in(0.5, 0.5, 0.5));
     hittable_list_add(world, sphere_new(vec3(0.0,-1000.0, 0.0), 1000.0, material_ground));
-
-    for (int a = -11; a < 11; ++a) {
-        for (int b = -11; b < 11; ++b) {
-            double choose_mat = random_double_nolimits();
-            point3_t center = point3(a + 0.9 * random_double_nolimits(), 0.2, b + 0.9 * random_double_nolimits());
-
-            if (vec3_len(vec3_sub_return(center, point3(4, 0.2, 0))) > 0.9) {
-                material_t *material;
-
-                if (choose_mat < 0.8) {
+// 
+    // for (int a = -11; a < 11; ++a) {
+        // for (int b = -11; b < 11; ++b) {
+            // double choose_mat = random_double_nolimits();
+            // point3_t center = point3(a + 0.9 * random_double_nolimits(), 0.2, b + 0.9 * random_double_nolimits());
+// 
+            // if (vec3_len(vec3_sub_return(center, point3(4, 0.2, 0))) > 0.9) {
+                // material_t *material;
+// 
+                // if (choose_mat < 0.8) {
                     // diffuse
-                    color_t albedo = vec3_multi(vec3_random(), vec3_random());
-                    material = mt_lambertian_new(albedo);
-                    point3_t center2 = (vec3_sum(center, vec3(0, random_double(0,.5), 0)));
-                    hittable_list_add(world, mv_sphere_new(center, center2, 0, 1, 0.2, material));
-                }
-                else if (choose_mat < 0.95) {
+                    // color_t albedo = vec3_multi(vec3_random(), vec3_random());
+                    // material = mt_lambertian_new(albedo);
+                    // point3_t center2 = (vec3_sum(center, vec3(0, random_double(0,.5), 0)));
+                    // hittable_list_add(world, mv_sphere_new(center, center2, 0, 1, 0.2, material));
+                // }
+                // else if (choose_mat < 0.95) {
                     // metal
-                    color_t albedo2 = vec3_random_limits(0.5, 1);
-                    double fuzz = random_double(0, 0.5);
-                    material = mt_metal_new(albedo2, fuzz);
-                    hittable_list_add(world, sphere_new(center, 0.2, material));
-                }
-                else {
+                    // color_t albedo2 = vec3_random_limits(0.5, 1);
+                    // double fuzz = random_double(0, 0.5);
+                    // material = mt_metal_new(albedo2, fuzz);
+                    // hittable_list_add(world, sphere_new(center, 0.2, material));
+                // }
+                // else {
                     // glass
-                    material = mt_dielectric_new(1.5);
-                    hittable_list_add(world, sphere_new(center, 0.2, material));
-                }
-                }
-            }
-        }
-
-    material_t *material1 = mt_dielectric_new(1.5);
-    hittable_list_add(world, sphere_new(point3(0,1,0), 1.0, material1));
-
-    material_t *material2 = mt_lambertian_new(color_in(0.4, 0.2, 0.1));
-    hittable_list_add(world, sphere_new(point3(-4,1,0), 1.0, material2));
-
-    material_t *material3 = mt_metal_new(color_in(0.7,0.6,0.5), 0.0);
-    hittable_list_add(world, sphere_new(point3(4,1,0), 1.0, material3));
-
+                    // material = mt_dielectric_new(1.5);
+                    // hittable_list_add(world, sphere_new(center, 0.2, material));
+                // }
+                // }
+            // }
+        // }
+// 
+    // material_t *material1 = mt_dielectric_new(1.5);
+    // hittable_list_add(world, sphere_new(point3(0,1,0), 1.0, material1));
+// 
+    // material_t *material2 = mt_lambertian_new(color_in(0.4, 0.2, 0.1));
+    // hittable_list_add(world, sphere_new(point3(-4,1,0), 1.0, material2));
+// 
+    // material_t *material3 = mt_metal_new(color_in(0.7,0.6,0.5), 0.0);
+    // hittable_list_add(world, sphere_new(point3(4,1,0), 1.0, material3));
+// 
     // TOuching spheres
     // double R = cos(PI/4);
-// 
+
     // material_t  *material_left = mt_lambertian_new(color_in(0,0,1));
     // material_t  *material_right = mt_lambertian_new(color_in(1,0,0));
-// 
+
     // hittable_list_add(world, sphere_new(vec3(-R,0,-1.0), R, material_left));
     // hittable_list_add(world, sphere_new(vec3(R,0,-1.0), R, material_right));
 
@@ -182,8 +181,10 @@ int main(void) {
     // Render
 
     mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "miniRT", true);
-    if (!mlx)
+    if (!mlx) {
+        fprintf(stderr, "Error initializing MLX42: %s\n", mlx_strerror(mlx_errno));
         return(1);
+    }
     image = mlx_new_image(mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
     if (!image || mlx_image_to_window(mlx, image, 0, 0) < 0)
         return(1);

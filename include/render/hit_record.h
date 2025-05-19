@@ -13,6 +13,9 @@ typedef struct hit_record_s {
     double          t;
     void            *mat;
 
+    double          u;
+    double          v;
+
     bool            front_face;
 } hit_record_t;
 

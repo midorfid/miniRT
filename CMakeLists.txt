@@ -17,7 +17,10 @@ set (SRCS
     src/render/aabb.c
     src/render/bvh.c
     src/random.c
-    src/render/material.c )
+    src/render/material.c
+    src/textures/texture.c
+    src/textures/checker_pattern.c
+    src/textures/solid_colour.c )
 
 set (EXEC_NAME miniRT)
 
