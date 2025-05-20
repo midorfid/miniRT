@@ -20,4 +20,6 @@ bool                 sphere_hit_test_generic(point3_t center, double radius, mat
 
 static bool          sphere_hit(const hittable_t *hittable, const ray_t *ray, double tmin, double tmax, hit_record_t *rec);
 
+static void             get_sphere_uv(const point3_t *p, double *u, double *v);
+
 #endif

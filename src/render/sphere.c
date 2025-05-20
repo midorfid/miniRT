@@ -4,6 +4,20 @@
 #include <stdlib.h>
 #include "../../include/render/ray.h"
 
+// p: a given point on the sphere of radius one, centered at the origin.
+        // u: returned value [0,1] of angle around the Y axis from X=-1.
+        // v: returned value [0,1] of angle from Y=-1 to Y=+1.
+        //     <1 0 0> yields <0.50 0.50>       <-1  0  0> yields <0.00 0.50>
+        //     <0 1 0> yields <0.50 1.00>       < 0 -1  0> yields <0.50 0.00>
+        //     <0 0 1> yields <0.25 0.50>       < 0  0 -1> yields <0.75 0.50>
+void    get_sphere_uv(const point3_t *p, double *u, double *v) {
+    double theta = -acos(p->y);
+    double phi = atan2(-p->z, p->x) + PI;
+
+    *u = phi / PI*2;
+    *v = theta / PI;
+}
+
 /*  (C - P)(C - P) = r^2 , where C = center of the sphere and P = any point that satisfies this equation is on the sphere
     (C - (Q + td))(C - (Q + td)) = r^2 , where Q = origin, d = direction, t = our unknown, basically scalar for which this equation is true
     (-td + (C - Q))(-td + (C - Q)) = r^2 , then we calculate dot product of a vector with it self
@@ -35,6 +49,7 @@ bool sphere_hit_test_generic(point3_t center, double radius, material_t *materia
         rec->p = ray_at(ray->orig, ray->dir, rec->t);
         vec3_t outward_normal = vec3_scaled_return(vec3_sub_return(rec->p, center), 1.0/radius);
         set_front_face(ray, &outward_normal, rec);
+        get_sphere_uv(&outward_normal, &rec->u, &rec->v);
     }
     return (true);
 }
