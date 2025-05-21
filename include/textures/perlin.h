@@ -17,6 +17,9 @@ typedef struct perlin_s {
     texture_t_free_met  delete;
     texture_t_value_met getvalue;
 } perlin_t;
+//scalar is a pseudo-random scalar of each angle that forms a cube surrouding point p
+// u,v,w are the fractional part of our point between [0:1]
+static double   trilinear_interp(double scalar[2][2][2], double u, double v, double w);
 
 static void    perlin_scramble(const texture_t *texture, const point3_t *p);
 

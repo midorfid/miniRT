@@ -10,14 +10,49 @@ static void    perlin_scramble(const texture_t *texture, const point3_t *p) {
     perlin_generate_perm(perlin->z_perm);
 }
 
+static double   trilinear_interp(double scalar[2][2][2], double u, double v, double w) {
+    double accum = 0.0;
+    
+    for (int i = 0; i < 2; ++i) {
+        for (int j = 0; j < 2; ++j) {
+            for (int k = 0; k < 2; ++k) {
+                accum += (i*u + (1 - u)*(1 - i)) *
+                        (j*v + (1 - v)*(1 - j)) *
+                        (k*w + (1 - w)*(1 - k)) *
+                        scalar[i][j][k];
+            }
+        }
+    }
+    return (accum);
+}
+
 static double    perlin_noise(const texture_t *texture, const point3_t *p) {
     perlin_t *perlin = (perlin_t *)texture;
 
-    int i = (int)(4 * p->x) & 255;
-    int j = (int)(4 * p->y) & 255;
-    int k = (int)(4 * p->z) & 255;
+    //fractional part of p
+    double u,v,w;
+    u = p->x - floor(p->x);
+    v = p->y - floor(p->y);
+    w = p->z - floor(p->z);
 
-    return perlin->random_float[i ^ j ^ k];
+    // cords for base bottom down left angle
+    int i,j,k
+    i = (int)floor(p->x);
+    j = (int)floor(p->y);
+    k = (int)floor(p->z);
+
+    double scalar[2][2][2];
+    for (int di = 0; di < 2; ++di) {
+        for (int dj = 0; dj < 2; ++dj) {
+            for (int dk = 0; dk < 2; ++dk) {
+                // assigning pseudo-random double to each angle of int cube
+                scalar[di][dj][dk] = perlin->random_float[perlin->x_perm[i + di & 255] ^
+                    perlin->y_perm[j + dj & 255] ^ perlin->z_perm[k + dk] & 255];
+            }
+        }
+    }
+
+    return trilinear_interp(scalar, u, v, w);
 }
 
 static void    perlin_permute(int *p) {
