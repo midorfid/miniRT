@@ -8,6 +8,7 @@ typedef enum texture_type_s {
     TEXTURE_TYPE_NONE = -1,
     TEXTURE_TYPE_SOLID_COLOUR,
     TEXTURE_TYPE_CHECKER_PATTERN,
+    TEXTURE_TYPE_PERLIN_NOISE,
 } texture_type_t;
 
 typedef void (*texture_t_free_met)(texture_t *texture);
