@@ -100,12 +100,12 @@ static double      noise_turbulance(const texture_t *texture, point3_t p, int de
 color_t     perlin_getvalue(const texture_t *texture, double u, double v, const point3_t *p) {
     perlin_t    *temp_perlin = (perlin_t *)texture;
 
-    point3_t scaled_p = vec3_scaled_return(*p, temp_perlin->intensity);
-    perlin_scramble(texture, &scaled_p);
+    // point3_t scaled_p = vec3_scaled_return(*p, temp_perlin->intensity);
+    perlin_scramble(texture, p);
 
-    double perlin = perlin_noise(texture, &scaled_p);
+    double perlin = perlin_noise(texture, p);
 
-    return vec3_scaled_return(color_in(1,1,1), noise_turbulance(texture, *p, 7));
+    return vec3_scaled_return(color_in(0.5, 0.5, 0.5), 1 + sin(temp_perlin->intensity * p->z +  10 * noise_turbulance(texture, *p, 7)));
 }
 texture_t   *perlin_new(double intensity) {
     perlin_t *new_perlin = calloc(1, sizeof(perlin_t));
