@@ -198,6 +198,7 @@ int main(void) {
             }
             color = vec3_scaled_return(color, pixel_sample_scale);
             mlx_put_pixel(image, i, j, return_color(color));
+            puts("pixel put");
         }
     }
     mlx_loop(mlx);
