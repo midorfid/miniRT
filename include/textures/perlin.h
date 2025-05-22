@@ -37,6 +37,6 @@ color_t     perlin_getvalue(const texture_t *texture, double u, double v, const 
 
 texture_t   *perlin_new(double intensity);
 
-
+static double      noise_turbulance(const texture_t *texture, point3_t p, int depth);
 
 #endif

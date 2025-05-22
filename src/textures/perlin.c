@@ -83,6 +83,20 @@ void        perlin_delete(texture_t *texture) {
     perlin_t *perlin = (perlin_t *)texture;
     free(perlin);
 }
+
+static double      noise_turbulance(const texture_t *texture, point3_t p, int depth) {
+    double accum = 0.0;
+    point3_t temp_p = p;
+    double weight = 1.0;
+
+    for (int i = 0; i < depth; ++i) {
+        accum  += weight * perlin_noise(texture, &temp_p);
+        weight *= 0.5;
+        temp_p = vec3_scaled_return(temp_p, 2.0);
+    }
+    return fabs(accum);
+}
+
 color_t     perlin_getvalue(const texture_t *texture, double u, double v, const point3_t *p) {
     perlin_t    *temp_perlin = (perlin_t *)texture;
 
@@ -90,8 +104,8 @@ color_t     perlin_getvalue(const texture_t *texture, double u, double v, const 
     perlin_scramble(texture, &scaled_p);
 
     double perlin = perlin_noise(texture, &scaled_p);
-    // * 0.5 and + 1.0 to mitigate negative values [-1:1] to [0:1]
-    return vec3_scaled_return(color_in(1,1,1), 0.5 * (1.0 + perlin));
+
+    return vec3_scaled_return(color_in(1,1,1), noise_turbulance(texture, *p, 7));
 }
 texture_t   *perlin_new(double intensity) {
     perlin_t *new_perlin = calloc(1, sizeof(perlin_t));
