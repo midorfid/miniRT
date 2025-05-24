@@ -3,7 +3,6 @@
 
 #include "vec3.h"
 #include "hittable_shared.h"
-#include "material_shared.h"
 
 typedef struct sphere_s {
     hittable_t  base;

@@ -3,6 +3,7 @@
 
 #include "hittable.h"
 #include "aabb.h"
+#include "material_shared.h"
 
 // #define PI (double)3.1415926535897932385
 
@@ -11,7 +12,8 @@ typedef enum hittable_type_e
     HITTABLE_TYPE_UNKNOWN = -1,
     HITTABLE_TYPE_SHPERE = 0,
     HITTABLE_TYPE_MOVING_SHPERE = 1,
-    HITTABLE_TYPE_BVH_NODE = 2
+    HITTABLE_TYPE_BVH_NODE = 2,
+    HITTABLE_TYPE_QUAD = 3,
 } hittable_type_t;
 
 
