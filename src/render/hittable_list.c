@@ -55,3 +55,11 @@ bool    hittable_list_hit_test(const ray_t *ray, const hittable_list_t *list, do
 hittable_t          **get_hittables(const hittable_list_t *list) {
     return list->hittables;
 }
+
+size_t              hittable_list_getsize(const hittable_list_t *list) {
+    if (list == NULL) {
+        printf("in hittable_list_getsize() list == NULL");
+        return 0;
+    }
+    return list->size;
+}

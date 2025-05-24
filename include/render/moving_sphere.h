@@ -24,4 +24,8 @@ static bool                 mv_sphere_hit(const hittable_t *hittable, const ray_
 
 static point3_t             get_center_at_time (const mv_sphere_t *sphere, double t);
 
+bool                        mv_sphere_bb(const hittable_t *hittable, double time0, double time1, aabb_t *out_bb);
+
+void                        mv_sphere_delete(hittable_t *hittable);
+
 #endif

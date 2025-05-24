@@ -19,4 +19,6 @@ bool                hittable_list_hit_test(const ray_t *ray, const hittable_list
 
 hittable_t          **get_hittables(const hittable_list_t *list);
 
+size_t              hittable_list_getsize(const hittable_list_t *list);
+
 #endif

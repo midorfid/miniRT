@@ -29,8 +29,8 @@ bool hittable_t_bb(const hittable_t *hittable, double time0, double time1, aabb_
 int                box_x_compare(const void *a, const void *b) {
     aabb_t a_bbox,b_bbox;
 
-    if (!hittable_t_bb((const hittable_t*)a, 0, 0, &a_bbox) ||
-        !hittable_t_bb((const hittable_t*)a, 0, 0, &a_bbox))
+    if (!hittable_t_bb(*(const hittable_t *const *)a, 0, 0, &a_bbox) ||
+        !hittable_t_bb(*(const hittable_t *const *)b, 0, 0, &b_bbox))
     {
         printf(" bbox x axis compare failed ");
         return 0;
@@ -45,10 +45,10 @@ int                box_x_compare(const void *a, const void *b) {
 int                box_y_compare(const void *a, const void *b) {
     aabb_t a_bbox,b_bbox;
 
-    if (!hittable_t_bb((const hittable_t*)a, 0, 0, &a_bbox) ||
-        !hittable_t_bb((const hittable_t*)a, 0, 0, &a_bbox))
+    if (!hittable_t_bb(*(const hittable_t *const *)a, 0, 0, &a_bbox) ||
+        !hittable_t_bb(*(const hittable_t *const *)b, 0, 0, &b_bbox))
     {
-        printf(" bbox x axis compare failed ");
+        printf(" bbox y axis compare failed ");
         return 0;
     }
     if (a_bbox.min.y < b_bbox.min.y)
@@ -61,10 +61,10 @@ int                box_y_compare(const void *a, const void *b) {
 int                box_z_compare(const void *a, const void *b) {
     aabb_t a_bbox,b_bbox;
 
-    if (!hittable_t_bb((const hittable_t*)a, 0, 0, &a_bbox) ||
-        !hittable_t_bb((const hittable_t*)a, 0, 0, &a_bbox))
+    if (!hittable_t_bb(*(const hittable_t *const *)a, 0, 0, &a_bbox) ||
+        !hittable_t_bb(*(const hittable_t *const *)b, 0, 0, &b_bbox))
     {
-        printf(" bbox x axis compare failed ");
+        printf(" bbox z axis compare failed ");
         return 0;
     }
     if (a_bbox.min.z < b_bbox.min.z)
