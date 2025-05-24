@@ -57,7 +57,7 @@ bool sphere_hit_test_generic(point3_t center, double radius, material_t *materia
 static  sphere_t  sphere_init(point3_t center, double radius, material_t *material) {
     sphere_t    result = {.center = center, .radius = radius, .material = material};
 
-    hittable_innit(&result.base, HITTABLE_TYPE_SHPERE, sphere_hit, bb_base, delete_base);
+    hittable_innit(&result.base, HITTABLE_TYPE_SHPERE, sphere_hit, sphere_bb, sphere_delete);
     return (result);
 }
 
@@ -78,4 +78,28 @@ static  bool     sphere_hit(const hittable_t *hittable, const ray_t *ray, double
     }
     sphere_t *sphere = (sphere_t *)hittable;
     return (sphere_hit_test_generic(sphere->center, sphere->radius, sphere->material, ray, tmin, tmax, rec));
+}
+
+bool    sphere_bb(const hittable_t *hittable, double time0, double time1, aabb_t *out_bbox) {
+    if (hittable == NULL || out_bbox == NULL || hittable->type != HITTABLE_TYPE_SHPERE) {
+        printf(" sphere_bb() failed ");
+        return false;
+    }
+    sphere_t *sphere = (sphere_t *)hittable;
+    vec3_t  rvec = vec3(sphere->radius, sphere->radius, sphere->radius);
+    out_bbox->min = vec3_sub_return(sphere->center, rvec);
+    out_bbox->max = vec3_sum(sphere->center, rvec);
+
+    return true;
+}
+
+void    sphere_delete(hittable_t *hittable) {
+    if (hittable == NULL || hittable->type != HITTABLE_TYPE_SHPERE) {
+        printf("sphere_delete() failed");
+        return ;
+    }
+    sphere_t *delete_sphere = (sphere_t *)hittable;
+
+    material_delete(delete_sphere->material);
+    free(delete_sphere);
 }

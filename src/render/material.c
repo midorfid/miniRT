@@ -41,3 +41,11 @@ static color_t emmit_base(const material_t *material, double u, double v, const 
 static void delete_base(material_t *material) {
     free(material);
 }
+
+void    material_delete(material_t *material) {
+    if (material == NULL) {
+        printf("material_delete() failed");
+        return ;
+    }
+    return material->delete(material);
+}

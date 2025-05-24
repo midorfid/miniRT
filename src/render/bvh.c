@@ -28,7 +28,7 @@ static void         bvh_node_delete(hittable_t *hittable) {
 }
 
 hittable_t          *bvh_node_new(const hittable_list_t *list, double time0, double time1) {
-    return (bvh_make_node(get_hittables(list), 0, list->size, time0, time1));
+    return (bvh_make_node(get_hittables(list), 0, hittable_list_getsize(list), time0, time1));
 }
 
 static hittable_t   *bvh_make_node(hittable_t **hittables, size_t start, size_t end, double time0, double time1) {
@@ -44,9 +44,9 @@ static hittable_t   *bvh_make_node(hittable_t **hittables, size_t start, size_t 
     size_t  object_span = end - start;
     int     axis = my_random_int(0,2);
     hittable_t_compare_met comparator = box_x_compare;
-    if (axis = 1)
+    if (axis == 1)
         comparator = box_y_compare;
-    if (axis = 2)
+    if (axis == 2)
         comparator = box_z_compare;
     if (object_span == 1)
         result->left = result->right = hittable_claim(hittables[start]); 
@@ -61,7 +61,7 @@ static hittable_t   *bvh_make_node(hittable_t **hittables, size_t start, size_t 
         }
     }
     else {
-        qsort(result + start, object_span, sizeof(hittable_t), comparator);
+        qsort(hittables + start, object_span, sizeof(hittable_t *), comparator);
         size_t mid = start + object_span / 2;
         result->left = bvh_make_node(hittables, start, mid, time0, time1);
         result->right = bvh_make_node(hittables, mid, end, time0, time1);
@@ -75,5 +75,16 @@ static hittable_t   *bvh_make_node(hittable_t **hittables, size_t start, size_t 
         return NULL;
     }
     result->box = aabb_surrounding_bbox(box_left, box_right);
-    hittable_innit(&result->base, HITTABLE_TYPE_BVH_NODE, bvh_node_hit, bb_base, delete_base);
+    hittable_innit(&result->base, HITTABLE_TYPE_BVH_NODE, bvh_node_hit, bvh_node_bb, bvh_node_delete);
+}
+
+bool                bvh_node_bb(const hittable_t *hittable, double time0, double time1, aabb_t *out_box) {
+    if (hittable == NULL || hittable->type != HITTABLE_TYPE_BVH_NODE || out_box == NULL) {
+        printf("bvh_node_bb failed");
+        return false;
+    }
+    bvh_node_t *node = (bvh_node_t *)hittable;
+    *out_box = node->box;
+
+    return true;
 }

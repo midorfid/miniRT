@@ -22,4 +22,6 @@ hittable_t          *bvh_node_new(const hittable_list_t *list, double time0, dou
 
 static hittable_t   *bvh_make_node(hittable_t **hittables, size_t start, size_t end, double time0, double time1);
 
+bool                bvh_node_bb(const hittable_t *hittable, double time0, double time1, aabb_t *out_box);
+
 #endif

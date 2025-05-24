@@ -9,7 +9,7 @@
 #define RANDOM_MAX UINT64_MAX
 #define RANDOM_DEFAULT_SEED 5489
 
-void random_seed(uint64_t seed);
+void rt_random_seed(uint64_t seed);
 
 uint64_t rt_random(void);
 

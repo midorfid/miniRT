@@ -22,4 +22,8 @@ static bool          sphere_hit(const hittable_t *hittable, const ray_t *ray, do
 
 static void             get_sphere_uv(const point3_t *p, double *u, double *v);
 
+bool                     sphere_bb(const hittable_t *hittable, double time0, double time1, aabb_t *out_bbox);
+
+void                    sphere_delete(hittable_t *hittable);
+
 #endif

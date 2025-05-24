@@ -21,7 +21,8 @@ set (SRCS
     src/textures/texture.c
     src/textures/checker_pattern.c
     src/textures/solid_colour.c
-    src/textures/perlin.c )
+    src/textures/perlin.c
+    src/render/quad.c )
 
 set (EXEC_NAME miniRT)
 

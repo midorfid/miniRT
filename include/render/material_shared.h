@@ -4,6 +4,7 @@
 #include "ray.h"
 #include "hit_record.h"
 #include "color.h"
+#include "material.h"
 
 typedef enum material_type_e
 {
