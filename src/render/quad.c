@@ -8,12 +8,22 @@ static my_quad_t       quad_init(point3_t Q, vec3_t u, vec3_t v, material_t *mat
         .v = v,
         .material = material,
    };
-   result.normal = vec3_normalize(vec3_cross(result.u, result.v));
+   vec3_t n = vec3_cross(result.u, result.v);
+   result.normal = vec3_normalize(n);
    result.D = vec3_dot(result.normal, result.Q);
+   result.w = vec3_scaled_return(n, 1 / vec3_dot(n,n));
 
    hittable_innit(&result.base, HITTABLE_TYPE_QUAD, quad_hit, quad_bb, quad_delete);
 
    return result;
+}
+
+static bool         is_interior(double a, double b, hit_record_t *rec) {
+    if ((a < 0 || a > 1) || (b < 0 || b > 1))
+        return false;
+    rec->u = a;
+    rec->v = b;
+    return true;
 }
 
 static bool         quad_hit(const hittable_t *hittable, const ray_t *ray, double tmin, double tmax, hit_record_t *rec) {
@@ -31,12 +41,18 @@ static bool         quad_hit(const hittable_t *hittable, const ray_t *ray, doubl
     // intersection is not within the valid segment of the ray
     if (t < tmin || t > tmax)
         return false;
+ // Determine if the hit point lies within the planar shape using its plane coordinates.
     point3_t intersection = ray_at(ray->orig, ray->dir, t);
+    point3_t planar_hitpt_vector = vec3_sub_return(intersection, quad->Q);
+    double alpha = vec3_dot(quad->w, vec3_cross(planar_hitpt_vector, quad->v));
+    double beta = vec3_dot(quad->w, vec3_cross(quad->u, planar_hitpt_vector));
 
+    if (!is_interior(alpha, beta, rec))
+        return false;
     rec->t = t;
     rec->p = intersection;
     rec->mat = quad->material;
-    set_front_face(ray, quad->normal, rec);
+    set_front_face(ray, &quad->normal, rec);
 
     return true;
 }
