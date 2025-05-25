@@ -49,3 +49,12 @@ void    material_delete(material_t *material) {
     }
     return material->delete(material);
 }
+
+color_t     material_emmit(const material_t *material, double u, double v, const point3_t *point) {
+    if (material == NULL) {
+        printf("material_emmit() failed");
+        return color_in(0, 0, 0);
+    }
+    
+    return material->emmit(material, u, v, point);
+}

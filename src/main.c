@@ -18,7 +18,7 @@
 #include "../include/render/render_plane.h"
 #include "../include/render/bvh.h"
 #include <time.h>
-
+#include "../include/render/box.h"
 
 #define SCREEN_WIDTH 1000
 #define SCREEN_HEIGHT 1000
@@ -31,7 +31,7 @@ color_t     ray_color(const ray_t *r, const hittable_list_t *world, int depth) {
     if (hittable_list_hit_test(r, world, 0.001, INFINITY, &rec)) {
         ray_t       scattered;
         color_t     attenuation;
-        color_t     color_from_emmision = material_emmit(rec.mat, rec.u, rec.v, rec.p);
+        color_t     color_from_emmision = material_emmit(rec.mat, rec.u, rec.v, &rec.p);
         if (material_scatter(rec.mat, r, &rec, &attenuation, &scattered)) {
             color_t color_from_scatter = vec3_multi(ray_color(&scattered, world, depth-1), attenuation); 
             return vec3_sum(color_from_emmision, color_from_scatter);

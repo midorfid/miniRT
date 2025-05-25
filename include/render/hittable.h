@@ -14,6 +14,8 @@ hittable_t     *hittable_claim(hittable_t *hittable);
 
 bool            hittable_t_bb(const hittable_t *hittable, double time0, double time1, aabb_t *bbox);
 
+void            hittable_delete(hittable_t *hittable);
+
 static bool     hit_base(const hittable_t *hittable, const ray_t *ray, double tmin, double tmax, hit_record_t *rec) {
     return false;
 }

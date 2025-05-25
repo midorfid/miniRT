@@ -73,3 +73,11 @@ int                box_z_compare(const void *a, const void *b) {
         return 1;
     return 0;
 }
+
+void            hittable_delete(hittable_t *hittable) {
+    if (hittable == NULL || --hittable->refcount > 0) {
+        printf("hittable_delete() failed");
+        return ;
+    }
+    hittable->delete(hittable);
+}

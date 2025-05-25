@@ -14,6 +14,7 @@ typedef enum hittable_type_e
     HITTABLE_TYPE_MOVING_SHPERE = 1,
     HITTABLE_TYPE_BVH_NODE = 2,
     HITTABLE_TYPE_QUAD = 3,
+    HITTABLE_TYPE_BOX = 4,
 } hittable_type_t;
 
 
