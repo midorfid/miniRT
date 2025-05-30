@@ -1,8 +1,8 @@
 #include "../../include/render/matrix3.h"
 
 void        matrix_default(matrix3_t *matrix) {
-    matrix[0].matrix[0][0] = matrix.matrix[1][1] = matrix.matrix[2][2] = 1;
-    matrix[1].matrix[0][0] = matrix.matrix[1][1] = matrix.matrix[2][2] = 1;
+    matrix[0].matrix[0][0] = matrix[0].matrix[1][1] = matrix[0].matrix[2][2] = 1;
+    matrix[1].matrix[0][0] = matrix[1].matrix[1][1] = matrix[1].matrix[2][2] = 1;
 }
 
 matrix3_t     matrix_rotation_y(double angle) {
@@ -39,4 +39,14 @@ void        matrix_multi_by_matrix(matrix3_t *first, const matrix3_t second) {
                         first->rows[i].components[2] * second.matrix[2][j];
         }
     }
+}
+
+matrix3_t           matrix_inverse_scale(const matrix3_t *src) {
+    matrix3_t       inversed = { .matrix =
+        {
+            1.0 / src->matrix_flat[0], 0, 0,
+            0, 1.0 / src->matrix_flat[4], 0,
+            0, 0, 1.0 / src->matrix_flat[8],
+        }};
+    return inversed;
 }

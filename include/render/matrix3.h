@@ -18,6 +18,8 @@ matrix3_t        matrix_scale(vec3_t scale_v);
 
 void             matrix_multi_by_matrix(matrix3_t *a, const matrix3_t b);
 
-vec3_t                  vec3_multi_by_matrix(const vec3_t *a, const matrix3_t *matrix);
+vec3_t              vec3_multi_by_matrix(const vec3_t *a, const matrix3_t *matrix);
+
+matrix3_t           matrix_inverse_scale(const matrix3_t *src);
 
 #endif
