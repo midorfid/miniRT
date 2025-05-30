@@ -24,6 +24,7 @@ set (SRCS
     src/textures/perlin.c
     src/render/quad.c
     src/render/box.c
+    src/render/matrix3.c
     src/render/instance.c )
 
 set (EXEC_NAME miniRT)
