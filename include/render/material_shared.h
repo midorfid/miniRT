@@ -13,6 +13,7 @@ typedef enum material_type_e
     MATERIAL_TYPE_METAL = 2,
     MATERIAL_TYPE_DIELECTRIC = 3,
     MATERIAL_TYPE_DIFFUSE_LIGHT = 4,
+    MATERIAL_TYPE_ISOTROPIC = 5,
 } material_type_t;
 
 

@@ -16,6 +16,7 @@ typedef enum hittable_type_e
     HITTABLE_TYPE_QUAD = 3,
     HITTABLE_TYPE_BOX = 4,
     HITTABLE_TYPE_INSTANCE = 5,
+    HITTABLE_TYPE_CONST_MEDIUM = 6,
 } hittable_type_t;
 
 
