@@ -18,7 +18,7 @@
 #include "../include/render/render_plane.h"
 #include "../include/render/bvh.h"
 #include <time.h>
-
+#include "../include/render/box.h"
 
 #define SCREEN_WIDTH 1000
 #define SCREEN_HEIGHT 1000
@@ -31,9 +31,12 @@ color_t     ray_color(const ray_t *r, const hittable_list_t *world, int depth) {
     if (hittable_list_hit_test(r, world, 0.001, INFINITY, &rec)) {
         ray_t       scattered;
         color_t     attenuation;
-        if (material_scatter(rec.mat, r, &rec, &attenuation, &scattered))
-            return (vec3_multi(ray_color(&scattered, world, depth-1), attenuation));
-        return (color_in(0.0, 0.0, 0.0));
+        color_t     color_from_emmision = material_emmit(rec.mat, rec.u, rec.v, &rec.p);
+        if (material_scatter(rec.mat, r, &rec, &attenuation, &scattered)) {
+            color_t color_from_scatter = vec3_multi(ray_color(&scattered, world, depth-1), attenuation); 
+            return vec3_sum(color_from_emmision, color_from_scatter);
+        }
+        return (color_from_emmision);
     }
     vec3_t  unit_direction = vec3_normalize(r->dir);
     double  a = 0.5 * (unit_direction.y + 1.0);
@@ -69,6 +72,7 @@ int main(void) {
     point3_t            lookfrom = point3(13,2,3);
     point3_t            lookat = point3(0,0,0);
     vec3_t              vup = vec3(0,1,0);
+    // color_t             background = color_in(0.70, 0.80, 1.00); // TODO
 
     point3_t            camera_center = lookfrom;
 
@@ -170,26 +174,6 @@ int main(void) {
 
     hittable_list_t *result = hittable_list_innit(1);
     hittable_list_add(result, bvh_node_new(world, 0.0, 1.0));
-    // TOuching spheres
-    // double R = cos(PI/4);
-
-    // material_t  *material_left = mt_lambertian_new(color_in(0,0,1));
-    // material_t  *material_right = mt_lambertian_new(color_in(1,0,0));
-
-    // hittable_list_add(world, sphere_new(vec3(-R,0,-1.0), R, material_left));
-    // hittable_list_add(world, sphere_new(vec3(R,0,-1.0), R, material_right));
-
-    // material_t  *material_ground = mt_lambertian_new(color_in(0.8, 0.8, 0.0));
-    // material_t  *material_center = mt_lambertian_new(color_in(0.1, 0.2, 0.5));
-    // material_t  *material_left = mt_dielectric_new(1.50);
-    // material_t  *material_bubble = mt_dielectric_new(1.00 / 1.50);
-    // material_t  *material_right = mt_metal_new(color_in(0.8, 0.6, 0.2), 1.0);
-
-    // hittable_list_add(world, sphere_new(vec3(0.0,-100.5,-1.0), 100.0, material_ground));
-    // hittable_list_add(world, sphere_new(vec3(0.0,0.0,-1.2), 0.5, material_center));
-    // hittable_list_add(world, sphere_new(vec3(-1.0,0.0,-1.0), 0.5, material_left));
-    // hittable_list_add(world, sphere_new(vec3(-1.0,0.0,-1.0), 0.4, material_bubble));
-    // hittable_list_add(world, sphere_new(vec3(1.0,0.0,-1.0), 0.5, material_right));
 
     // Render
 

@@ -63,3 +63,10 @@ size_t              hittable_list_getsize(const hittable_list_t *list) {
     }
     return list->size;
 }
+
+void                delete_hittable_list(hittable_list_t *list) {
+    for (int i = 0; i < list->size; ++i) {
+        hittable_delete(list->hittables[i]);
+    }
+    list->size = 0;
+}

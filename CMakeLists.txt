@@ -22,7 +22,12 @@ set (SRCS
     src/textures/checker_pattern.c
     src/textures/solid_colour.c
     src/textures/perlin.c
-    src/render/quad.c )
+    src/render/quad.c
+    src/render/box.c
+    src/render/matrix3.c
+    src/render/instance.c
+    src/render/constant_medium.c
+    src/render/material_isotropic.c )
 
 set (EXEC_NAME miniRT)
 

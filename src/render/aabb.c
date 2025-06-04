@@ -36,3 +36,12 @@ aabb_t      aabb_surrounding_bbox(aabb_t a, aabb_t b) {
                     }};
     return result;
 }
+
+aabb_t      aabb_two_points(point3_t a, point3_t b) {
+    aabb_t  result = 
+    {
+        .min = a,
+        .max = b,
+    };
+    return result;
+}
