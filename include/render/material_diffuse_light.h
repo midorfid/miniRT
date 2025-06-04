@@ -2,7 +2,7 @@
 #define MATERIAL_DIFFUSE_LIGHT_H
 
 #include "material_shared.h"
-#include "texture_shared.h"
+#include "../textures/texture_shared.h"
 #include "hittable_shared.h"
 #include "../textures/solid_colour.h"
 

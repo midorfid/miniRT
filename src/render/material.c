@@ -58,3 +58,12 @@ color_t     material_emmit(const material_t *material, double u, double v, const
     
     return material->emmit(material, u, v, point);
 }
+
+material_t      *material_claim(material_t *material) {
+    if (material == NULL) {
+        printf("material_claim() failed");
+        return NULL;
+    }
+    material->refcount++;
+    return material;
+}
