@@ -7,34 +7,36 @@ bool        const_medium_hit(const hittable_t *hittable, const ray_t *ray, doubl
     }
     const_medium_t *medium = (const_medium_t *)hittable;
     hit_record_t    fog_start, fog_end;
+    for (double tsearch_min = tmin; tsearch_min < tmax; tsearch_min = fog_end.t + 0.0001) {
+        if (!hittable_t_hit(medium->boundary, ray, -INFINITY, INFINITY, &fog_start))
+            return false;
+        if (!hittable_t_hit(medium->boundary, ray, fog_start.t + 0.0001, INFINITY, &fog_end))
+            return false;
+        if (fog_start.t < tsearch_min)
+            fog_start.t = tsearch_min;
+        if (fog_end.t > tmax)
+            fog_end.t = tmax;
+        if (fog_start.t >= fog_end.t)
+            continue;
+        if (fog_start.t < 0)
+            fog_start.t = 0;
 
-    if (!hittable_t_hit(medium->boundary, ray, -INFINITY, INFINITY, &fog_start))
-        return false;
-    if (!hittable_t_hit(medium->boundary, ray, fog_start.t + 0.0001, INFINITY, &fog_end))
-        return false;
-    if (fog_start.t < tmin)
-        fog_start.t = tmin;
-    if (fog_end.t > tmax)
-        fog_end.t = tmax;
-    if (fog_start.t >= fog_end.t)
-        return false;
-    if (fog_start.t < 0)
-        fog_start.t = 0;
+        double ray_len = vec3_len(ray->dir);
+        double dist_inside_boundary = (fog_end.t - fog_start.t) * ray_len;
+        double hit_dist = medium->inv_neg_density * log(random_double_nolimits());
+        
+        if (hit_dist <= dist_inside_boundary) {
+            rec->t = fog_start.t + hit_dist / ray_len;
+            rec->p = ray_at(ray->orig, ray->dir, rec->t);
+            
+            rec->normal = vec3(1, 0, 0);
+            rec->front_face = true;
+            rec->mat = medium->phase_function;
 
-    double ray_len = vec3_len(ray->dir);
-    double dist_inside_boundary = (fog_end.t - fog_start.t) * ray_len;
-    double hit_dist = medium->inv_neg_density * log(random_double_nolimits());
-    
-    if (hit_dist > dist_inside_boundary)
-        return false;
-    rec->t = fog_start.t + hit_dist / ray_len;
-    rec->p = ray_at(ray->orig, ray->dir, rec->t);
-    
-    rec->normal = vec3(1, 0, 0);
-    rec->front_face = true;
-    rec->mat = medium->phase_function;
-
-    return true;
+            return true;
+        }
+    }
+    return false;
 }
 
 void        const_medium_delete(hittable_t *hittable) {
