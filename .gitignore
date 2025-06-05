@@ -1,0 +1,4 @@
+.vscode/
+build/
+lib/Libft/CMakeFiles/
+lib/get_next_line/CMakeLists.txt

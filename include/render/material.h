@@ -9,4 +9,6 @@ color_t     material_emmit(const material_t *material, double u, double v, const
 
 void    material_delete(material_t *material);
 
+material_t      *material_claim(material_t *material);
+
 #endif

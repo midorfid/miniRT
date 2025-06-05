@@ -5,26 +5,32 @@
 #include "ray.h"
 #include "material_shared.h"
 #include "material.h"
+#include "../textures/texture_shared.h"
+#include "../textures/solid_colour.h"
 
 typedef struct lambertian_s
 {
     material_t  base;
     
-    color_t     albedo;
+    texture_t   *texture;
 } lambertian_t;
 
 static bool     mt_lambertian_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered);
 
 static void     mt_lambertian_delete(material_t *material);
 
-material_t      *mt_lambertian_new(color_t albedo) {
+material_t      *mt_lambertian_new_with_tex(texture_t *tex) {
     lambertian_t    *material = calloc(1, sizeof(lambertian_t));
     if (material == NULL)
         return (NULL);
-    material->albedo = albedo;
+    material->texture = tex;
     material_base_innit(&material->base, MATERIAL_TYPE_DIFFUSE_LAMBERTIAN, mt_lambertian_scatter, NULL, mt_lambertian_delete);
 
     return (material_t *)material;
+}
+
+material_t      *mt_lambertian_new_with_colour(color_t colour) {
+    return mt_lambertian_new_with_tex(solid_colour_new_with_components(colour.x, colour.y, colour.z));
 }
 
 static bool     mt_lambertian_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered) {
@@ -36,7 +42,7 @@ static bool     mt_lambertian_scatter(const material_t *material, const ray_t *r
     if (vec3_near_zero(&scatter_dir))
         scatter_dir = rec->normal;
     *scattered = ray(rec->p, scatter_dir, ray_in->time);
-    *attenuation = diffuse->albedo;
+    *attenuation = texture_t_get_value(diffuse->texture, rec->u, rec->v, &rec->p);
 
     return (true);
 }
@@ -49,6 +55,7 @@ static void     mt_lambertian_delete(material_t *material) {
         return ;
     }
     lambertian_t    *diffuse = (lambertian_t *)material;
+    texture_t_delete(diffuse->texture);
     free(diffuse);
 }
 
