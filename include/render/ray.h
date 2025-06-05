@@ -2,7 +2,8 @@
 #define RAY_H
 
 #include "vec3.h"
-#include "../render_context.h"
+#include "../render_plane.h"
+#include "../lens.h"
 
 typedef struct ray_s {
     point3_t      orig;

@@ -33,8 +33,8 @@ render_context_t        *render_context_new(mlx_t *mlx, mlx_image_t *mlx_img) {
 static void        image_settings_init(image_t *image) {
     image->aspect_ratio = 16.0 / 9.0;
     image->image_width = 400;
-    image->image_height = (int)(image_width/aspect_ratio);
-    image->image_height = (image_height < 1) ? 1 : image_height;
+    image->image_height = (int)(image->image_width / image->aspect_ratio);
+    image->image_height = (image->image_height < 1) ? 1 : image->image_height;
 
 }
 
@@ -43,7 +43,7 @@ static void        lens_init(defocus_blur_t *lens, vec3_t u, vec3_t v) {
     lens->focus_dist = 10.0; // Distance from camera lookfrom point to plane of perfect focus
 
     // Calculate camera defocus disk basis vectors
-    double      defocus_radius = focus_dist * tan(DEG_TO_RAD(lens->defocus_angle / 2));
+    double      defocus_radius = lens->focus_dist * tan(DEG_TO_RAD(lens->defocus_angle / 2));
     lens->defocus_disk_u = vec3_scaled_return(u, defocus_radius); // defocus disk horizontal radius
     lens->defocus_disk_v = vec3_scaled_return(v, defocus_radius); // defocus disk vertical radius
 }
@@ -53,7 +53,7 @@ static void        camera_settings_init(camera_t *camera) {
     camera->pixel_sample_scale = 1.0 / camera->samples_per_pixel; 
     camera->max_depth = 50;
     camera->lookfrom = point3(13,2,3);
-    camera->at = point3(0,0,0);
+    camera->lookat = point3(0,0,0);
     camera->vup = vec3(0,1,0);
     // color_t             background = color_in(0.70, 0.80, 1.00); // TODO
 
@@ -71,7 +71,7 @@ static void        viewpoint_init(viewpoint_t *view_p, double focus_dist, double
     view_p->vfov = 20;
     view_p->theta = DEG_TO_RAD(view_p->vfov);
     view_p->h = tan(view_p->theta/2);
-    view_p->viewport_height = 2 * h * focus_dist;
+    view_p->viewport_height = 2 * view_p->h * focus_dist;
     view_p->viewport_width = view_p->viewport_height * width_to_height_ratio;
 
     // Vectors across horizontal and down the vertical viewport edges
@@ -99,11 +99,11 @@ static void        render_context_init(render_context_t *render)
     camera_settings_init(&render->camera);
     
     double image_w_h_ratio = (double)(render->image.image_width / render->image.image_height);
-    viewpoint_init(&render->pov, render->camera.lens.focus_dist, image_w_h_ratio, render->camera.u, vec3_negative(render->camera.v));
+    viewpoint_init(&render->pov, render->camera.lens.focus_dist, image_w_h_ratio, render->camera.u, vec3_negative(&render->camera.v));
 
     vec3_t      viewport_upper_left_pixel = 
         vec3_sub_return(vec3_sub_return(
             vec3_sub_return(render->camera.camera_center, vec3_scaled_return(render->camera.w, render->camera.lens.focus_dist)), 
             vec3_scaled_return(render->pov.viewport_u, 0.5)), vec3_scaled_return(render->pov.viewport_v, 0.5));
-    render_plane_init(&render->render_p, viewport_upper_left_pixel);
+    render_plane_init(&render->render_p, viewport_upper_left_pixel, &render->image, render->pov.viewport_u, render->pov.viewport_v);
 }

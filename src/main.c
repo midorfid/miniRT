@@ -8,9 +8,9 @@ void    render_pixel_row_hook(void *param) {
     
     for (render->current_j = 0; render->current_j < render->image.image_width; render->current_j++) {
         vec3_t color = vec3(0.0, 0.0, 0.0);
-        for (int sample = 0;sample < render->.camera.samples_per_pixel;++sample) {
+        for (int sample = 0;sample < render->camera.samples_per_pixel;++sample) {
             ray_t r = get_ray(render->current_i, render->current_j, &render->render_p, render->camera.camera_center, &render->camera.lens); 
-            color = vec3_sum(color, ray_color(&r, world, render->camera.max_depth));
+            color = vec3_sum(color, ray_color(&r, render->world, render->camera.max_depth));
         }
         color = vec3_scaled_return(color, render->camera.pixel_sample_scale);
         mlx_put_pixel(render->mlx_image, render->current_j, render->current_i, return_color(color));
@@ -59,7 +59,7 @@ int main(void) {
             render->camera.samples_per_pixel = 200;
             render->camera.max_depth         = 50;
 
-            render->camera.vfov     = 40;
+            render->pov.vfov        = 40;
             render->camera.lookfrom = point3(278, 278, -800);
             render->camera.lookat   = point3(278, 278, 0);
             render->camera.vup      = vec3(0,1,0);
@@ -74,7 +74,7 @@ int main(void) {
             render->camera.samples_per_pixel = 200;
             render->camera.max_depth         = 50;
 
-            render->camera.vfov     = 40;
+            render->pov.vfov        = 40;
             render->camera.lookfrom = point3(278, 278, -800);
             render->camera.lookat   = point3(278, 278, 0);
             render->camera.vup      = vec3(0,1,0);
@@ -93,7 +93,7 @@ int main(void) {
             render->camera.samples_per_pixel = 100;
             render->camera.max_depth         = 50;
 
-            render->camera.vfov     = 80;
+            render->pov.vfov        = 80;
             render->camera.lookfrom = point3(0,0,9);
             render->camera.lookat   = point3(0,0,0);
             render->camera.vup      = vec3(0,1,0);
@@ -108,7 +108,7 @@ int main(void) {
             render->camera.samples_per_pixel = 100;
             render->camera.max_depth         = 50;
 
-            render->camera.vfov     = 20;
+            render->pov.vfov        = 20;
             render->camera.lookfrom = point3(13,2,3);
             render->camera.lookat   = point3(0,0,0);
             render->camera.vup      = vec3(0,1,0);
@@ -123,7 +123,7 @@ int main(void) {
             render->camera.samples_per_pixel = 100;
             render->camera.max_depth         = 50;
 
-            render->camera.vfov     = 20;
+            render->pov.vfov        = 20;
             render->camera.lookfrom = point3(13,2,3);
             render->camera.lookat   = point3(0,0,0);
             render->camera.vup      = vec3(0,1,0);
@@ -138,7 +138,7 @@ int main(void) {
             render->camera.samples_per_pixel = 200;
             render->camera.max_depth         = 50;
 
-            render->camera.vfov     = 40;
+            render->pov.vfov        = 40;
             render->camera.lookfrom = point3(278, 278, -800);
             render->camera.lookat   = point3(278, 278, 0);
             render->camera.vup      = vec3(0,1,0);
@@ -158,7 +158,7 @@ int main(void) {
             render->camera.lookat   = point3(0,2,0);
             render->camera.vup      = vec3(0,1,0);
 
-            render->camera.defocus_angle = 0;
+            render->camera.lens.defocus_angle = 0;
             render->world = simple_light();
             break;
         
@@ -181,7 +181,7 @@ int main(void) {
             render->image.aspect_ratio      = 1.0;
 
             render->pov.vfov     = 40;
-            render->camera.lookform = point3(478, 278, -600);
+            render->camera.lookfrom = point3(478, 278, -600);
             render->camera.lookat   = point3(278, 278, 0);
             render->camera.vup      = vec3(0,1,0);
 
@@ -193,7 +193,7 @@ int main(void) {
             // TODO print to log
             return EXIT_FAILURE;
     }
-    final_scene
+
     // Render
     mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "miniRT", true);
     if (!mlx) {

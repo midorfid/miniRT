@@ -11,14 +11,14 @@ hittable_list_t     *earth() {
 hittable_list_t         *quads() {
     // hittable_list world;
 // 
-    Materials
+    // Materials
     // auto left_red     = make_shared<lambertian>(color(1.0, 0.2, 0.2));
     // auto back_green   = make_shared<lambertian>(color(0.2, 1.0, 0.2));
     // auto right_blue   = make_shared<lambertian>(color(0.2, 0.2, 1.0));
     // auto upper_orange = make_shared<lambertian>(color(1.0, 0.5, 0.0));
     // auto lower_teal   = make_shared<lambertian>(color(0.2, 0.8, 0.8));
 // 
-    Quads
+    // Quads
     // world.add(make_shared<quad>(point3(-3,-2, 5), vec3(0, 0,-4), vec3(0, 4, 0), left_red));
     // world.add(make_shared<quad>(point3(-2,-2, 0), vec3(4, 0, 0), vec3(0, 4, 0), back_green));
     // world.add(make_shared<quad>(point3( 3,-2, 1), vec3(0, 0, 4), vec3(0, 4, 0), right_blue));
@@ -176,7 +176,7 @@ hittable_list_t         *cornell_box_standard() {
     // box2 = make_shared<rotate_y>(box2, -18);
     // box2 = make_shared<translate>(box2, vec3(130,0,65));
     // world.add(box2);
-    return NULL
+    return NULL;
 }
 
 hittable_list_t     *checkered_spheres() {
