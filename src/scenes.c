@@ -1,0 +1,270 @@
+#include "../include/render/hittable_list.h"
+#include "../include/scenes.h"
+
+hittable_list_t     *earth() {
+    // auto earth_texture = make_shared<image_texture>("earthmap.jpg");
+    // auto earth_surface = make_shared<lambertian>(earth_texture);
+    // auto globe = make_shared<sphere>(point3(0,0,0), 2, earth_surface);
+    return NULL;
+}
+
+hittable_list_t         *quads() {
+    // hittable_list world;
+// 
+    Materials
+    // auto left_red     = make_shared<lambertian>(color(1.0, 0.2, 0.2));
+    // auto back_green   = make_shared<lambertian>(color(0.2, 1.0, 0.2));
+    // auto right_blue   = make_shared<lambertian>(color(0.2, 0.2, 1.0));
+    // auto upper_orange = make_shared<lambertian>(color(1.0, 0.5, 0.0));
+    // auto lower_teal   = make_shared<lambertian>(color(0.2, 0.8, 0.8));
+// 
+    Quads
+    // world.add(make_shared<quad>(point3(-3,-2, 5), vec3(0, 0,-4), vec3(0, 4, 0), left_red));
+    // world.add(make_shared<quad>(point3(-2,-2, 0), vec3(4, 0, 0), vec3(0, 4, 0), back_green));
+    // world.add(make_shared<quad>(point3( 3,-2, 1), vec3(0, 0, 4), vec3(0, 4, 0), right_blue));
+    // world.add(make_shared<quad>(point3(-2, 3, 1), vec3(4, 0, 0), vec3(0, 0, 4), upper_orange));
+    // world.add(make_shared<quad>(point3(-2,-3, 5), vec3(4, 0, 0), vec3(0, 0,-4), lower_teal));
+
+    return NULL;
+}
+
+hittable_list_t     *cornell_smoke() {
+    // hittable_list world;
+// 
+    // auto red   = make_shared<lambertian>(color(.65, .05, .05));
+    // auto white = make_shared<lambertian>(color(.73, .73, .73));
+    // auto green = make_shared<lambertian>(color(.12, .45, .15));
+    // auto light = make_shared<diffuse_light>(color(7, 7, 7));
+// 
+    // world.add(make_shared<quad>(point3(555,0,0), vec3(0,555,0), vec3(0,0,555), green));
+    // world.add(make_shared<quad>(point3(0,0,0), vec3(0,555,0), vec3(0,0,555), red));
+    // world.add(make_shared<quad>(point3(113,554,127), vec3(330,0,0), vec3(0,0,305), light));
+    // world.add(make_shared<quad>(point3(0,555,0), vec3(555,0,0), vec3(0,0,555), white));
+    // world.add(make_shared<quad>(point3(0,0,0), vec3(555,0,0), vec3(0,0,555), white));
+    // world.add(make_shared<quad>(point3(0,0,555), vec3(555,0,0), vec3(0,555,0), white));
+// 
+    // shared_ptr<hittable> box1 = box(point3(0,0,0), point3(165,330,165), white);
+    // box1 = make_shared<rotate_y>(box1, 15);
+    // box1 = make_shared<translate>(box1, vec3(265,0,295));
+// 
+    // shared_ptr<hittable> box2 = box(point3(0,0,0), point3(165,165,165), white);
+    // box2 = make_shared<rotate_y>(box2, -18);
+    // box2 = make_shared<translate>(box2, vec3(130,0,65));
+// 
+    // world.add(make_shared<constant_medium>(box1, 0.01, color(0,0,0)));
+    // world.add(make_shared<constant_medium>(box2, 0.01, color(1,1,1)));
+
+    return NULL;
+}
+
+// 800 10000 40 or 400 250 4
+hittable_list_t     *final_scene(int image_width, int samples_per_pixel, int max_depth) {
+    // hittable_list boxes1;
+    // auto ground = make_shared<lambertian>(color(0.48, 0.83, 0.53));
+// 
+    // int boxes_per_side = 20;
+    // for (int i = 0; i < boxes_per_side; i++) {
+        // for (int j = 0; j < boxes_per_side; j++) {
+            // auto w = 100.0;
+            // auto x0 = -1000.0 + i*w;
+            // auto z0 = -1000.0 + j*w;
+            // auto y0 = 0.0;
+            // auto x1 = x0 + w;
+            // auto y1 = random_double(1,101);
+            // auto z1 = z0 + w;
+// 
+            // boxes1.add(box(point3(x0,y0,z0), point3(x1,y1,z1), ground));
+        // }
+    // }
+
+    // hittable_list world;
+// 
+    // world.add(make_shared<bvh_node>(boxes1));
+// 
+    // auto light = make_shared<diffuse_light>(color(7, 7, 7));
+    // world.add(make_shared<quad>(point3(123,554,147), vec3(300,0,0), vec3(0,0,265), light));
+// 
+    // auto center1 = point3(400, 400, 200);
+    // auto center2 = center1 + vec3(30,0,0);
+    // auto sphere_material = make_shared<lambertian>(color(0.7, 0.3, 0.1));
+    // world.add(make_shared<sphere>(center1, center2, 50, sphere_material));
+// 
+    // world.add(make_shared<sphere>(point3(260, 150, 45), 50, make_shared<dielectric>(1.5)));
+    // world.add(make_shared<sphere>(
+        // point3(0, 150, 145), 50, make_shared<metal>(color(0.8, 0.8, 0.9), 1.0)
+    // ));
+// 
+    // auto boundary = make_shared<sphere>(point3(360,150,145), 70, make_shared<dielectric>(1.5));
+    // world.add(boundary);
+    // world.add(make_shared<constant_medium>(boundary, 0.2, color(0.2, 0.4, 0.9)));
+    // boundary = make_shared<sphere>(point3(0,0,0), 5000, make_shared<dielectric>(1.5));
+    // world.add(make_shared<constant_medium>(boundary, .0001, color(1,1,1)));
+// 
+    // auto emat = make_shared<lambertian>(make_shared<image_texture>("earthmap.jpg"));
+    // world.add(make_shared<sphere>(point3(400,200,400), 100, emat));
+    // auto pertext = make_shared<noise_texture>(0.2);
+    // world.add(make_shared<sphere>(point3(220,280,300), 80, make_shared<lambertian>(pertext)));
+// 
+    // hittable_list boxes2;
+    // auto white = make_shared<lambertian>(color(.73, .73, .73));
+    // int ns = 1000;
+    // for (int j = 0; j < ns; j++) {
+        // boxes2.add(make_shared<sphere>(point3::random(0,165), 10, white));
+    // }
+// 
+    // world.add(make_shared<translate>(
+        // make_shared<rotate_y>(
+            // make_shared<bvh_node>(boxes2), 15),
+            // vec3(-100,270,395)
+        // )
+    // );
+
+    return NULL;
+}
+
+// world.add(make_shared<sphere>(point3(0,7,0), 2, difflight));
+hittable_list_t     *simple_light() {
+    // hittable_list world;
+// 
+    // auto pertext = make_shared<noise_texture>(4);
+    // world.add(make_shared<sphere>(point3(0,-1000,0), 1000, make_shared<lambertian>(pertext)));
+    // world.add(make_shared<sphere>(point3(0,2,0), 2, make_shared<lambertian>(pertext)));
+// 
+    // auto difflight = make_shared<diffuse_light>(color(4,4,4));
+    // world.add(make_shared<quad>(point3(3,1,-2), vec3(2,0,0), vec3(0,2,0), difflight));
+
+    return NULL;
+}
+
+hittable_list_t     *perlin_spheres() {
+    // hittable_list world;
+// 
+    // auto pertext = make_shared<noise_texture>();
+    // world.add(make_shared<sphere>(point3(0,-1000,0), 1000, make_shared<lambertian>(pertext)));
+    // world.add(make_shared<sphere>(point3(0,2,0), 2, make_shared<lambertian>(pertext)));
+
+    return NULL;
+}
+
+hittable_list_t     *cornell_box_empty() {
+    // hittable_list world;
+// 
+    // auto red   = make_shared<lambertian>(color(.65, .05, .05));
+    // auto white = make_shared<lambertian>(color(.73, .73, .73));
+    // auto green = make_shared<lambertian>(color(.12, .45, .15));
+    // auto light = make_shared<diffuse_light>(color(15, 15, 15));
+// 
+    // world.add(make_shared<quad>(point3(555,0,0), vec3(0,555,0), vec3(0,0,555), green));
+    // world.add(make_shared<quad>(point3(0,0,0), vec3(0,555,0), vec3(0,0,555), red));
+    // world.add(make_shared<quad>(point3(343, 554, 332), vec3(-130,0,0), vec3(0,0,-105), light));
+    // world.add(make_shared<quad>(point3(0,0,0), vec3(555,0,0), vec3(0,0,555), white));
+    // world.add(make_shared<quad>(point3(555,555,555), vec3(-555,0,0), vec3(0,0,-555), white));
+    // world.add(make_shared<quad>(point3(0,0,555), vec3(555,0,0), vec3(0,555,0), white));
+
+    return NULL;
+}
+
+hittable_list_t         *cornell_box_standard() {
+    // world.add(make_shared<quad>(point3(0,0,555), vec3(555,0,0), vec3(0,555,0), white));
+// 
+    // shared_ptr<hittable> box1 = box(point3(0,0,0), point3(165,330,165), white);
+    // box1 = make_shared<rotate_y>(box1, 15);
+    // box1 = make_shared<translate>(box1, vec3(265,0,295));
+    // world.add(box1);
+// 
+    // shared_ptr<hittable> box2 = box(point3(0,0,0), point3(165,165,165), white);
+    // box2 = make_shared<rotate_y>(box2, -18);
+    // box2 = make_shared<translate>(box2, vec3(130,0,65));
+    // world.add(box2);
+    return NULL
+}
+
+hittable_list_t     *checkered_spheres() {
+    // hittable_list world;
+// 
+    // auto checker = make_shared<checker_texture>(0.32, color(.2, .3, .1), color(.9, .9, .9));
+// 
+    // world.add(make_shared<sphere>(point3(0,-10, 0), 10, make_shared<lambertian>(checker)));
+    // world.add(make_shared<sphere>(point3(0, 10, 0), 10, make_shared<lambertian>(checker)));
+
+    return NULL;
+}
+
+hittable_list_t         *touching_spheres() {
+    // double R = cos(PI/4);
+// 
+    // material_t  *material_left = mt_lambertian_new(color_in(0,0,1));
+    // material_t  *material_right = mt_lambertian_new(color_in(1,0,0));
+// 
+    // hittable_list_add(world, sphere_new(vec3(-R,0,-1.0), R, material_left));
+    // hittable_list_add(world, sphere_new(vec3(R,0,-1.0), R, material_right));
+// 
+    // material_t  *material_ground = mt_lambertian_new(color_in(0.8, 0.8, 0.0));
+    // material_t  *material_center = mt_lambertian_new(color_in(0.1, 0.2, 0.5));
+    // material_t  *material_left = mt_dielectric_new(1.50);
+    // material_t  *material_bubble = mt_dielectric_new(1.00 / 1.50);
+    // material_t  *material_right = mt_metal_new(color_in(0.8, 0.6, 0.2), 1.0);
+// 
+    // hittable_list_add(world, sphere_new(vec3(0.0,-100.5,-1.0), 100.0, material_ground));
+    // hittable_list_add(world, sphere_new(vec3(0.0,0.0,-1.2), 0.5, material_center));
+    // hittable_list_add(world, sphere_new(vec3(-1.0,0.0,-1.0), 0.5, material_left));
+    // hittable_list_add(world, sphere_new(vec3(-1.0,0.0,-1.0), 0.4, material_bubble));
+    // hittable_list_add(world, sphere_new(vec3(1.0,0.0,-1.0), 0.5, material_right));
+    return NULL;
+}
+
+hittable_list_t     *bouncing_spheres() {
+    // hittable_list_t     *world = hittable_list_innit(500);
+// 
+    // material_t  *material_ground = mt_lambertian_new(color_in(0.5, 0.5, 0.5));
+    // hittable_list_add(world, sphere_new(vec3(0.0,-1000.0, 0.0), 1000.0, material_ground));
+// 
+    // for (int a = -11; a < 11; ++a) {
+        // for (int b = -11; b < 11; ++b) {
+            // double choose_mat = random_double_nolimits();
+            // point3_t center = point3(a + 0.9 * random_double_nolimits(), 0.2, b + 0.9 * random_double_nolimits());
+// 
+            // if (vec3_len(vec3_sub_return(center, point3(4, 0.2, 0))) > 0.9) {
+                // material_t *material = NULL;
+                // hittable_t *object_to_add = NULL;
+                // if (choose_mat < 0.8) {
+                    // diffuse
+                    // color_t albedo = vec3_multi(vec3_random(), vec3_random());
+                    // material = mt_lambertian_new(albedo);
+                    // point3_t center2 = (vec3_sum(center, vec3(0, random_double(0,.5), 0)));
+// 
+                    // object_to_add = mv_sphere_new(center, center2, 0, 1, 0.2, material);
+                // }
+                // else if (choose_mat < 0.95) {
+                    // metal
+                    // color_t albedo2 = vec3_random_limits(0.5, 1);
+                    // double fuzz = random_double(0, 0.5);
+                    // material = mt_metal_new(albedo2, fuzz);
+// 
+                    // object_to_add = sphere_new(center, 0.2, material);
+                // }
+                // else {
+                    // glass
+                    // material = mt_dielectric_new(1.5);
+// 
+                    // object_to_add = sphere_new(center, 0.2, material);
+                // }
+                // if (object_to_add != NULL)
+                    // hittable_list_add(world, object_to_add);
+            // }
+        // }
+    // }
+// 
+    // material_t *material1 = mt_dielectric_new(1.5);
+    // hittable_list_add(world, sphere_new(point3(0,1,0), 1.0, material1));
+// 
+    // material_t *material2 = mt_lambertian_new(color_in(0.4, 0.2, 0.1));
+    // hittable_list_add(world, sphere_new(point3(-4,1,0), 1.0, material2));
+// 
+    // material_t *material3 = mt_metal_new(color_in(0.7,0.6,0.5), 0.0);
+    // hittable_list_add(world, sphere_new(point3(4,1,0), 1.0, material3));
+// 
+    // hittable_list_t *result = hittable_list_innit(1);
+    // hittable_list_add(result, bvh_node_new(world, 0.0, 1.0));
+    return NULL;
+}

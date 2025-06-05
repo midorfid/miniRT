@@ -28,7 +28,8 @@ set (SRCS
     src/render/instance.c
     src/render/constant_medium.c
     src/render/material_isotropic.c
-    src/render_context.c )
+    src/render_context.c
+    src/scenes.c )
 
 set (EXEC_NAME miniRT)
 

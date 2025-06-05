@@ -14,18 +14,17 @@
 #include "../include/render/material_metal.h"
 #include "../include/render/material_lambertian.h"
 #include "../include/render/material_dielectric.h"
-#include "../include/camera/defocus_blur.h"
-#include "../include/render/render_plane.h"
 #include "../include/render/bvh.h"
 #include <time.h>
 #include "../include/render/box.h"
-
+#include "../include/scenes.h"
 
 
 typedef enum scene_id_s {
     SCENE_NONE = -1,
     SCENE_BOUNCING_SPHERES,
-    SCENE_CORNELL_BOX,
+    SCENE_CORNELL_BOX_EMPTY,
+    SCENE_CORNELL_BOX_STANDARD,
     SCENE_TOUCHING_SPHERES,
     SCENE_QUAD,
     SCENE_TWO_CHECKERED_SPHERES,
