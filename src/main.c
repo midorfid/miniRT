@@ -1,27 +1,29 @@
 #include "../include/render_context.h"
+#include <pthread.h>
 
 #define SCREEN_WIDTH 1000
 #define SCREEN_HEIGHT 1000
 
-void    render_pixel_row_hook(void *param) {
-    render_context_t *render = (render_context_t *)param;
+void    *render_pixel_chunk(void *param) {
+    thread_data_t   *data = (thread_data_t *)param;
+    render_context_t *render = data->context;
     
-    for (render->current_j = 0; render->current_j < render->image.image_width; render->current_j++) {
-        vec3_t color = vec3(0.0, 0.0, 0.0);
-        for (int sample = 0;sample < render->camera.samples_per_pixel;++sample) {
-            ray_t r = get_ray(render->current_i, render->current_j, &render->render_p, render->camera.camera_center, &render->camera.lens); 
-            color = vec3_sum(color, ray_color(&r, render->world, render->camera.max_depth));
+    for(;data->start_row < data->end_row; data->start_row++) {
+        for (int j = 0; j < render->image.image_width; ++j) {
+            vec3_t color = vec3(0.0, 0.0, 0.0);
+            for (int sample = 0;sample < render->camera.samples_per_pixel;++sample) {
+                ray_t r = get_ray(data->start_row, j, &render->render_p, render->camera.camera_center, &render->camera.lens); 
+                color = vec3_sum(color, ray_color(&r, render->world, render->camera.max_depth));
+            }
+            color = vec3_scaled_return(color, render->camera.pixel_sample_scale);
+            mlx_put_pixel(render->mlx_image, j, data->start_row, return_color(color));
         }
-        color = vec3_scaled_return(color, render->camera.pixel_sample_scale);
-        mlx_put_pixel(render->mlx_image, render->current_j, render->current_i, return_color(color));
     }
-    if (render->current_i >= render->image.image_height) {
-        render->render_complete = true;
-        printf("rendering complete");
-    }
-    render->current_i++;
-    printf("rendered a row");
-
+    // if (data->start_row >= render->image.image_height) {
+        // render->render_complete = true;
+        // printf("rendering complete");
+    // }
+    return NULL;
 }
 
 int main(void) {
@@ -208,8 +210,33 @@ int main(void) {
             // TODO print to log
             return EXIT_FAILURE;
     }
+
+    // init threads
+    
+    int             num_threads = 8;
+    
+    pthread_t       thread_ids[num_threads];
+    thread_data_t   thread_data[num_threads];
+    
+    int rows_per_thread = render->image.image_height / num_threads;
+    
+    clock_t start = clock();
+    printf("Rendering...\n");
+    for (int i = 0; i < num_threads; ++i) {
+        thread_data[i].thread_id = i;
+        thread_data[i].context = render;
+        thread_data[i].start_row = i * rows_per_thread;
+        if (i == num_threads - 1)
+            thread_data[i].end_row = render->image.image_height;
+        else
+            thread_data[i].end_row = (i + 1) * rows_per_thread;
+        pthread_create(&thread_ids[i], NULL, render_pixel_chunk, &thread_data[i]);
+    }
+    for (int i = 0; i < num_threads; ++i) {
+        pthread_join(thread_ids[i], NULL);
+    }
+    printf("Rendering complete in %.2f\n", (double)(clock() - start) / CLOCKS_PER_SEC);
     // mlx_close_hook(mlx, &esc_exit, NULL);
-    mlx_loop_hook(mlx, render_pixel_row_hook, render);
     mlx_loop(mlx);
     mlx_terminate(mlx);
     return(0);

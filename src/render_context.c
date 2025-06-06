@@ -93,10 +93,6 @@ static void        render_plane_init(render_plane_t *render_p, vec3_t upper_left
 
 static void        render_context_init(render_context_t *render)
 {
-    render->current_i = 0;
-    render->current_j = 0;
-    render->render_complete = false;
-
     image_settings_init(&render->image);
     camera_settings_init(&render->camera);
     

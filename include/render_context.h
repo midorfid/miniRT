@@ -58,11 +58,14 @@ typedef struct render_context_s {
     // scene objects
     hittable_list_t     *world;
 
-    //incremental rendering state
-    int                 current_i, current_j;
-    bool                render_complete;
 } render_context_t;
 
+typedef struct thread_data_s {
+    int                 thread_id;
+    int                 start_row, end_row;
+
+    render_context_t    *context;
+} thread_data_t;
 
 render_context_t        *render_context_new(mlx_t *mlx, mlx_image_t *mlx_img);
 
