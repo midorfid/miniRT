@@ -29,7 +29,11 @@ set (SRCS
     src/render/constant_medium.c
     src/render/material_isotropic.c
     src/render_context.c
-    src/scenes.c )
+    src/scenes.c
+    src/render/material_dielectric.c
+    src/render/material_diffuse_light.c
+    src/render/material_lambertian.c
+    src/render/material_metal.c )
 
 set (EXEC_NAME miniRT)
 

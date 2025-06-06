@@ -1,10 +1,10 @@
 #ifndef MATERIAL_METAL_H
 #define MATERIAL_METAL_H
 
-#include "hit_record.h"
-#include "ray.h"
-#include "material_shared.h"
-#include "material.h"
+#include "../../include/render/hit_record.h"
+#include "../../include/render/ray.h"
+#include "../../include/render/material_shared.h"
+#include "../../include/render/material.h"
 
 typedef struct metal_s
 {

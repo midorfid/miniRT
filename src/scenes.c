@@ -1,5 +1,8 @@
 #include "../include/render/hittable_list.h"
 #include "../include/scenes.h"
+#include "../include/render/hittable.h"
+#include "../include/textures/checker_pattern.h"
+
 
 hittable_list_t     *earth() {
     // auto earth_texture = make_shared<image_texture>("earthmap.jpg");
@@ -180,14 +183,14 @@ hittable_list_t         *cornell_box_standard() {
 }
 
 hittable_list_t     *checkered_spheres() {
-    // hittable_list world;
-// 
-    // auto checker = make_shared<checker_texture>(0.32, color(.2, .3, .1), color(.9, .9, .9));
-// 
-    // world.add(make_shared<sphere>(point3(0,-10, 0), 10, make_shared<lambertian>(checker)));
-    // world.add(make_shared<sphere>(point3(0, 10, 0), 10, make_shared<lambertian>(checker)));
+    hittable_list_t *world = hittable_list_innit(2);
 
-    return NULL;
+    material_t *checker = mt_lambertian_new_with_tex(checker_pat_new(0.32, solid_colour_new(color(.2, .3, .1)), solid_colour_new(color(.9, .9, .9)))); 
+
+    hittable_list_add(world, sphere_new(point3(0,-10, 0), 10, checker));
+    hittable_list_add(world, sphere_new(point3(0, 10, 0), 10, material_claim(checker)));
+
+    return world;
 }
 
 hittable_list_t         *touching_spheres() {

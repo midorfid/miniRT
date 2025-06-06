@@ -20,6 +20,8 @@ void    render_pixel_row_hook(void *param) {
         printf("rendering complete");
     }
     render->current_i++;
+    printf("rendered a row");
+
 }
 
 int main(void) {
@@ -33,9 +35,21 @@ int main(void) {
     mlx_t               *mlx;
     mlx_image_t         *image;
     
+
+    // Render
+    mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "miniRT", true);
+    if (!mlx) {
+        fprintf(stderr, "Error initializing MLX42: %s\n", mlx_strerror(mlx_errno));
+        return(1);
+    }
+    image = mlx_new_image(mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+    if (!image || mlx_image_to_window(mlx, image, 0, 0) < 0)
+        return(1);
+
     render_context_t    *render; 
 
     render = render_context_new(mlx, image);
+
 
     // choose scene
     scene_id_t scene_id = SCENE_TWO_CHECKERED_SPHERES;
@@ -105,6 +119,7 @@ int main(void) {
         case SCENE_TWO_CHECKERED_SPHERES:
             render->image.aspect_ratio      = 16.0 / 9.0;
             render->image.image_width       = 400;
+            render->image.image_height       = 400;
             render->camera.samples_per_pixel = 100;
             render->camera.max_depth         = 50;
 
@@ -193,16 +208,6 @@ int main(void) {
             // TODO print to log
             return EXIT_FAILURE;
     }
-
-    // Render
-    mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGHT, "miniRT", true);
-    if (!mlx) {
-        fprintf(stderr, "Error initializing MLX42: %s\n", mlx_strerror(mlx_errno));
-        return(1);
-    }
-    image = mlx_new_image(mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-    if (!image || mlx_image_to_window(mlx, image, 0, 0) < 0)
-        return(1);
     // mlx_close_hook(mlx, &esc_exit, NULL);
     mlx_loop_hook(mlx, render_pixel_row_hook, render);
     mlx_loop(mlx);

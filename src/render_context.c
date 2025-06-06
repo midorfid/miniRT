@@ -26,6 +26,8 @@ render_context_t        *render_context_new(mlx_t *mlx, mlx_image_t *mlx_img) {
         printf("render context new failed");
         return NULL;
     }
+    render_contxt->mlx = mlx;
+    render_contxt->mlx_image = mlx_img;
     render_context_init(render_contxt);
     return render_contxt;
 }

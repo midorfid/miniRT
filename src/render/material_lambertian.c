@@ -1,12 +1,11 @@
 #ifndef MATERIAL_LAMBERTIAN_H
 #define MATERIAL_LAMBERTIAN_H
 
-#include "hit_record.h"
-#include "ray.h"
-#include "material_shared.h"
-#include "material.h"
-#include "../textures/texture_shared.h"
-#include "../textures/solid_colour.h"
+#include "../../include/render/hit_record.h"
+#include "../../include/render/ray.h"
+#include "../../include/render/material_shared.h"
+#include "../../include/render/material.h"
+#include "../../include/textures/solid_colour.h"
 
 typedef struct lambertian_s
 {

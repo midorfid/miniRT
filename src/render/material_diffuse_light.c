@@ -1,10 +1,10 @@
 #ifndef MATERIAL_DIFFUSE_LIGHT_H
 #define MATERIAL_DIFFUSE_LIGHT_H
 
-#include "material_shared.h"
-#include "../textures/texture_shared.h"
-#include "hittable_shared.h"
-#include "../textures/solid_colour.h"
+#include "../../include/render/hit_record.h"
+#include "../../include/render/ray.h"
+#include "../../include/render/material_shared.h"
+#include "../../include/render/material.h"
 
 typedef struct diffuse_light_s {
     material_t  base;

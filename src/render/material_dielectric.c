@@ -1,10 +1,10 @@
 #ifndef MATERIAL_DIELECTRIC_H
 #define MATERIAL_DIELECTRIC_H
 
-#include "hit_record.h"
-#include "ray.h"
-#include "material_shared.h"
-#include "material.h"
+#include "../../include/render/hit_record.h"
+#include "../../include/render/ray.h"
+#include "../../include/render/material_shared.h"
+#include "../../include/render/material.h"
 
 typedef struct dielectric_s
 {
@@ -16,9 +16,6 @@ typedef struct dielectric_s
 static bool     mt_dielectric_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered);
 
 static void     mt_dielectric_delete(material_t *material);
-
-material_t      *mt_dielectric_new(double refraction_index);
-
 
 material_t      *mt_dielectric_new(double refraction_index) {
     dielectric_t    *material = calloc(1, sizeof(dielectric_t));

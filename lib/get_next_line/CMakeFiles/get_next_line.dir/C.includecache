@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/workspaces/miniRT/lib/get_next_line/get_next_line.c
+get_next_line_int.h
+/workspaces/miniRT/lib/get_next_line/get_next_line_int.h
+
+/workspaces/miniRT/lib/get_next_line/get_next_line_int.h
+unistd.h
+-
+stdlib.h
+-
+
+/workspaces/miniRT/lib/get_next_line/get_next_line_utils.c
+get_next_line_int.h
+/workspaces/miniRT/lib/get_next_line/get_next_line_int.h
+

@@ -3,10 +3,6 @@
 
 #include "../include/render/hittable_list.h"
 #include "../include/render/material.h"
-#include "../include/render/material_metal.h"
-#include "../include/render/material_lambertian.h"
-#include "../include/render/material_dielectric.h"
-
 
 typedef enum scene_id_s {
     SCENE_NONE = -1,

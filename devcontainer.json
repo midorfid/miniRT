@@ -1,0 +1,17 @@
+{
+    "name": "My C Development Environment with OpenGL",
+    "image": "mcr.microsoft.com/devcontainers/c:0.26.1", // Or a similar C base image
+    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libgl1-mesa-dev libglu1-mesa-dev libglfw3-dev build-essential",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.csharp" // While named C#, it provides C/C++ support
+                // Add other extensions you need
+            ]
+        }
+    },
+    // [Optional] Forward ports if your application needs them
+    // "forwardPorts": [],
+    // [Optional] Mount volumes for persistent storage
+    // "volumes": []
+}

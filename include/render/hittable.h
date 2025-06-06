@@ -28,4 +28,11 @@ static bool     bb_base(const hittable_t *hittable, double time0, double time1, 
     return false;
 }
 
+hittable_t                  *sphere_new(point3_t center, double radius, material_t *material);
+
+hittable_t                  *quad_new(point3_t Q, vec3_t u, vec3_t v, material_t *material);
+
+hittable_t                  *box_new(point3_t min, point3_t max, material_t *material);
+
+
 #endif
