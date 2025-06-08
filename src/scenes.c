@@ -12,23 +12,26 @@ hittable_list_t     *earth() {
 }
 
 hittable_list_t         *quads() {
-    // hittable_list world;
-// 
-    // Materials
-    // auto left_red     = make_shared<lambertian>(color(1.0, 0.2, 0.2));
-    // auto back_green   = make_shared<lambertian>(color(0.2, 1.0, 0.2));
-    // auto right_blue   = make_shared<lambertian>(color(0.2, 0.2, 1.0));
-    // auto upper_orange = make_shared<lambertian>(color(1.0, 0.5, 0.0));
-    // auto lower_teal   = make_shared<lambertian>(color(0.2, 0.8, 0.8));
-// 
-    // Quads
-    // world.add(make_shared<quad>(point3(-3,-2, 5), vec3(0, 0,-4), vec3(0, 4, 0), left_red));
-    // world.add(make_shared<quad>(point3(-2,-2, 0), vec3(4, 0, 0), vec3(0, 4, 0), back_green));
-    // world.add(make_shared<quad>(point3( 3,-2, 1), vec3(0, 0, 4), vec3(0, 4, 0), right_blue));
-    // world.add(make_shared<quad>(point3(-2, 3, 1), vec3(4, 0, 0), vec3(0, 0, 4), upper_orange));
-    // world.add(make_shared<quad>(point3(-2,-3, 5), vec3(4, 0, 0), vec3(0, 0,-4), lower_teal));
+    hittable_list_t     *world;
 
-    return NULL;
+    world = hittable_list_innit(5);
+
+    // Materials
+    material_t *left_red = mt_lambertian_new_with_colour(color_in(1.0, 0.2, 0.2)); 
+    material_t *back_green = mt_lambertian_new_with_colour(color_in(0.2, 1.0, 0.2)); 
+    material_t *right_blue = mt_lambertian_new_with_colour(color_in(0.2, 0.2, 1.0)); 
+    material_t *upper_orange = mt_lambertian_new_with_colour(color_in(1.0, 0.5, 0.0)); 
+    material_t *lower_teal = mt_lambertian_new_with_colour(color_in(0.2, 0.8, 0.8)); 
+
+
+    // Quads
+    hittable_list_add(world, quad_new(point3(-3,-2, 5), vec3(0, 0,-4), vec3(0, 4, 0), left_red));
+    hittable_list_add(world, quad_new(point3(-2,-2, 0), vec3(4, 0, 0), vec3(0, 4, 0), back_green));
+    hittable_list_add(world, quad_new(point3( 3,-2, 1), vec3(0, 0, 4), vec3(0, 4, 0), right_blue));
+    hittable_list_add(world, quad_new(point3(-2, 3, 1), vec3(4, 0, 0), vec3(0, 0, 4), upper_orange));
+    hittable_list_add(world, quad_new(point3(-2,-3, 5), vec3(4, 0, 0), vec3(0, 0,-4), lower_teal));
+
+    return world;
 }
 
 hittable_list_t     *cornell_smoke() {
