@@ -8,7 +8,7 @@ void    *render_pixel_chunk(void *param) {
     thread_data_t   *data = (thread_data_t *)param;
     render_context_t *render = data->context;
     
-    for(int i = render->num_thread; i < render->image.image_height; i +=render->num_thread) {
+    for(int i = data->start_row; i < data->end_row; i += (data->thread_id + 1)) {
         for (int j = 0; j < render->image.image_width; ++j) {
             vec3_t color = vec3(0.0, 0.0, 0.0);
             for (int sample = 0;sample < render->camera.samples_per_pixel;++sample) {
@@ -54,7 +54,7 @@ int main(void) {
 
 
     // choose scene
-    scene_id_t scene_id = SCENE_TWO_CHECKERED_SPHERES;
+    scene_id_t scene_id = SCENE_QUAD;
     switch(scene_id) {
         case SCENE_BOUNCING_SPHERES:
             render->camera.samples_per_pixel = 10;
@@ -122,7 +122,7 @@ int main(void) {
             render->image.aspect_ratio      = 16.0 / 9.0;
             render->image.image_width       = 400;
             render->image.image_height       = 400;
-            render->camera.samples_per_pixel = 1;
+            render->camera.samples_per_pixel = 10;
             render->camera.max_depth         = 50;
 
             render->pov.vfov        = 20;
@@ -214,7 +214,7 @@ int main(void) {
     // init threads
     
     int             num_threads = 1;
-    render->num_thread = num_threads;
+    
     pthread_t       thread_ids[num_threads];
     thread_data_t   thread_data[num_threads];
     
