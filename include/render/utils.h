@@ -16,7 +16,7 @@
 
 static inline double random_double(double min, double max)
 {
-    return min + (max - min) * rt_random() / (RANDOM_MAX + 0.0);
+    return min + (max - min) * 0.5 / (RANDOM_MAX + 0.0);
 }
 
 static int     my_random_int(int min, int max) {
@@ -25,7 +25,8 @@ static int     my_random_int(int min, int max) {
 
 static inline double random_double_nolimits(void)
 {
-    return rt_random() / (RANDOM_MAX + 0.0);
+    return 0.5;
+    // return rt_random() / (RANDOM_MAX + 0.0);
 }
 
 static inline double clamp(double x, double min, double max)

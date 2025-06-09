@@ -8,15 +8,15 @@ void    *render_pixel_chunk(void *param) {
     thread_data_t   *data = (thread_data_t *)param;
     render_context_t *render = data->context;
     
-    for(;data->start_row < data->end_row; data->start_row++) {
+    for(int i = render->num_thread; i < render->image.image_height; i +=render->num_thread) {
         for (int j = 0; j < render->image.image_width; ++j) {
             vec3_t color = vec3(0.0, 0.0, 0.0);
             for (int sample = 0;sample < render->camera.samples_per_pixel;++sample) {
-                ray_t r = get_ray(data->start_row, j, &render->render_p, render->camera.camera_center, &render->camera.lens); 
+                ray_t r = get_ray(i, j, &render->render_p, render->camera.camera_center, &render->camera.lens); 
                 color = vec3_sum(color, ray_color(&r, render->world, render->camera.max_depth));
             }
             color = vec3_scaled_return(color, render->camera.pixel_sample_scale);
-            mlx_put_pixel(render->mlx_image, j, data->start_row, return_color(color));
+            mlx_put_pixel(render->mlx_image, j, i, return_color(color));
         }
     }
     // if (data->start_row >= render->image.image_height) {
@@ -122,7 +122,7 @@ int main(void) {
             render->image.aspect_ratio      = 16.0 / 9.0;
             render->image.image_width       = 400;
             render->image.image_height       = 400;
-            render->camera.samples_per_pixel = 100;
+            render->camera.samples_per_pixel = 1;
             render->camera.max_depth         = 50;
 
             render->pov.vfov        = 20;
@@ -213,8 +213,8 @@ int main(void) {
 
     // init threads
     
-    int             num_threads = 8;
-    
+    int             num_threads = 1;
+    render->num_thread = num_threads;
     pthread_t       thread_ids[num_threads];
     thread_data_t   thread_data[num_threads];
     
@@ -225,11 +225,6 @@ int main(void) {
     for (int i = 0; i < num_threads; ++i) {
         thread_data[i].thread_id = i;
         thread_data[i].context = render;
-        thread_data[i].start_row = i * rows_per_thread;
-        if (i == num_threads - 1)
-            thread_data[i].end_row = render->image.image_height;
-        else
-            thread_data[i].end_row = (i + 1) * rows_per_thread;
         pthread_create(&thread_ids[i], NULL, render_pixel_chunk, &thread_data[i]);
     }
     for (int i = 0; i < num_threads; ++i) {

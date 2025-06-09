@@ -210,7 +210,3 @@ stdbool.h
 pthread.h
 -
 
-/workspaces/miniRT/src/render_context.c
-../include/render_context.h
-/workspaces/miniRT/include/render_context.h
-

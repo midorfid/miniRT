@@ -459,3 +459,50 @@ Parsed CXX implicit link information from above output:
   implicit fwks: []
 
 
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /workspaces/miniRT/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_34e07/fast && /usr/bin/make -f CMakeFiles/cmTC_34e07.dir/build.make CMakeFiles/cmTC_34e07.dir/build
+make[1]: Entering directory '/workspaces/miniRT/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_34e07.dir/CheckIncludeFile.c.o
+/usr/bin/cc   -Iinclude -ldl -lglfw -pthread -lm    -o CMakeFiles/cmTC_34e07.dir/CheckIncludeFile.c.o   -c /workspaces/miniRT/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_34e07
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_34e07.dir/link.txt --verbose=1
+/usr/bin/cc  -Iinclude -ldl -lglfw -pthread -lm     CMakeFiles/cmTC_34e07.dir/CheckIncludeFile.c.o  -o cmTC_34e07 
+make[1]: Leaving directory '/workspaces/miniRT/CMakeFiles/CMakeTmp'
+
+
+
+Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD succeeded with the following output:
+Change Dir: /workspaces/miniRT/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_bb47b/fast && /usr/bin/make -f CMakeFiles/cmTC_bb47b.dir/build.make CMakeFiles/cmTC_bb47b.dir/build
+make[1]: Entering directory '/workspaces/miniRT/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_bb47b.dir/src.c.o
+/usr/bin/cc   -Iinclude -ldl -lglfw -pthread -lm -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_bb47b.dir/src.c.o   -c /workspaces/miniRT/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_bb47b
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bb47b.dir/link.txt --verbose=1
+/usr/bin/cc  -Iinclude -ldl -lglfw -pthread -lm -DCMAKE_HAVE_LIBC_PTHREAD    CMakeFiles/cmTC_bb47b.dir/src.c.o  -o cmTC_bb47b 
+make[1]: Leaving directory '/workspaces/miniRT/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+#include <pthread.h>
+
+void* test_func(void* data)
+{
+  return data;
+}
+
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
+
+  return 0;
+}
+

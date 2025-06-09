@@ -57,12 +57,11 @@ typedef struct render_context_s {
 
     // scene objects
     hittable_list_t     *world;
-
+    int                 num_thread;
 } render_context_t;
 
 typedef struct thread_data_s {
     int                 thread_id;
-    int                 start_row, end_row;
 
     render_context_t    *context;
 } thread_data_t;

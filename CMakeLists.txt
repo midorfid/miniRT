@@ -33,7 +33,10 @@ set (SRCS
     src/render/material_dielectric.c
     src/render/material_diffuse_light.c
     src/render/material_lambertian.c
-    src/render/material_metal.c )
+    src/render/material_metal.c
+    src/threads/thread_pool.c
+    src/threads/thread_unix.c
+    src/threads/sync_unix.c )
 
 set (EXEC_NAME miniRT)
 
@@ -46,6 +49,8 @@ add_subdirectory(lib/Libft)
 add_subdirectory(lib/MLX42)
 add_subdirectory(lib/get_next_line)
 
+find_package(Threads REQUIRED)
+target_link_libraries(${EXEC_NAME} PRIVATE Threads::Threads)
 target_link_libraries(${EXEC_NAME} PRIVATE ft)
 target_link_libraries(${EXEC_NAME} PRIVATE mlx42)
 target_link_libraries(${EXEC_NAME} PRIVATE get_next_line)
