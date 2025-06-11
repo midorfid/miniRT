@@ -26,6 +26,9 @@ CMakeFiles/miniRT.dir/src/main.c.o: include/textures/texture.h
 CMakeFiles/miniRT.dir/src/main.c.o: include/textures/texture_shared.h
 CMakeFiles/miniRT.dir/src/main.c.o: lib/MLX42/include/MLX42/MLX42.h
 CMakeFiles/miniRT.dir/src/main.c.o: src/main.c
+CMakeFiles/miniRT.dir/src/main.c.o: src/threads/sync.h
+CMakeFiles/miniRT.dir/src/main.c.o: src/threads/thread.h
+CMakeFiles/miniRT.dir/src/main.c.o: src/threads/thread_pool.h
 
 CMakeFiles/miniRT.dir/src/random.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/random.c.o: src/random.c
@@ -332,6 +335,9 @@ CMakeFiles/miniRT.dir/src/render_context.c.o: include/textures/texture.h
 CMakeFiles/miniRT.dir/src/render_context.c.o: include/textures/texture_shared.h
 CMakeFiles/miniRT.dir/src/render_context.c.o: lib/MLX42/include/MLX42/MLX42.h
 CMakeFiles/miniRT.dir/src/render_context.c.o: src/render_context.c
+CMakeFiles/miniRT.dir/src/render_context.c.o: src/threads/sync.h
+CMakeFiles/miniRT.dir/src/render_context.c.o: src/threads/thread.h
+CMakeFiles/miniRT.dir/src/render_context.c.o: src/threads/thread_pool.h
 
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/lens.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/random.h
@@ -393,6 +399,7 @@ CMakeFiles/miniRT.dir/src/threads/sync_unix.c.o: src/threads/sync_unix.c
 
 CMakeFiles/miniRT.dir/src/threads/thread_pool.c.o: src/threads/queue.h
 CMakeFiles/miniRT.dir/src/threads/thread_pool.c.o: src/threads/sync.h
+CMakeFiles/miniRT.dir/src/threads/thread_pool.c.o: src/threads/thread.h
 CMakeFiles/miniRT.dir/src/threads/thread_pool.c.o: src/threads/thread_pool.c
 CMakeFiles/miniRT.dir/src/threads/thread_pool.c.o: src/threads/thread_pool.h
 

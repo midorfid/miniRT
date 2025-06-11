@@ -1,7 +1,8 @@
 #include "thread_pool.h"
 #include "queue.h"
+#include "thread.h"
 
-typedef enum thread_work_type_s {
+typedef enum thread_work_type_e {
     THREAD_WORK_TYPE_REGULAR = 0,
     THREAD_WORK_TYPE_STOP,
 } thread_work_type_t;
@@ -23,7 +24,7 @@ typedef struct thread_pool_s {
     my_thread_t           **threads;
     size_t              num_of_threads;
 
-    tp_work_item_queue_t    *work_queue;
+    tp_work_item_queue_t    work_queue;
     my_mutex_t              *work_mutex;
     my_cond_t               *work_signal;
 };
@@ -56,7 +57,7 @@ thread_pool_t           *thread_pool_init(size_t num_of_threads) {
     }
     MY_QUEUE_INIT(&tp->work_queue);
     for (int i = 0; i < num_of_threads; ++i) {
-        tp->threads[i] = thread_create();
+        tp->threads[i] = thread_create(thread_func, tp);
         if (tp->threads[i] == NULL) {
             printf("thread_pool_init() failed");
             return NULL;
@@ -70,7 +71,7 @@ void                thread_pool_destroy(thread_pool_t *tp) {
         enqueue_work(tp, THREAD_WORK_TYPE_STOP, NULL, NULL, NULL);
     }
     for (int i = 0; i < tp->num_of_threads; ++i) {
-        pthread_join(tp->threads[i], NULL);
+        pthread_join(tp->threads[i]->thread_handle, NULL);
     }
     while (!MY_QUEUE_EMPTY(&tp->work_queue)) {
         tp_work_item_t *item = MY_QUEUE_FIRST(&tp->work_queue);
@@ -101,10 +102,10 @@ static void         thread_func(void *params) {
 
         while (MY_QUEUE_EMPTY(&pool->work_queue)) {
             int rc = cond_wait(pool->work_signal, pool->work_mutex);
-            if (rc == 0) {
-                printf("thread_func() failed");
-                return;
-            }
+            // if (rc == 0) {
+            //     printf("thread_func() failed");
+            //     return;
+            // }
         }
         tp_work_item_t *new_work_item = MY_QUEUE_FIRST(&pool->work_queue);
         
@@ -119,7 +120,7 @@ static void         thread_func(void *params) {
             return;
         }
         copy.work(copy.work_args);
-        copy.copletion_sb(0, copy.work_args);
+        copy.completion_sb(0, copy.work_args);
     }
 }
 

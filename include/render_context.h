@@ -46,6 +46,8 @@ typedef struct camera_s {
     defocus_blur_t  lens;
 } camera_t;
 
+// typedef color_t (*render_fn_t)()
+
 typedef struct render_context_s {
     mlx_t               *mlx;
     mlx_image_t         *mlx_image;
@@ -63,6 +65,11 @@ typedef struct render_context_s {
     my_mutex_t          *process_mutex;
     int                 *processed_chunks;
     int                 total_chunks;
+    // render_fn_t         render_function;
+
+    // chunk
+    int                 width, height;
+    int                 x_start, y_start;
 } render_context_t;
 
 

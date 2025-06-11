@@ -4,12 +4,13 @@
 #define SCREEN_WIDTH 1000
 #define SCREEN_HEIGHT 1000
 
-void    *render_pixel_chunk(void *param) {
-    thread_data_t   *data = (thread_data_t *)param;
-    render_context_t *render = data->context;
+#define CHUNK 32
+
+void    render_pixel_chunk(void *param) {
+    render_context_t *render = (render_context_t *)param;
     
-    for(int i = data->start_row; i < data->end_row; i += (data->thread_id + 1)) {
-        for (int j = 0; j < render->image.image_width; ++j) {
+    for(int i = render->height + render->y_start - 1; i >= render->y_start; --i) {
+        for (int j = render->x_start; j < render->x_start + render->width; ++j) {
             vec3_t color = vec3(0.0, 0.0, 0.0);
             for (int sample = 0;sample < render->camera.samples_per_pixel;++sample) {
                 ray_t r = get_ray(i, j, &render->render_p, render->camera.camera_center, &render->camera.lens); 
@@ -19,12 +20,9 @@ void    *render_pixel_chunk(void *param) {
             mlx_put_pixel(render->mlx_image, j, i, return_color(color));
         }
     }
-    // if (data->start_row >= render->image.image_height) {
-        // render->render_complete = true;
-        // printf("rendering complete");
-    // }
-    return NULL;
 }
+
+static void            render_worker_complete(int status, void *args);
 
 int main(void) {
 
@@ -213,26 +211,70 @@ int main(void) {
 
     // init threads
     
-    int             num_threads = 1;
-    
-    pthread_t       thread_ids[num_threads];
-    thread_data_t   thread_data[num_threads];
-    
-    int rows_per_thread = render->image.image_height / num_threads;
-    
+    int             num_threads = 2;
+    my_mutex_t      *process_mutex = mutex_init();
+    thread_pool_t   *pool = thread_pool_init(num_threads);
+    // chunks
+    int             processed_chunks = 0;
+    int             total_chunks = (int)(ceil(render->image.image_height / (double)CHUNK)) * (int)(ceil(render->image.image_width / (double)CHUNK));
+
     clock_t start = clock();
     printf("Rendering...\n");
-    for (int i = 0; i < num_threads; ++i) {
-        thread_data[i].thread_id = i;
-        thread_data[i].context = render;
-        pthread_create(&thread_ids[i], NULL, render_pixel_chunk, &thread_data[i]);
+    for (int i = 0; i < ceil(render->image.image_height / (double)CHUNK); ++i) {
+        for (int j = 0; j < ceil(render->image.image_width / (double)CHUNK); ++j) {
+            render_context_t *arg = malloc(sizeof(render_context_t));
+            if (arg == NULL) {
+                printf("main render failed");
+                return(EXIT_FAILURE);
+            }
+            arg->mlx = render->mlx;
+            arg->mlx_image = render->mlx_image;
+            arg->image = render->image;
+            arg->pov = arg->pov;
+            arg->camera = arg->camera;
+            arg->render_p = arg->render_p;
+            arg->world = arg->world;
+            arg->process_mutex = process_mutex;
+            arg->processed_chunks = &processed_chunks;
+            arg->total_chunks = total_chunks;
+            arg->x_start = j * CHUNK;
+            arg->y_start = i * CHUNK;
+            arg->width = render->image.image_width - j * CHUNK < CHUNK ? render->image.image_width - j * CHUNK : CHUNK;
+            arg->height = render->image.image_height - i * CHUNK < CHUNK ? render->image.image_height - i * CHUNK : CHUNK;
+            
+            schedule_work(pool, render_pixel_chunk, arg, render_worker_complete);
+        }
     }
-    for (int i = 0; i < num_threads; ++i) {
-        pthread_join(thread_ids[i], NULL);
-    }
+
+    //clean up
+    mutex_destroy(process_mutex);
+    thread_pool_destroy(pool);
     printf("Rendering complete in %.2f\n", (double)(clock() - start) / CLOCKS_PER_SEC);
     // mlx_close_hook(mlx, &esc_exit, NULL);
     mlx_loop(mlx);
     mlx_terminate(mlx);
     return(0);
+}
+
+static void            render_worker_complete(int status, void *args) {
+    render_context_t *worker_args = args;
+
+    mutex_lock(worker_args->process_mutex);
+
+    int old_processed_chunks = *worker_args->processed_chunks;
+    *worker_args->processed_chunks += 1;
+    int current_processed_chunks = *worker_args->processed_chunks;
+    int old_percentage = 100 * old_processed_chunks / worker_args->total_chunks;
+    int current_percentage = 100 * current_processed_chunks / worker_args->total_chunks;
+
+    if (current_percentage != old_percentage)
+    {
+        fprintf(stderr, "\rProgress: %d/%d chunks (%3d%%)", current_processed_chunks, worker_args->total_chunks,
+                current_percentage);
+        fflush(stderr);
+    }
+    
+    mutex_unlock(worker_args->process_mutex);
+
+    free(worker_args);
 }
