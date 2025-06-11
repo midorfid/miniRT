@@ -19,7 +19,8 @@
 #include "../include/scenes.h"
 #include "../include/render_plane.h"
 #include "../include/lens.h"
-
+#include "../src/threads/thread.h"
+#include "../src/threads/thread_pool.h"
 
 typedef struct image_s {
     double      aspect_ratio;
@@ -57,14 +58,13 @@ typedef struct render_context_s {
 
     // scene objects
     hittable_list_t     *world;
-    int                 num_thread;
+
+    // threads
+    my_mutex_t          *process_mutex;
+    int                 *processed_chunks;
+    int                 total_chunks;
 } render_context_t;
 
-typedef struct thread_data_s {
-    int                 thread_id;
-
-    render_context_t    *context;
-} thread_data_t;
 
 render_context_t        *render_context_new(mlx_t *mlx, mlx_image_t *mlx_img);
 

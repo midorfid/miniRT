@@ -133,17 +133,17 @@ lib/get_next_line/clean: lib/get_next_line/CMakeFiles/get_next_line.dir/clean
 # Target rules for target CMakeFiles/miniRT.dir
 
 # All Build rule for target.
+CMakeFiles/miniRT.dir/all: lib/Libft/CMakeFiles/ft.dir/all
 CMakeFiles/miniRT.dir/all: lib/MLX42/CMakeFiles/mlx42.dir/all
 CMakeFiles/miniRT.dir/all: lib/get_next_line/CMakeFiles/get_next_line.dir/all
-CMakeFiles/miniRT.dir/all: lib/Libft/CMakeFiles/ft.dir/all
 	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/depend
 	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/workspaces/miniRT/CMakeFiles --progress-num=46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73 "Built target miniRT"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/workspaces/miniRT/CMakeFiles --progress-num=45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75 "Built target miniRT"
 .PHONY : CMakeFiles/miniRT.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/miniRT.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /workspaces/miniRT/CMakeFiles 98
+	$(CMAKE_COMMAND) -E cmake_progress_start /workspaces/miniRT/CMakeFiles 100
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/miniRT.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /workspaces/miniRT/CMakeFiles 0
 .PHONY : CMakeFiles/miniRT.dir/rule
@@ -165,12 +165,12 @@ CMakeFiles/miniRT.dir/clean:
 lib/Libft/CMakeFiles/ft.dir/all:
 	$(MAKE) -f lib/Libft/CMakeFiles/ft.dir/build.make lib/Libft/CMakeFiles/ft.dir/depend
 	$(MAKE) -f lib/Libft/CMakeFiles/ft.dir/build.make lib/Libft/CMakeFiles/ft.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/workspaces/miniRT/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42 "Built target ft"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/workspaces/miniRT/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41 "Built target ft"
 .PHONY : lib/Libft/CMakeFiles/ft.dir/all
 
 # Build rule for subdir invocation for target.
 lib/Libft/CMakeFiles/ft.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /workspaces/miniRT/CMakeFiles 42
+	$(CMAKE_COMMAND) -E cmake_progress_start /workspaces/miniRT/CMakeFiles 41
 	$(MAKE) -f CMakeFiles/Makefile2 lib/Libft/CMakeFiles/ft.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /workspaces/miniRT/CMakeFiles 0
 .PHONY : lib/Libft/CMakeFiles/ft.dir/rule
@@ -192,7 +192,7 @@ lib/Libft/CMakeFiles/ft.dir/clean:
 lib/MLX42/CMakeFiles/mlx42.dir/all:
 	$(MAKE) -f lib/MLX42/CMakeFiles/mlx42.dir/build.make lib/MLX42/CMakeFiles/mlx42.dir/depend
 	$(MAKE) -f lib/MLX42/CMakeFiles/mlx42.dir/build.make lib/MLX42/CMakeFiles/mlx42.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/workspaces/miniRT/CMakeFiles --progress-num=74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98 "Built target mlx42"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/workspaces/miniRT/CMakeFiles --progress-num=76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100 "Built target mlx42"
 .PHONY : lib/MLX42/CMakeFiles/mlx42.dir/all
 
 # Build rule for subdir invocation for target.
@@ -219,7 +219,7 @@ lib/MLX42/CMakeFiles/mlx42.dir/clean:
 lib/get_next_line/CMakeFiles/get_next_line.dir/all:
 	$(MAKE) -f lib/get_next_line/CMakeFiles/get_next_line.dir/build.make lib/get_next_line/CMakeFiles/get_next_line.dir/depend
 	$(MAKE) -f lib/get_next_line/CMakeFiles/get_next_line.dir/build.make lib/get_next_line/CMakeFiles/get_next_line.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/workspaces/miniRT/CMakeFiles --progress-num=43,44,45 "Built target get_next_line"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/workspaces/miniRT/CMakeFiles --progress-num=42,43,44 "Built target get_next_line"
 .PHONY : lib/get_next_line/CMakeFiles/get_next_line.dir/all
 
 # Build rule for subdir invocation for target.
