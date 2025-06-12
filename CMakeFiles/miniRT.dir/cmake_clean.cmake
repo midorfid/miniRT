@@ -26,9 +26,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/miniRT.dir/src/textures/perlin.c.o"
   "CMakeFiles/miniRT.dir/src/textures/solid_colour.c.o"
   "CMakeFiles/miniRT.dir/src/textures/texture.c.o"
-  "CMakeFiles/miniRT.dir/src/threads/sync_unix.c.o"
   "CMakeFiles/miniRT.dir/src/threads/thread_pool.c.o"
-  "CMakeFiles/miniRT.dir/src/threads/thread_unix.c.o"
   "miniRT"
   "miniRT.pdb"
 )

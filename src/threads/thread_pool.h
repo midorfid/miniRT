@@ -1,7 +1,7 @@
 #ifndef THREAD_POOL_H
 #define THREAD_POOL_H
 
-#include "sync.h"
+#include <stddef.h>
 
 typedef struct thread_pool_s thread_pool_t;
 

@@ -937,33 +937,6 @@ src/textures/texture.c.s:
 	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/textures/texture.c.s
 .PHONY : src/textures/texture.c.s
 
-src/threads/sync_unix.o: src/threads/sync_unix.c.o
-
-.PHONY : src/threads/sync_unix.o
-
-# target to build an object file
-src/threads/sync_unix.c.o:
-	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/threads/sync_unix.c.o
-.PHONY : src/threads/sync_unix.c.o
-
-src/threads/sync_unix.i: src/threads/sync_unix.c.i
-
-.PHONY : src/threads/sync_unix.i
-
-# target to preprocess a source file
-src/threads/sync_unix.c.i:
-	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/threads/sync_unix.c.i
-.PHONY : src/threads/sync_unix.c.i
-
-src/threads/sync_unix.s: src/threads/sync_unix.c.s
-
-.PHONY : src/threads/sync_unix.s
-
-# target to generate assembly for a file
-src/threads/sync_unix.c.s:
-	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/threads/sync_unix.c.s
-.PHONY : src/threads/sync_unix.c.s
-
 src/threads/thread_pool.o: src/threads/thread_pool.c.o
 
 .PHONY : src/threads/thread_pool.o
@@ -990,33 +963,6 @@ src/threads/thread_pool.s: src/threads/thread_pool.c.s
 src/threads/thread_pool.c.s:
 	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/threads/thread_pool.c.s
 .PHONY : src/threads/thread_pool.c.s
-
-src/threads/thread_unix.o: src/threads/thread_unix.c.o
-
-.PHONY : src/threads/thread_unix.o
-
-# target to build an object file
-src/threads/thread_unix.c.o:
-	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/threads/thread_unix.c.o
-.PHONY : src/threads/thread_unix.c.o
-
-src/threads/thread_unix.i: src/threads/thread_unix.c.i
-
-.PHONY : src/threads/thread_unix.i
-
-# target to preprocess a source file
-src/threads/thread_unix.c.i:
-	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/threads/thread_unix.c.i
-.PHONY : src/threads/thread_unix.c.i
-
-src/threads/thread_unix.s: src/threads/thread_unix.c.s
-
-.PHONY : src/threads/thread_unix.s
-
-# target to generate assembly for a file
-src/threads/thread_unix.c.s:
-	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/threads/thread_unix.c.s
-.PHONY : src/threads/thread_unix.c.s
 
 # Help Target
 help:
@@ -1115,15 +1061,9 @@ help:
 	@echo "... src/textures/texture.o"
 	@echo "... src/textures/texture.i"
 	@echo "... src/textures/texture.s"
-	@echo "... src/threads/sync_unix.o"
-	@echo "... src/threads/sync_unix.i"
-	@echo "... src/threads/sync_unix.s"
 	@echo "... src/threads/thread_pool.o"
 	@echo "... src/threads/thread_pool.i"
 	@echo "... src/threads/thread_pool.s"
-	@echo "... src/threads/thread_unix.o"
-	@echo "... src/threads/thread_unix.i"
-	@echo "... src/threads/thread_unix.s"
 .PHONY : help
 
 

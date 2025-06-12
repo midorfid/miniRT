@@ -34,9 +34,7 @@ set (SRCS
     src/render/material_diffuse_light.c
     src/render/material_lambertian.c
     src/render/material_metal.c
-    src/threads/thread_pool.c
-    src/threads/thread_unix.c
-    src/threads/sync_unix.c )
+    src/threads/thread_pool.c )
 
 set (EXEC_NAME miniRT)
 

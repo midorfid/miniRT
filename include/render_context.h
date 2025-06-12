@@ -62,7 +62,7 @@ typedef struct render_context_s {
     hittable_list_t     *world;
 
     // threads
-    my_mutex_t          *process_mutex;
+    pthread_mutex_t          *process_mutex;
     int                 *processed_chunks;
     int                 total_chunks;
     // render_fn_t         render_function;

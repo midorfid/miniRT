@@ -212,7 +212,8 @@ int main(void) {
     // init threads
     
     int             num_threads = 2;
-    my_mutex_t      *process_mutex = mutex_init();
+    pthread_mutex_t      *process_mutex;
+    pthread_mutex_init(process_mutex, NULL);
     thread_pool_t   *pool = thread_pool_init(num_threads);
     // chunks
     int             processed_chunks = 0;
@@ -247,7 +248,7 @@ int main(void) {
     }
 
     //clean up
-    mutex_destroy(process_mutex);
+    pthread_mutex_destroy(process_mutex);
     thread_pool_destroy(pool);
     printf("Rendering complete in %.2f\n", (double)(clock() - start) / CLOCKS_PER_SEC);
     // mlx_close_hook(mlx, &esc_exit, NULL);
@@ -259,7 +260,7 @@ int main(void) {
 static void            render_worker_complete(int status, void *args) {
     render_context_t *worker_args = args;
 
-    mutex_lock(worker_args->process_mutex);
+    pthread_mutex_lock(worker_args->process_mutex);
 
     int old_processed_chunks = *worker_args->processed_chunks;
     *worker_args->processed_chunks += 1;
@@ -274,7 +275,7 @@ static void            render_worker_complete(int status, void *args) {
         fflush(stderr);
     }
     
-    mutex_unlock(worker_args->process_mutex);
+    pthread_mutex_unlock(worker_args->process_mutex);
 
     free(worker_args);
 }

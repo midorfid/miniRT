@@ -31,9 +31,7 @@ set(CMAKE_DEPENDS_CHECK_C
   "/workspaces/miniRT/src/textures/perlin.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/textures/perlin.c.o"
   "/workspaces/miniRT/src/textures/solid_colour.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/textures/solid_colour.c.o"
   "/workspaces/miniRT/src/textures/texture.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/textures/texture.c.o"
-  "/workspaces/miniRT/src/threads/sync_unix.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/threads/sync_unix.c.o"
   "/workspaces/miniRT/src/threads/thread_pool.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/threads/thread_pool.c.o"
-  "/workspaces/miniRT/src/threads/thread_unix.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/threads/thread_unix.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

@@ -1,4 +1,5 @@
 #include "sync.h"
+#include <stdlib.h>
 
 struct my_mutex_s {
     pthread_mutex_t mutex;

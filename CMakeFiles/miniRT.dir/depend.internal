@@ -27,7 +27,6 @@ CMakeFiles/miniRT.dir/src/main.c.o
  /workspaces/miniRT/include/textures/texture_shared.h
  /workspaces/miniRT/lib/MLX42/include/MLX42/MLX42.h
  /workspaces/miniRT/src/main.c
- /workspaces/miniRT/src/threads/sync.h
  /workspaces/miniRT/src/threads/thread.h
  /workspaces/miniRT/src/threads/thread_pool.h
 CMakeFiles/miniRT.dir/src/random.c.o
@@ -336,7 +335,6 @@ CMakeFiles/miniRT.dir/src/render_context.c.o
  /workspaces/miniRT/include/textures/texture_shared.h
  /workspaces/miniRT/lib/MLX42/include/MLX42/MLX42.h
  /workspaces/miniRT/src/render_context.c
- /workspaces/miniRT/src/threads/sync.h
  /workspaces/miniRT/src/threads/thread.h
  /workspaces/miniRT/src/threads/thread_pool.h
 CMakeFiles/miniRT.dir/src/scenes.c.o
@@ -394,15 +392,8 @@ CMakeFiles/miniRT.dir/src/textures/texture.c.o
  /workspaces/miniRT/include/textures/texture.h
  /workspaces/miniRT/include/textures/texture_shared.h
  /workspaces/miniRT/src/textures/texture.c
-CMakeFiles/miniRT.dir/src/threads/sync_unix.c.o
- /workspaces/miniRT/src/threads/sync.h
- /workspaces/miniRT/src/threads/sync_unix.c
 CMakeFiles/miniRT.dir/src/threads/thread_pool.c.o
- /workspaces/miniRT/src/threads/queue.h
  /workspaces/miniRT/src/threads/sync.h
  /workspaces/miniRT/src/threads/thread.h
  /workspaces/miniRT/src/threads/thread_pool.c
  /workspaces/miniRT/src/threads/thread_pool.h
-CMakeFiles/miniRT.dir/src/threads/thread_unix.c.o
- /workspaces/miniRT/src/threads/thread.h
- /workspaces/miniRT/src/threads/thread_unix.c
