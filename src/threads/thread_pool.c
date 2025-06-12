@@ -29,8 +29,8 @@ struct thread_pool_s {
     size_t                      num_of_threads;
 
     tp_work_item_queue_t        work_queue;
-    pthread_mutex_t              *work_mutex;
-    pthread_cond_t               *work_signal;
+    pthread_mutex_t             work_mutex;
+    pthread_cond_t              work_signal;
 };
 
 static void     *thread_func(void *params);
@@ -43,23 +43,23 @@ thread_pool_t           *thread_pool_init(size_t num_of_threads) {
         printf("thread_pool_init() failed");
         return NULL;
     }
-    tp->threads = calloc(num_of_threads, sizeof(my_thread_t *));
+    tp->threads = calloc(num_of_threads, sizeof(pthread_t));
     if (tp->threads == NULL) {
         printf("thread_pool_init() failed");
         return NULL;
     }
     tp->num_of_threads = num_of_threads;
-    if (pthread_cond_init(tp->work_signal, NULL) == 0) {
+    if (pthread_cond_init(&tp->work_signal, NULL) != 0) {
         printf("thread_pool_init() failed");
         return NULL;
     }
-    if (pthread_mutex_init(tp->work_mutex, NULL) == 0) {
+    if (pthread_mutex_init(&tp->work_mutex, NULL) != 0) {
         printf("thread_pool_init() failed");
         return NULL;
     }
     TAILQ_INIT(&tp->work_queue);
     for (int i = 0; i < num_of_threads; ++i) { 
-        if (pthread_create(tp->threads + i, NULL, thread_func, tp) == 0) {
+        if (pthread_create(tp->threads + i, NULL, thread_func, tp) != 0) {
             printf("thread_pool_init() failed");
             return NULL;
         }
@@ -82,8 +82,8 @@ void                thread_pool_destroy(thread_pool_t *tp) {
         TAILQ_REMOVE(&tp->work_queue, item, next);
         free(item);
     }
-    pthread_mutex_destroy(tp->work_mutex);
-    pthread_cond_destroy(tp->work_signal);
+    pthread_mutex_destroy(&tp->work_mutex);
+    pthread_cond_destroy(&tp->work_signal);
 
     free(tp);
 }
@@ -99,10 +99,10 @@ static void         *thread_func(void *params) {
         return NULL;
     }
     while (true) {
-        pthread_mutex_lock(pool->work_mutex);
+        pthread_mutex_lock(&pool->work_mutex);
 
         while (TAILQ_EMPTY(&pool->work_queue)) {
-            int rc = pthread_cond_wait(pool->work_signal, pool->work_mutex);
+            int rc = pthread_cond_wait(&pool->work_signal, &pool->work_mutex);
             // if (rc == 0) {
             //     printf("thread_func() failed");
             //     return;
@@ -112,7 +112,7 @@ static void         *thread_func(void *params) {
         
         TAILQ_REMOVE(&pool->work_queue, new_work_item, next);
 
-        pthread_mutex_unlock(pool->work_mutex);
+        pthread_mutex_unlock(&pool->work_mutex);
 
         tp_work_item_t copy = *new_work_item;
         free(new_work_item);
@@ -129,7 +129,7 @@ static void         *thread_func(void *params) {
 static int          enqueue_work(thread_pool_t *tp, thread_work_type_t type, thread_pool_work_t work,
                                 void *work_args, thread_pool_work_completion_sb_t completion_sb)
 {
-    pthread_mutex_lock(tp->work_mutex);
+    pthread_mutex_lock(&tp->work_mutex);
 
     tp_work_item_t      *new_item = calloc(1, sizeof(tp_work_item_t));
     if (new_item == NULL) {
@@ -143,9 +143,9 @@ static int          enqueue_work(thread_pool_t *tp, thread_work_type_t type, thr
 
     TAILQ_INSERT_TAIL(&tp->work_queue, new_item, next);
     
-    pthread_cond_signal(tp->work_signal);
+    pthread_cond_signal(&tp->work_signal);
 
-    pthread_mutex_unlock(tp->work_mutex);
+    pthread_mutex_unlock(&tp->work_mutex);
 
     return 0;
 }

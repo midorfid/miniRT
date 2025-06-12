@@ -211,10 +211,13 @@ int main(void) {
 
     // init threads
     
-    int             num_threads = 2;
-    pthread_mutex_t      *process_mutex;
+    int             num_threads = 1;
+    pthread_mutex_t      *process_mutex = malloc(sizeof(pthread_mutex_t));
+    puts("yo0");
     pthread_mutex_init(process_mutex, NULL);
+    puts("yo");
     thread_pool_t   *pool = thread_pool_init(num_threads);
+    puts("yo1");
     // chunks
     int             processed_chunks = 0;
     int             total_chunks = (int)(ceil(render->image.image_height / (double)CHUNK)) * (int)(ceil(render->image.image_width / (double)CHUNK));

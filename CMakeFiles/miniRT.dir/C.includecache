@@ -214,7 +214,27 @@ stdbool.h
 pthread.h
 -
 
+/workspaces/miniRT/src/threads/sync.h
+pthread.h
+-
+
 /workspaces/miniRT/src/threads/thread.h
+
+/workspaces/miniRT/src/threads/thread_pool.c
+thread_pool.h
+/workspaces/miniRT/src/threads/thread_pool.h
+sys/queue.h
+-
+thread.h
+/workspaces/miniRT/src/threads/thread.h
+sync.h
+/workspaces/miniRT/src/threads/sync.h
+stdlib.h
+-
+stdio.h
+-
+stdbool.h
+-
 
 /workspaces/miniRT/src/threads/thread_pool.h
 stddef.h
