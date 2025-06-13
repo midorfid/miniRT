@@ -52,7 +52,9 @@ static void        lens_init(defocus_blur_t *lens, vec3_t u, vec3_t v) {
 
 static void        camera_settings_init(camera_t *camera) {
     camera->samples_per_pixel = 10;
-    camera->pixel_sample_scale = 1.0 / camera->samples_per_pixel; 
+    camera->sqrt_spp = sqrt(camera->samples_per_pixel);
+    camera->pixel_sample_scale = 1.0 / camera->samples_per_pixel;
+    camera->rec1p_sqrt_spp = 1.0 / camera->sqrt_spp; 
     camera->max_depth = 50;
     camera->lookfrom = point3(13,2,3);
     camera->lookat = point3(0,0,0);

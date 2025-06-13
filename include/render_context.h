@@ -39,6 +39,8 @@ typedef struct camera_s {
     int             samples_per_pixel;
     int             max_depth;
     double          pixel_sample_scale;
+    int             sqrt_spp; // sample per pixel
+    double          rec1p_sqrt_spp;
     point3_t        lookfrom, lookat;
     vec3_t          vup;
     vec3_t          u,v,w;  // camera frame basis vectors

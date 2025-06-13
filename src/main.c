@@ -12,9 +12,11 @@ void    render_pixel_chunk(void *param) {
     for(int i = render->height + render->y_start - 1; i >= render->y_start; --i) {
         for (int j = render->x_start; j < render->x_start + render->width; ++j) {
             vec3_t color = vec3(0.0, 0.0, 0.0);
-            for (int sample = 0;sample < render->camera.samples_per_pixel;++sample) {
-                ray_t r = get_ray(i, j, &render->render_p, render->camera.camera_center, &render->camera.lens); 
-                color = vec3_sum(color, ray_color(&r, render->world, render->camera.max_depth));
+            for (int s_i = 0; s_i < render->camera.sqrt_spp; ++s_i) {
+                for (int s_j = 0; s_j < render->camera.sqrt_spp; ++s_j) {
+                    ray_t r = get_ray(i, j, s_i, s_j, &render->render_p, render->camera.camera_center, &render->camera.lens, render->camera.rec1p_sqrt_spp); 
+                    color = vec3_sum(color, ray_color(&r, render->world, render->camera.max_depth));
+                }
             }
             color = vec3_scaled_return(color, render->camera.pixel_sample_scale);
             mlx_put_pixel(render->mlx_image, j, i, return_color(color));
@@ -211,13 +213,10 @@ int main(void) {
 
     // init threads
     
-    int             num_threads = 1;
+    int             num_threads = 2;
     pthread_mutex_t      *process_mutex = malloc(sizeof(pthread_mutex_t));
-    puts("yo0");
     pthread_mutex_init(process_mutex, NULL);
-    puts("yo");
     thread_pool_t   *pool = thread_pool_init(num_threads);
-    puts("yo1");
     // chunks
     int             processed_chunks = 0;
     int             total_chunks = (int)(ceil(render->image.image_height / (double)CHUNK)) * (int)(ceil(render->image.image_width / (double)CHUNK));
