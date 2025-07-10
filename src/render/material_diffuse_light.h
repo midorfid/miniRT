@@ -10,7 +10,7 @@ typedef struct diffuse_light_s {
     material_t  base;
 
     texture_t   *texture;
-    double      intensity;
+    // double      intensity;
 } diffuse_light_t;
 
 bool    diffuse_light_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered);
@@ -19,8 +19,8 @@ color_t    diffuse_light_emmit(const material_t *material, double u, double v, c
 
 void    diffuse_light_delete(material_t *material);
 
-material_t      *diffuse_light_new_with_tex(texture_t *texture, double intensity);
+material_t      *diffuse_light_new_with_tex(texture_t *texture);
 
-material_t      *diffuse_light_new_with_colour(color_t albedo, double intensity);
+material_t      *diffuse_light_new_with_colour(color_t albedo);
 
 #endif

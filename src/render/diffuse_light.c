@@ -26,19 +26,19 @@ void    diffuse_light_delete(material_t *material) {
     free(diff_light);
 }
 
-material_t      *diffuse_light_new_with_tex(texture_t *texture, double intensity) {
+material_t      *diffuse_light_new_with_tex(texture_t *texture) {
     diffuse_light_t *diff_light_new = calloc(1, sizeof(diffuse_light_t));
     if (diff_light_new == NULL) {
         printf("diffuse_light_new() failed");
         return NULL;
     }
     diff_light_new->texture = texture;
-    diff_light_new->intensity = intensity;        
-    material_base_innit(&diff_light_new->base, MATERIAL_TYPE_DIFFUSE_LIGHT, diffuse_light_scatter, diffuse_light_emmit, diffuse_light_delete);
+    // diff_light_new->intensity = intensity;        
+    material_base_innit(&diff_light_new->base, MATERIAL_TYPE_DIFFUSE_LIGHT, NULL, diffuse_light_emmit, diffuse_light_delete);
 
     return (material_t *)diff_light_new;
 }
 
-material_t      *diffuse_light_new_with_colour(color_t albedo, double intensity) {
-    return diffuse_light_new_with_tex(solid_colour_new(albedo), intensity);
+material_t      *diffuse_light_new_with_colour(color_t albedo) {
+    return diffuse_light_new_with_tex(solid_colour_new(albedo));
 }

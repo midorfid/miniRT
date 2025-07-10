@@ -67,7 +67,7 @@ int main(void) {
 
     // choose scene
     // TODO render_context_new and different scenes should have same vars values
-    scene_id_t scene_id = SCENE_QUAD;
+    scene_id_t scene_id = SCENE_CORNELL_BOX_EMPTY;
     switch(scene_id) {
         case SCENE_BOUNCING_SPHERES:
             render->camera.samples_per_pixel = 10;
@@ -249,7 +249,7 @@ int main(void) {
     render = render_context_new(render, mlx, image);
     // init threads
     
-    int             num_threads = 8;
+    int             num_threads = 1;
     pthread_mutex_t      *process_mutex = malloc(sizeof(pthread_mutex_t));
     pthread_mutex_init(process_mutex, NULL);
     thread_pool_t   *pool = thread_pool_init(num_threads);
@@ -287,7 +287,6 @@ int main(void) {
 
     // Wait for all chunks to finish rendering
     // This is a simple "busy-wait" loop. It checks if all tasks are done.
-    printf("processed: %d, total: %d\n", processed_chunks, total_chunks);
     while (processed_chunks < total_chunks)
     {
         // Sleep for a short duration to avoid maxing out the CPU.
@@ -312,7 +311,8 @@ int main(void) {
     // Now destroy the mutex.
     pthread_mutex_destroy(process_mutex);
     free(process_mutex); // You were missing this free!
-
+    mlx_image_to_window(mlx, image, 0, 0);
+    mlx_loop(mlx);
     // Finally, terminate MLX42.
     mlx_terminate(mlx);
 

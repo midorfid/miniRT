@@ -158,7 +158,7 @@ hittable_list_t     *cornell_box_empty() {
     material_t *red   = mt_lambertian_new_with_colour(color(.65, .05, .05));
     material_t *white = mt_lambertian_new_with_colour(color(.73, .73, .73));
     material_t *green = mt_lambertian_new_with_colour(color(.12, .45, .15));
-    material_t *light = diffuse_light_new_with_colour(color(1, 1, 1), 15);
+    material_t *light = diffuse_light_new_with_colour(color(4, 4, 4));
 
     hittable_list_add(world, quad_new(point3(555,0,0), vec3(0,555,0), vec3(0,0,555), green));
     hittable_list_add(world, quad_new(point3(0,0,0), vec3(0,555,0), vec3(0,0,555), red));
