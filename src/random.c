@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "../include/random.h"
+#include "./threads/thread.h"
 
 struct rt_mt19937_s
 {
@@ -20,7 +21,7 @@ struct rt_mt19937_s
     uint64_t *MT;
 };
 
-static struct rt_mt19937_s gs_generator = {
+static THREAD_LOCAL struct rt_mt19937_s gs_generator = {
     .index = UINT64_MAX
 };
 

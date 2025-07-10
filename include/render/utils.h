@@ -24,10 +24,10 @@ static inline double random_double_nolimits(void)
 static inline double random_double(double min, double max)
 {
     // return min + (max - min) * random_double_nolimits();
-    return min + (max - min) * 0.5 / (RANDOM_MAX + 0.0);
+    return min + (max - min) * rt_random() / (RANDOM_MAX + 0.0);
 }
 
-static int     my_random_int(int min, int max) {
+static inline int my_random_int(int min, int max) {
     return (int)(random_double(min, max+1));
 }
 

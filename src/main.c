@@ -12,6 +12,8 @@ int save_image_to_png(mlx_image_t* image, const char* filename);
 
 void    render_pixel_chunk(void *param) {
     render_context_t *render = (render_context_t *)param;
+    
+    rt_random_seed(render->random_seed);
     for(int i = render->height + render->y_start - 1; i >= render->y_start; --i) {
         for (int j = render->x_start; j < render->x_start + render->width; ++j) {
             vec3_t color = vec3(0.0, 0.0, 0.0);
@@ -65,7 +67,7 @@ int main(void) {
 
     // choose scene
     // TODO render_context_new and different scenes should have same vars values
-    scene_id_t scene_id = SCENE_CORNELL_BOX_EMPTY;
+    scene_id_t scene_id = SCENE_QUAD;
     switch(scene_id) {
         case SCENE_BOUNCING_SPHERES:
             render->camera.samples_per_pixel = 10;
@@ -247,7 +249,7 @@ int main(void) {
     render = render_context_new(render, mlx, image);
     // init threads
     
-    int             num_threads = 1;
+    int             num_threads = 8;
     pthread_mutex_t      *process_mutex = malloc(sizeof(pthread_mutex_t));
     pthread_mutex_init(process_mutex, NULL);
     thread_pool_t   *pool = thread_pool_init(num_threads);
@@ -274,6 +276,7 @@ int main(void) {
             arg->process_mutex = process_mutex;
             arg->processed_chunks = &processed_chunks;
             arg->total_chunks = total_chunks;
+            arg->random_seed = initial_seed + ((uint64_t)i << 32 | (uint64_t)j);
             arg->x_start = j * CHUNK;
             arg->y_start = i * CHUNK;
             arg->width = render->image.image_width - j * CHUNK < CHUNK ? render->image.image_width - j * CHUNK : CHUNK;

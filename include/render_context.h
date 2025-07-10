@@ -67,6 +67,7 @@ typedef struct render_context_s {
     pthread_mutex_t          *process_mutex;
     int                 *processed_chunks;
     int                 total_chunks;
+    uint64_t            random_seed;
     // render_fn_t         render_function;
 
     // chunk
