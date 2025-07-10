@@ -1,17 +1,24 @@
 #include "../include/render_context.h"
 #include <pthread.h>
+#include "../include/stb_image_write.h"
+#include <unistd.h>
 
 #define SCREEN_WIDTH 1000
 #define SCREEN_HEIGHT 1000
 
 #define CHUNK 32
 
+int save_image_to_png(mlx_image_t* image, const char* filename);
+
 void    render_pixel_chunk(void *param) {
     render_context_t *render = (render_context_t *)param;
-    
     for(int i = render->height + render->y_start - 1; i >= render->y_start; --i) {
         for (int j = render->x_start; j < render->x_start + render->width; ++j) {
             vec3_t color = vec3(0.0, 0.0, 0.0);
+            
+            // printf("  Processing pixel (x:%d, y:%d)...\n", j, i);
+            // fflush(stdout); // This forces the output to print immediately
+            
             for (int s_i = 0; s_i < render->camera.sqrt_spp; ++s_i) {
                 for (int s_j = 0; s_j < render->camera.sqrt_spp; ++s_j) {
                     ray_t r = get_ray(i, j, s_i, s_j, &render->render_p, render->camera.camera_center, &render->camera.lens, render->camera.rec1p_sqrt_spp); 
@@ -54,7 +61,7 @@ int main(void) {
 
 
     // choose scene
-    scene_id_t scene_id = SCENE_QUAD;
+    scene_id_t scene_id = SCENE_FIVE_SPHERES;
     switch(scene_id) {
         case SCENE_BOUNCING_SPHERES:
             render->camera.samples_per_pixel = 10;
@@ -100,7 +107,31 @@ int main(void) {
             break;
 
         case SCENE_TOUCHING_SPHERES:
+            render->image.aspect_ratio      = 1.0;
+            render->image.image_width       = 600;
+            render->camera.samples_per_pixel = 20;
+            render->camera.max_depth         = 50;
+
+            render->pov.vfov        = 40;
+            render->camera.lookfrom = point3(0, 0, 0.1);
+            render->camera.lookat   = point3(0, 0, -1);
+            render->camera.vup      = vec3(0,1,0);
+
             render->world = touching_spheres();
+            break;
+
+        case SCENE_FIVE_SPHERES:
+            render->image.aspect_ratio      = 16.0 / 9.0;
+            render->image.image_width       = 400;
+            render->camera.samples_per_pixel = 10;
+            render->camera.max_depth         = 50;
+
+            render->pov.vfov        = 90;
+            render->camera.lookfrom = point3(-2, 2, 1);
+            render->camera.lookat   = point3(0, 0, -1);
+            render->camera.vup      = vec3(0,1,0);
+
+            render->world = five_spheres();
             break;
 
         case SCENE_QUAD:
@@ -213,7 +244,7 @@ int main(void) {
 
     // init threads
     
-    int             num_threads = 2;
+    int             num_threads = 1;
     pthread_mutex_t      *process_mutex = malloc(sizeof(pthread_mutex_t));
     pthread_mutex_init(process_mutex, NULL);
     thread_pool_t   *pool = thread_pool_init(num_threads);
@@ -233,10 +264,10 @@ int main(void) {
             arg->mlx = render->mlx;
             arg->mlx_image = render->mlx_image;
             arg->image = render->image;
-            arg->pov = arg->pov;
-            arg->camera = arg->camera;
-            arg->render_p = arg->render_p;
-            arg->world = arg->world;
+            arg->pov = render->pov;
+            arg->camera = render->camera;
+            arg->render_p = render->render_p;
+            arg->world = render->world;
             arg->process_mutex = process_mutex;
             arg->processed_chunks = &processed_chunks;
             arg->total_chunks = total_chunks;
@@ -244,18 +275,43 @@ int main(void) {
             arg->y_start = i * CHUNK;
             arg->width = render->image.image_width - j * CHUNK < CHUNK ? render->image.image_width - j * CHUNK : CHUNK;
             arg->height = render->image.image_height - i * CHUNK < CHUNK ? render->image.image_height - i * CHUNK : CHUNK;
-            
             schedule_work(pool, render_pixel_chunk, arg, render_worker_complete);
         }
     }
 
-    //clean up
-    pthread_mutex_destroy(process_mutex);
+    // Wait for all chunks to finish rendering
+    // This is a simple "busy-wait" loop. It checks if all tasks are done.
+    printf("processed: %d, total: %d\n", processed_chunks, total_chunks);
+    while (processed_chunks < total_chunks)
+    {
+        // Sleep for a short duration to avoid maxing out the CPU.
+        usleep(10000); // Sleep for 10 milliseconds.
+    }
+    
+    // Print the final progress bar line.
+    fprintf(stderr, "\rProgress: %d/%d chunks (%3d%%)\n", total_chunks, total_chunks, 100);
+
+    printf("Rendering complete in %.2f seconds.\n", (double)(clock() - start) / CLOCKS_PER_SEC);
+
+    // Save the final image to "output.png"
+    // Make sure your save_image_to_png function is defined elsewhere.
+    if (!save_image_to_png(image, "output.png")) {
+        fprintf(stderr, "Failed to save the output image.\n");
+    }
+
+    // --- Clean up ---
+    // Destroy the thread pool first to ensure all threads are stopped.
     thread_pool_destroy(pool);
-    printf("Rendering complete in %.2f\n", (double)(clock() - start) / CLOCKS_PER_SEC);
-    // mlx_close_hook(mlx, &esc_exit, NULL);
-    mlx_loop(mlx);
+
+    // Now destroy the mutex.
+    pthread_mutex_destroy(process_mutex);
+    free(process_mutex); // You were missing this free!
+
+    // Finally, terminate MLX42.
     mlx_terminate(mlx);
+
+    printf("Program finished and resources cleaned up.\n");
+    
     return(0);
 }
 

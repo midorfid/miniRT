@@ -2,3 +2,10 @@
 build/
 lib/Libft/CMakeFiles/
 lib/get_next_line/CMakeLists.txt
+output.png
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+devcontainer.json
+miniRT
+.devcontainer

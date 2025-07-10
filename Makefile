@@ -208,6 +208,33 @@ get_next_line/fast:
 	$(MAKE) -f lib/get_next_line/CMakeFiles/get_next_line.dir/build.make lib/get_next_line/CMakeFiles/get_next_line.dir/build
 .PHONY : get_next_line/fast
 
+src/image_save.o: src/image_save.c.o
+
+.PHONY : src/image_save.o
+
+# target to build an object file
+src/image_save.c.o:
+	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/image_save.c.o
+.PHONY : src/image_save.c.o
+
+src/image_save.i: src/image_save.c.i
+
+.PHONY : src/image_save.i
+
+# target to preprocess a source file
+src/image_save.c.i:
+	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/image_save.c.i
+.PHONY : src/image_save.c.i
+
+src/image_save.s: src/image_save.c.s
+
+.PHONY : src/image_save.s
+
+# target to generate assembly for a file
+src/image_save.c.s:
+	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/image_save.c.s
+.PHONY : src/image_save.c.s
+
 src/main.o: src/main.c.o
 
 .PHONY : src/main.o
@@ -980,6 +1007,9 @@ help:
 	@echo "... ft"
 	@echo "... mlx42"
 	@echo "... get_next_line"
+	@echo "... src/image_save.o"
+	@echo "... src/image_save.i"
+	@echo "... src/image_save.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

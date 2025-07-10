@@ -42,7 +42,6 @@ static bool     mt_lambertian_scatter(const material_t *material, const ray_t *r
         scatter_dir = rec->normal;
     *scattered = ray(rec->p, scatter_dir, ray_in->time);
     *attenuation = texture_t_get_value(diffuse->texture, rec->u, rec->v, &rec->p);
-
     return (true);
 }
 

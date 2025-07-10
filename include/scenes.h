@@ -17,6 +17,7 @@ typedef enum scene_id_s {
     SCENE_PERLIN_SPHERES,
     SCENE_EARTH,
     SCENE_FINAL,
+    SCENE_FIVE_SPHERES,
 } scene_id_t;
 
 hittable_list_t             *earth();
@@ -30,5 +31,6 @@ hittable_list_t             *cornell_box_standard();
 hittable_list_t             *checkered_spheres();
 hittable_list_t             *touching_spheres();
 hittable_list_t             *bouncing_spheres();
+hittable_list_t             *five_spheres();
 
 #endif
