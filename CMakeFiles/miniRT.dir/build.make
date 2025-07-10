@@ -369,18 +369,18 @@ CMakeFiles/miniRT.dir/src/render/material_dielectric.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/miniRT.dir/src/render/material_dielectric.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /workspaces/miniRT/src/render/material_dielectric.c -o CMakeFiles/miniRT.dir/src/render/material_dielectric.c.s
 
-CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o: CMakeFiles/miniRT.dir/flags.make
-CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o: src/render/material_diffuse_light.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspaces/miniRT/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building C object CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o   -c /workspaces/miniRT/src/render/material_diffuse_light.c
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: CMakeFiles/miniRT.dir/flags.make
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: src/render/diffuse_light.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/workspaces/miniRT/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building C object CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o   -c /workspaces/miniRT/src/render/diffuse_light.c
 
-CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /workspaces/miniRT/src/render/material_diffuse_light.c > CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.i
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/miniRT.dir/src/render/diffuse_light.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /workspaces/miniRT/src/render/diffuse_light.c > CMakeFiles/miniRT.dir/src/render/diffuse_light.c.i
 
-CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /workspaces/miniRT/src/render/material_diffuse_light.c -o CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.s
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/miniRT.dir/src/render/diffuse_light.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /workspaces/miniRT/src/render/diffuse_light.c -o CMakeFiles/miniRT.dir/src/render/diffuse_light.c.s
 
 CMakeFiles/miniRT.dir/src/render/material_lambertian.c.o: CMakeFiles/miniRT.dir/flags.make
 CMakeFiles/miniRT.dir/src/render/material_lambertian.c.o: src/render/material_lambertian.c
@@ -460,7 +460,7 @@ miniRT_OBJECTS = \
 "CMakeFiles/miniRT.dir/src/render_context.c.o" \
 "CMakeFiles/miniRT.dir/src/scenes.c.o" \
 "CMakeFiles/miniRT.dir/src/render/material_dielectric.c.o" \
-"CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o" \
+"CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o" \
 "CMakeFiles/miniRT.dir/src/render/material_lambertian.c.o" \
 "CMakeFiles/miniRT.dir/src/render/material_metal.c.o" \
 "CMakeFiles/miniRT.dir/src/threads/thread_pool.c.o" \
@@ -493,7 +493,7 @@ miniRT: CMakeFiles/miniRT.dir/src/render/material_isotropic.c.o
 miniRT: CMakeFiles/miniRT.dir/src/render_context.c.o
 miniRT: CMakeFiles/miniRT.dir/src/scenes.c.o
 miniRT: CMakeFiles/miniRT.dir/src/render/material_dielectric.c.o
-miniRT: CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o
+miniRT: CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o
 miniRT: CMakeFiles/miniRT.dir/src/render/material_lambertian.c.o
 miniRT: CMakeFiles/miniRT.dir/src/render/material_metal.c.o
 miniRT: CMakeFiles/miniRT.dir/src/threads/thread_pool.c.o

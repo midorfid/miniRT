@@ -75,7 +75,7 @@ typedef struct render_context_s {
 } render_context_t;
 
 
-render_context_t        *render_context_new(mlx_t *mlx, mlx_image_t *mlx_img);
+render_context_t        *render_context_new(render_context_t *render_contxt, mlx_t *mlx, mlx_image_t *mlx_img);
 
 static void        image_settings_init(image_t *image);
 

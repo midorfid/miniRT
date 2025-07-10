@@ -2,7 +2,7 @@
 #include "../include/scenes.h"
 #include "../include/render/hittable.h"
 #include "../include/textures/checker_pattern.h"
-
+#include "../include/textures/perlin.h"
 
 hittable_list_t     *earth() {
     // auto earth_texture = make_shared<image_texture>("earthmap.jpg");
@@ -143,31 +143,31 @@ hittable_list_t     *simple_light() {
 }
 
 hittable_list_t     *perlin_spheres() {
-    // hittable_list world;
-// 
-    // auto pertext = make_shared<noise_texture>();
-    // world.add(make_shared<sphere>(point3(0,-1000,0), 1000, make_shared<lambertian>(pertext)));
-    // world.add(make_shared<sphere>(point3(0,2,0), 2, make_shared<lambertian>(pertext)));
+    hittable_list_t *world = hittable_list_innit(2);
 
-    return NULL;
+    material_t *pertext = mt_lambertian_new_with_tex(perlin_new(4.0));
+    hittable_list_add(world, sphere_new(point3(0,-1000,0), 1000, pertext));
+    hittable_list_add(world, sphere_new(point3(0,2,0), 2, material_claim(pertext)));
+
+    return world;
 }
 
 hittable_list_t     *cornell_box_empty() {
-    // hittable_list world;
-// 
-    // auto red   = make_shared<lambertian>(color(.65, .05, .05));
-    // auto white = make_shared<lambertian>(color(.73, .73, .73));
-    // auto green = make_shared<lambertian>(color(.12, .45, .15));
-    // auto light = make_shared<diffuse_light>(color(15, 15, 15));
-// 
-    // world.add(make_shared<quad>(point3(555,0,0), vec3(0,555,0), vec3(0,0,555), green));
-    // world.add(make_shared<quad>(point3(0,0,0), vec3(0,555,0), vec3(0,0,555), red));
-    // world.add(make_shared<quad>(point3(343, 554, 332), vec3(-130,0,0), vec3(0,0,-105), light));
-    // world.add(make_shared<quad>(point3(0,0,0), vec3(555,0,0), vec3(0,0,555), white));
-    // world.add(make_shared<quad>(point3(555,555,555), vec3(-555,0,0), vec3(0,0,-555), white));
-    // world.add(make_shared<quad>(point3(0,0,555), vec3(555,0,0), vec3(0,555,0), white));
+    hittable_list_t *world = hittable_list_innit(6);
 
-    return NULL;
+    material_t *red   = mt_lambertian_new_with_colour(color(.65, .05, .05));
+    material_t *white = mt_lambertian_new_with_colour(color(.73, .73, .73));
+    material_t *green = mt_lambertian_new_with_colour(color(.12, .45, .15));
+    material_t *light = diffuse_light_new_with_colour(color(1, 1, 1), 15);
+
+    hittable_list_add(world, quad_new(point3(555,0,0), vec3(0,555,0), vec3(0,0,555), green));
+    hittable_list_add(world, quad_new(point3(0,0,0), vec3(0,555,0), vec3(0,0,555), red));
+    hittable_list_add(world, quad_new(point3(343, 554, 332), vec3(-130,0,0), vec3(0,0,-105), light));
+    hittable_list_add(world, quad_new(point3(0,0,0), vec3(555,0,0), vec3(0,0,555), white));
+    hittable_list_add(world, quad_new(point3(555,555,555), vec3(-555,0,0), vec3(0,0,-555), white));
+    hittable_list_add(world, quad_new(point3(0,0,555), vec3(555,0,0), vec3(0,555,0), white));
+
+    return world;
 }
 
 hittable_list_t         *cornell_box_standard() {

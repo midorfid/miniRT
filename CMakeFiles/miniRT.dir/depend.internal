@@ -109,6 +109,22 @@ CMakeFiles/miniRT.dir/src/render/constant_medium.c.o
  /workspaces/miniRT/include/textures/texture.h
  /workspaces/miniRT/include/textures/texture_shared.h
  /workspaces/miniRT/src/render/constant_medium.c
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o
+ /workspaces/miniRT/include/lens.h
+ /workspaces/miniRT/include/random.h
+ /workspaces/miniRT/include/render/color.h
+ /workspaces/miniRT/include/render/hit_record.h
+ /workspaces/miniRT/include/render/material.h
+ /workspaces/miniRT/include/render/material_shared.h
+ /workspaces/miniRT/include/render/ray.h
+ /workspaces/miniRT/include/render/utils.h
+ /workspaces/miniRT/include/render/vec3.h
+ /workspaces/miniRT/include/render_plane.h
+ /workspaces/miniRT/include/textures/solid_colour.h
+ /workspaces/miniRT/include/textures/texture.h
+ /workspaces/miniRT/include/textures/texture_shared.h
+ /workspaces/miniRT/src/render/diffuse_light.c
+ /workspaces/miniRT/src/render/material_diffuse_light.h
 CMakeFiles/miniRT.dir/src/render/hit_record.c.o
  /workspaces/miniRT/include/lens.h
  /workspaces/miniRT/include/random.h
@@ -194,20 +210,6 @@ CMakeFiles/miniRT.dir/src/render/material_dielectric.c.o
  /workspaces/miniRT/include/textures/texture.h
  /workspaces/miniRT/include/textures/texture_shared.h
  /workspaces/miniRT/src/render/material_dielectric.c
-CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o
- /workspaces/miniRT/include/lens.h
- /workspaces/miniRT/include/random.h
- /workspaces/miniRT/include/render/color.h
- /workspaces/miniRT/include/render/hit_record.h
- /workspaces/miniRT/include/render/material.h
- /workspaces/miniRT/include/render/material_shared.h
- /workspaces/miniRT/include/render/ray.h
- /workspaces/miniRT/include/render/utils.h
- /workspaces/miniRT/include/render/vec3.h
- /workspaces/miniRT/include/render_plane.h
- /workspaces/miniRT/include/textures/texture.h
- /workspaces/miniRT/include/textures/texture_shared.h
- /workspaces/miniRT/src/render/material_diffuse_light.c
 CMakeFiles/miniRT.dir/src/render/material_isotropic.c.o
  /workspaces/miniRT/include/lens.h
  /workspaces/miniRT/include/random.h
@@ -357,6 +359,7 @@ CMakeFiles/miniRT.dir/src/scenes.c.o
  /workspaces/miniRT/include/render_plane.h
  /workspaces/miniRT/include/scenes.h
  /workspaces/miniRT/include/textures/checker_pattern.h
+ /workspaces/miniRT/include/textures/perlin.h
  /workspaces/miniRT/include/textures/solid_colour.h
  /workspaces/miniRT/include/textures/texture.h
  /workspaces/miniRT/include/textures/texture_shared.h

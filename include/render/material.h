@@ -23,4 +23,8 @@ material_t      *mt_lambertian_new_with_tex(texture_t *tex);
 
 material_t      *mt_lambertian_new_with_colour(color_t colour);
 
+material_t      *diffuse_light_new_with_tex(texture_t *texture, double intensity);
+
+material_t      *diffuse_light_new_with_colour(color_t albedo, double intensity);
+
 #endif

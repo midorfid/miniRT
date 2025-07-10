@@ -31,7 +31,7 @@ set (SRCS
     src/render_context.c
     src/scenes.c
     src/render/material_dielectric.c
-    src/render/material_diffuse_light.c
+    src/render/diffuse_light.c
     src/render/material_lambertian.c
     src/render/material_metal.c
     src/threads/thread_pool.c 

@@ -25,12 +25,7 @@ color_t     ray_color(const ray_t *r, const hittable_list_t *world, int depth) {
     return(vec3_sum(vec3_scaled_return(vec3(1.0,1.0,1.0), 1.0-a), vec3_scaled_return(vec3(0.5,0.7,1.0), a)));
 }
 
-render_context_t        *render_context_new(mlx_t *mlx, mlx_image_t *mlx_img) {
-    render_context_t *render_contxt = calloc(1, sizeof(render_context_t));
-    if (render_contxt == NULL) {
-        printf("render context new failed");
-        return NULL;
-    }
+render_context_t        *render_context_new(render_context_t *render_contxt, mlx_t *mlx, mlx_image_t *mlx_img) {
     render_contxt->mlx = mlx;
     render_contxt->mlx_image = mlx_img;
     render_context_init(render_contxt);
@@ -38,8 +33,6 @@ render_context_t        *render_context_new(mlx_t *mlx, mlx_image_t *mlx_img) {
 }
 
 static void        image_settings_init(image_t *image) {
-    image->aspect_ratio = 16.0 / 9.0;
-    image->image_width = 600;
     image->image_height = (int)(image->image_width / image->aspect_ratio);
     image->image_height = (image->image_height < 1) ? 1 : image->image_height;
 
@@ -55,14 +48,9 @@ static void        lens_init(defocus_blur_t *lens, vec3_t u, vec3_t v) {
 }
 
 static void        camera_settings_init(camera_t *camera) {
-    camera->samples_per_pixel = 10;
     camera->sqrt_spp = sqrt(camera->samples_per_pixel);
     camera->pixel_sample_scale = 1.0 / (camera->sqrt_spp * camera->sqrt_spp);
     camera->rec1p_sqrt_spp = 1.0 / camera->sqrt_spp; 
-    camera->max_depth = 50;
-    camera->lookfrom = point3(-2, 2, 1);
-    camera->lookat   = point3(0, 0, -1);
-    camera->vup      = vec3(0,1,0);
     // color_t             background = color_in(0.70, 0.80, 1.00); // TODO
     camera->lens.focus_dist = vec3_len(vec3_sub_return(camera->lookfrom, camera->lookat)); // Distance from camera lookfrom point to plane of perfect focus
 
@@ -77,7 +65,6 @@ static void        camera_settings_init(camera_t *camera) {
 
 static void        viewpoint_init(viewpoint_t *view_p, double focus_dist, double width_to_height_ratio, vec3_t u, vec3_t negative_v) {
     // Determine viewpoint dimensions
-    view_p->vfov = 90;
     view_p->theta = DEG_TO_RAD(view_p->vfov);
     view_p->h = tan(view_p->theta/2);
     view_p->viewport_height = 2 * view_p->h * focus_dist;

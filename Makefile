@@ -424,6 +424,33 @@ src/render/constant_medium.c.s:
 	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/render/constant_medium.c.s
 .PHONY : src/render/constant_medium.c.s
 
+src/render/diffuse_light.o: src/render/diffuse_light.c.o
+
+.PHONY : src/render/diffuse_light.o
+
+# target to build an object file
+src/render/diffuse_light.c.o:
+	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o
+.PHONY : src/render/diffuse_light.c.o
+
+src/render/diffuse_light.i: src/render/diffuse_light.c.i
+
+.PHONY : src/render/diffuse_light.i
+
+# target to preprocess a source file
+src/render/diffuse_light.c.i:
+	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/render/diffuse_light.c.i
+.PHONY : src/render/diffuse_light.c.i
+
+src/render/diffuse_light.s: src/render/diffuse_light.c.s
+
+.PHONY : src/render/diffuse_light.s
+
+# target to generate assembly for a file
+src/render/diffuse_light.c.s:
+	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/render/diffuse_light.c.s
+.PHONY : src/render/diffuse_light.c.s
+
 src/render/hit_record.o: src/render/hit_record.c.o
 
 .PHONY : src/render/hit_record.o
@@ -585,33 +612,6 @@ src/render/material_dielectric.s: src/render/material_dielectric.c.s
 src/render/material_dielectric.c.s:
 	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/render/material_dielectric.c.s
 .PHONY : src/render/material_dielectric.c.s
-
-src/render/material_diffuse_light.o: src/render/material_diffuse_light.c.o
-
-.PHONY : src/render/material_diffuse_light.o
-
-# target to build an object file
-src/render/material_diffuse_light.c.o:
-	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o
-.PHONY : src/render/material_diffuse_light.c.o
-
-src/render/material_diffuse_light.i: src/render/material_diffuse_light.c.i
-
-.PHONY : src/render/material_diffuse_light.i
-
-# target to preprocess a source file
-src/render/material_diffuse_light.c.i:
-	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.i
-.PHONY : src/render/material_diffuse_light.c.i
-
-src/render/material_diffuse_light.s: src/render/material_diffuse_light.c.s
-
-.PHONY : src/render/material_diffuse_light.s
-
-# target to generate assembly for a file
-src/render/material_diffuse_light.c.s:
-	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.s
-.PHONY : src/render/material_diffuse_light.c.s
 
 src/render/material_isotropic.o: src/render/material_isotropic.c.o
 
@@ -1031,6 +1031,9 @@ help:
 	@echo "... src/render/constant_medium.o"
 	@echo "... src/render/constant_medium.i"
 	@echo "... src/render/constant_medium.s"
+	@echo "... src/render/diffuse_light.o"
+	@echo "... src/render/diffuse_light.i"
+	@echo "... src/render/diffuse_light.s"
 	@echo "... src/render/hit_record.o"
 	@echo "... src/render/hit_record.i"
 	@echo "... src/render/hit_record.s"
@@ -1049,9 +1052,6 @@ help:
 	@echo "... src/render/material_dielectric.o"
 	@echo "... src/render/material_dielectric.i"
 	@echo "... src/render/material_dielectric.s"
-	@echo "... src/render/material_diffuse_light.o"
-	@echo "... src/render/material_diffuse_light.i"
-	@echo "... src/render/material_diffuse_light.s"
 	@echo "... src/render/material_isotropic.o"
 	@echo "... src/render/material_isotropic.i"
 	@echo "... src/render/material_isotropic.s"

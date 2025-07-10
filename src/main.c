@@ -57,11 +57,15 @@ int main(void) {
 
     render_context_t    *render; 
 
-    render = render_context_new(mlx, image);
-
+    render = calloc(1, sizeof(render_context_t));
+    if (render == NULL) {
+        printf("render context new failed");
+        return -1;
+    }
 
     // choose scene
-    scene_id_t scene_id = SCENE_FIVE_SPHERES;
+    // TODO render_context_new and different scenes should have same vars values
+    scene_id_t scene_id = SCENE_CORNELL_BOX_EMPTY;
     switch(scene_id) {
         case SCENE_BOUNCING_SPHERES:
             render->camera.samples_per_pixel = 10;
@@ -137,7 +141,7 @@ int main(void) {
         case SCENE_QUAD:
             render->image.aspect_ratio      = 1.0;
             render->image.image_width       = 400;
-            render->camera.samples_per_pixel = 100;
+            render->camera.samples_per_pixel = 10;
             render->camera.max_depth         = 50;
 
             render->pov.vfov        = 80;
@@ -145,7 +149,6 @@ int main(void) {
             render->camera.lookat   = point3(0,0,0);
             render->camera.vup      = vec3(0,1,0);
 
-            render->camera.lens.defocus_angle = 0;
             render->world = quads();
             break;
 
@@ -198,7 +201,7 @@ int main(void) {
         case SCENE_SIMPLE_LIGHT:
             render->image.aspect_ratio      = 16.0 / 9.0;
             render->image.image_width       = 400;
-            render->camera.samples_per_pixel = 100;
+            render->camera.samples_per_pixel = 10;
             render->camera.max_depth         = 50;
 
             render->pov.vfov     = 20;
@@ -241,7 +244,7 @@ int main(void) {
             // TODO print to log
             return EXIT_FAILURE;
     }
-
+    render = render_context_new(render, mlx, image);
     // init threads
     
     int             num_threads = 1;

@@ -109,6 +109,22 @@ CMakeFiles/miniRT.dir/src/render/constant_medium.c.o: include/textures/texture.h
 CMakeFiles/miniRT.dir/src/render/constant_medium.c.o: include/textures/texture_shared.h
 CMakeFiles/miniRT.dir/src/render/constant_medium.c.o: src/render/constant_medium.c
 
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/lens.h
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/random.h
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/render/color.h
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/render/hit_record.h
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/render/material.h
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/render/material_shared.h
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/render/ray.h
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/render/utils.h
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/render/vec3.h
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/render_plane.h
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/textures/solid_colour.h
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/textures/texture.h
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/textures/texture_shared.h
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: src/render/diffuse_light.c
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: src/render/material_diffuse_light.h
+
 CMakeFiles/miniRT.dir/src/render/hit_record.c.o: include/lens.h
 CMakeFiles/miniRT.dir/src/render/hit_record.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/render/hit_record.c.o: include/render/hit_record.h
@@ -193,20 +209,6 @@ CMakeFiles/miniRT.dir/src/render/material_dielectric.c.o: include/render_plane.h
 CMakeFiles/miniRT.dir/src/render/material_dielectric.c.o: include/textures/texture.h
 CMakeFiles/miniRT.dir/src/render/material_dielectric.c.o: include/textures/texture_shared.h
 CMakeFiles/miniRT.dir/src/render/material_dielectric.c.o: src/render/material_dielectric.c
-
-CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o: include/lens.h
-CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o: include/random.h
-CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o: include/render/color.h
-CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o: include/render/hit_record.h
-CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o: include/render/material.h
-CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o: include/render/material_shared.h
-CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o: include/render/ray.h
-CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o: include/render/utils.h
-CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o: include/render/vec3.h
-CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o: include/render_plane.h
-CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o: include/textures/texture.h
-CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o: include/textures/texture_shared.h
-CMakeFiles/miniRT.dir/src/render/material_diffuse_light.c.o: src/render/material_diffuse_light.c
 
 CMakeFiles/miniRT.dir/src/render/material_isotropic.c.o: include/lens.h
 CMakeFiles/miniRT.dir/src/render/material_isotropic.c.o: include/random.h
@@ -356,6 +358,7 @@ CMakeFiles/miniRT.dir/src/scenes.c.o: include/render/vec3.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/render_plane.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/scenes.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/textures/checker_pattern.h
+CMakeFiles/miniRT.dir/src/scenes.c.o: include/textures/perlin.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/textures/solid_colour.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/textures/texture.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/textures/texture_shared.h
