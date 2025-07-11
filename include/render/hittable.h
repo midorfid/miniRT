@@ -5,6 +5,7 @@
 #include "hit_record.h"
 #include "aabb.h"
 #include <stdbool.h>
+#include "../textures/texture.h"
 
 typedef struct hittable_s hittable_t;
 
@@ -34,5 +35,10 @@ hittable_t                  *quad_new(point3_t Q, vec3_t u, vec3_t v, material_t
 
 hittable_t                  *box_new(point3_t min, point3_t max, material_t *material);
 
+hittable_t                  *const_medium_new_with_tex(hittable_t *boundary, double density, texture_t *texture);
+
+hittable_t                  *const_medium_new_with_colour(hittable_t *boundary, double density, double albedo);
+
+hittable_t                  *mv_sphere_new(point3_t center_start, point3_t center_end, double time_start, double time_end, double radius, material_t *material);
 
 #endif

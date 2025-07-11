@@ -65,6 +65,8 @@ aabb.h
 /workspaces/miniRT/include/render/aabb.h
 stdbool.h
 -
+../textures/texture.h
+/workspaces/miniRT/include/textures/texture.h
 
 /workspaces/miniRT/include/render/hittable_list.h
 hittable.h

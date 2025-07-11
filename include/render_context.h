@@ -71,6 +71,7 @@ typedef struct render_context_s {
     // render_fn_t         render_function;
 
     // chunk
+    vec3_t              *chunk_buffer;
     int                 width, height;
     int                 x_start, y_start;
 } render_context_t;

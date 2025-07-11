@@ -17,7 +17,7 @@ typedef struct tp_work_item_s {
 
     thread_pool_work_t                  work;
     void                                *work_args;
-    thread_pool_work_completion_sb_t    completion_sb;
+    // thread_pool_work_completion_sb_t    completion_sb;
 
     TAILQ_ENTRY(tp_work_item_s)         next;
 } tp_work_item_t;
@@ -35,7 +35,7 @@ struct thread_pool_s {
 
 static void     *thread_func(void *params);
 static int      enqueue_work(thread_pool_t *tp, thread_work_type_t type, thread_pool_work_t work,
-                        void *work_args, thread_pool_work_completion_sb_t completion_sb);
+                        void *work_args);
 
 thread_pool_t           *thread_pool_init(size_t num_of_threads) {
     thread_pool_t       *tp = calloc(1, sizeof(thread_pool_t));
@@ -69,16 +69,16 @@ thread_pool_t           *thread_pool_init(size_t num_of_threads) {
 
 void                thread_pool_destroy(thread_pool_t *tp) {
     for (int i = 0; i < tp->num_of_threads; ++i) {
-        enqueue_work(tp, THREAD_WORK_TYPE_STOP, NULL, NULL, NULL);
+        enqueue_work(tp, THREAD_WORK_TYPE_STOP, NULL, NULL);
     }
     for (int i = 0; i < tp->num_of_threads; ++i) {
         pthread_join(tp->threads[i], NULL);
     }
     while (!TAILQ_EMPTY(&tp->work_queue)) {
         tp_work_item_t *item = TAILQ_FIRST(&tp->work_queue);
-        if (NULL != item->completion_sb) {
-            item->completion_sb(1, item->work_args);
-        }
+        // if (NULL != item->completion_sb) {
+        //     item->completion_sb(1, item->work_args);
+        // }
         TAILQ_REMOVE(&tp->work_queue, item, next);
         free(item);
     }
@@ -88,8 +88,8 @@ void                thread_pool_destroy(thread_pool_t *tp) {
     free(tp);
 }
 
-int                 schedule_work(thread_pool_t *tp, thread_pool_work_t work, void *work_args, thread_pool_work_completion_sb_t completion_sb) {
-    return enqueue_work(tp, THREAD_WORK_TYPE_REGULAR, work, work_args, completion_sb);
+int                 schedule_work(thread_pool_t *tp, thread_pool_work_t work, void *work_args) {
+    return enqueue_work(tp, THREAD_WORK_TYPE_REGULAR, work, work_args);
 }
 
 static void         *thread_func(void *params) {
@@ -121,25 +121,26 @@ static void         *thread_func(void *params) {
             return NULL;
         }
         copy.work(copy.work_args);
-        copy.completion_sb(0, copy.work_args);
+        // copy.completion_sb(0, copy.work_args);
     }
     return NULL;
 }
 
 static int          enqueue_work(thread_pool_t *tp, thread_work_type_t type, thread_pool_work_t work,
-                                void *work_args, thread_pool_work_completion_sb_t completion_sb)
+                                void *work_args)
 {
-    pthread_mutex_lock(&tp->work_mutex);
-
     tp_work_item_t      *new_item = calloc(1, sizeof(tp_work_item_t));
     if (new_item == NULL) {
         printf("enqueue_work() failed");
         return -1;
     }
+
+    pthread_mutex_lock(&tp->work_mutex);
+
     new_item->type = type;
     new_item->work = work;
     new_item->work_args = work_args;
-    new_item->completion_sb = completion_sb;
+    // new_item->completion_sb = completion_sb;
 
     TAILQ_INSERT_TAIL(&tp->work_queue, new_item, next);
     

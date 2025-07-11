@@ -36,6 +36,7 @@ CMakeFiles/miniRT.dir/src/main.c.o: src/threads/thread_pool.h
 
 CMakeFiles/miniRT.dir/src/random.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/random.c.o: src/random.c
+CMakeFiles/miniRT.dir/src/random.c.o: src/threads/thread.h
 
 CMakeFiles/miniRT.dir/src/render/aabb.c.o: include/lens.h
 CMakeFiles/miniRT.dir/src/render/aabb.c.o: include/random.h
@@ -154,6 +155,7 @@ CMakeFiles/miniRT.dir/src/render/hittable.c.o: src/render/hittable.c
 CMakeFiles/miniRT.dir/src/render/hittable_list.c.o: include/lens.h
 CMakeFiles/miniRT.dir/src/render/hittable_list.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/render/hittable_list.c.o: include/render/aabb.h
+CMakeFiles/miniRT.dir/src/render/hittable_list.c.o: include/render/color.h
 CMakeFiles/miniRT.dir/src/render/hittable_list.c.o: include/render/hit_record.h
 CMakeFiles/miniRT.dir/src/render/hittable_list.c.o: include/render/hittable.h
 CMakeFiles/miniRT.dir/src/render/hittable_list.c.o: include/render/hittable_list.h
@@ -161,6 +163,7 @@ CMakeFiles/miniRT.dir/src/render/hittable_list.c.o: include/render/ray.h
 CMakeFiles/miniRT.dir/src/render/hittable_list.c.o: include/render/utils.h
 CMakeFiles/miniRT.dir/src/render/hittable_list.c.o: include/render/vec3.h
 CMakeFiles/miniRT.dir/src/render/hittable_list.c.o: include/render_plane.h
+CMakeFiles/miniRT.dir/src/render/hittable_list.c.o: include/textures/texture.h
 CMakeFiles/miniRT.dir/src/render/hittable_list.c.o: src/render/hittable_list.c
 
 CMakeFiles/miniRT.dir/src/render/instance.c.o: include/lens.h
@@ -347,11 +350,14 @@ CMakeFiles/miniRT.dir/src/render_context.c.o: src/threads/thread_pool.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/lens.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/render/aabb.h
+CMakeFiles/miniRT.dir/src/scenes.c.o: include/render/bvh.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/render/color.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/render/hit_record.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/render/hittable.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/render/hittable_list.h
+CMakeFiles/miniRT.dir/src/scenes.c.o: include/render/hittable_shared.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/render/material.h
+CMakeFiles/miniRT.dir/src/scenes.c.o: include/render/material_shared.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/render/ray.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/render/utils.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/render/vec3.h

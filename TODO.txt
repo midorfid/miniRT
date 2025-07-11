@@ -1,0 +1,6 @@
+jpg to texture
+rotation, translation
+light scatter
+multi-threading speed up
+encapsulate everything
+test torus

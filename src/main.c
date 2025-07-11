@@ -6,7 +6,7 @@
 #define SCREEN_WIDTH 1000
 #define SCREEN_HEIGHT 1000
 
-#define CHUNK 32
+#define CHUNK 128
 
 int save_image_to_png(mlx_image_t* image, const char* filename);
 
@@ -28,12 +28,16 @@ void    render_pixel_chunk(void *param) {
                 }
             }
             color = vec3_scaled_return(color, render->camera.pixel_sample_scale);
-            mlx_put_pixel(render->mlx_image, j, i, return_color(color));
+            int local_i = i - render->y_start;
+            int local_j = j - render->x_start;
+            int index = local_i * render->width + local_j;
+            render->chunk_buffer[index] = color;
+            // mlx_put_pixel(render->mlx_image, j, i, return_color(color));
         }
     }
 }
 
-static void            render_worker_complete(int status, void *args);
+// static void            render_worker_complete(int status, void *args);
 
 int main(void) {
 
@@ -67,7 +71,7 @@ int main(void) {
 
     // choose scene
     // TODO render_context_new and different scenes should have same vars values
-    scene_id_t scene_id = SCENE_CORNELL_BOX_EMPTY;
+    scene_id_t scene_id = SCENE_QUAD;
     switch(scene_id) {
         case SCENE_BOUNCING_SPHERES:
             render->camera.samples_per_pixel = 10;
@@ -85,7 +89,7 @@ int main(void) {
         case SCENE_CORNELL_BOX_EMPTY:
             render->image.aspect_ratio      = 1.0;
             render->image.image_width       = 600;
-            render->camera.samples_per_pixel = 200;
+            render->camera.samples_per_pixel = 50;
             render->camera.max_depth         = 50;
 
             render->pov.vfov        = 40;
@@ -232,6 +236,7 @@ int main(void) {
 
         case SCENE_FINAL:
             render->image.aspect_ratio      = 1.0;
+            // 800 10000 40 or 400 250 4
 
             render->pov.vfov     = 40;
             render->camera.lookfrom = point3(478, 278, -600);
@@ -281,17 +286,22 @@ int main(void) {
             arg->y_start = i * CHUNK;
             arg->width = render->image.image_width - j * CHUNK < CHUNK ? render->image.image_width - j * CHUNK : CHUNK;
             arg->height = render->image.image_height - i * CHUNK < CHUNK ? render->image.image_height - i * CHUNK : CHUNK;
-            schedule_work(pool, render_pixel_chunk, arg, render_worker_complete);
+            arg->chunk_buffer = malloc(arg->width * arg->height * sizeof(vec3_t));
+            if (arg->chunk_buffer == NULL) {
+                printf("main render failed");
+                return(EXIT_FAILURE);
+            }
+            schedule_work(pool, render_pixel_chunk, arg);
         }
     }
 
     // Wait for all chunks to finish rendering
     // This is a simple "busy-wait" loop. It checks if all tasks are done.
-    while (processed_chunks < total_chunks)
-    {
+    // while (processed_chunks < total_chunks)
+    // {
         // Sleep for a short duration to avoid maxing out the CPU.
-        usleep(10000); // Sleep for 10 milliseconds.
-    }
+    usleep(100000); // Sleep for 10 milliseconds.
+    // }
     
     // Print the final progress bar line.
     fprintf(stderr, "\rProgress: %d/%d chunks (%3d%%)\n", total_chunks, total_chunks, 100);
@@ -311,8 +321,8 @@ int main(void) {
     // Now destroy the mutex.
     pthread_mutex_destroy(process_mutex);
     free(process_mutex); // You were missing this free!
-    mlx_image_to_window(mlx, image, 0, 0);
-    mlx_loop(mlx);
+    // mlx_image_to_window(mlx, image, 0, 0);
+    // mlx_loop(mlx);
     // Finally, terminate MLX42.
     mlx_terminate(mlx);
 
@@ -321,25 +331,34 @@ int main(void) {
     return(0);
 }
 
-static void            render_worker_complete(int status, void *args) {
-    render_context_t *worker_args = args;
+// static void            render_worker_complete(int status, void *args) {
+//     render_context_t *worker_args = args;
 
-    pthread_mutex_lock(worker_args->process_mutex);
+//     pthread_mutex_lock(worker_args->process_mutex);
 
-    int old_processed_chunks = *worker_args->processed_chunks;
-    *worker_args->processed_chunks += 1;
-    int current_processed_chunks = *worker_args->processed_chunks;
-    int old_percentage = 100 * old_processed_chunks / worker_args->total_chunks;
-    int current_percentage = 100 * current_processed_chunks / worker_args->total_chunks;
+//     for(int i = worker_args->height + worker_args->y_start - 1; i >= worker_args->y_start; --i) {
+//         for (int j = worker_args->x_start; j < worker_args->x_start + worker_args->width; ++j) {
+//             int local_i = i - worker_args->y_start;
+//             int local_j = j - worker_args->x_start;
+//             int index = local_i * worker_args->width + local_j;
+//             vec3_t final_color = worker_args->chunk_buffer[index];
+//             mlx_put_pixel(worker_args->mlx_image, j, i, return_color(final_color));
+//         }
+//     }
+//     int old_processed_chunks = *worker_args->processed_chunks;
+//     *worker_args->processed_chunks += 1;
+//     int current_processed_chunks = *worker_args->processed_chunks;
+//     int old_percentage = 100 * old_processed_chunks / worker_args->total_chunks;
+//     int current_percentage = 100 * current_processed_chunks / worker_args->total_chunks;
 
-    if (current_percentage != old_percentage)
-    {
-        fprintf(stderr, "\rProgress: %d/%d chunks (%3d%%)", current_processed_chunks, worker_args->total_chunks,
-                current_percentage);
-        fflush(stderr);
-    }
+//     if (current_percentage != old_percentage)
+//     {
+//         fprintf(stderr, "\rProgress: %d/%d chunks (%3d%%)", current_processed_chunks, worker_args->total_chunks,
+//                 current_percentage);
+//         fflush(stderr);
+//     }
     
-    pthread_mutex_unlock(worker_args->process_mutex);
+//     pthread_mutex_unlock(worker_args->process_mutex);
 
-    free(worker_args);
-}
+//     free(worker_args);
+// }

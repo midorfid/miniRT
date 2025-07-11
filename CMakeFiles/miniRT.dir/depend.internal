@@ -37,6 +37,7 @@ CMakeFiles/miniRT.dir/src/main.c.o
 CMakeFiles/miniRT.dir/src/random.c.o
  /workspaces/miniRT/include/random.h
  /workspaces/miniRT/src/random.c
+ /workspaces/miniRT/src/threads/thread.h
 CMakeFiles/miniRT.dir/src/render/aabb.c.o
  /workspaces/miniRT/include/lens.h
  /workspaces/miniRT/include/random.h
@@ -155,6 +156,7 @@ CMakeFiles/miniRT.dir/src/render/hittable_list.c.o
  /workspaces/miniRT/include/lens.h
  /workspaces/miniRT/include/random.h
  /workspaces/miniRT/include/render/aabb.h
+ /workspaces/miniRT/include/render/color.h
  /workspaces/miniRT/include/render/hit_record.h
  /workspaces/miniRT/include/render/hittable.h
  /workspaces/miniRT/include/render/hittable_list.h
@@ -162,6 +164,7 @@ CMakeFiles/miniRT.dir/src/render/hittable_list.c.o
  /workspaces/miniRT/include/render/utils.h
  /workspaces/miniRT/include/render/vec3.h
  /workspaces/miniRT/include/render_plane.h
+ /workspaces/miniRT/include/textures/texture.h
  /workspaces/miniRT/src/render/hittable_list.c
 CMakeFiles/miniRT.dir/src/render/instance.c.o
  /workspaces/miniRT/include/lens.h
@@ -348,11 +351,14 @@ CMakeFiles/miniRT.dir/src/scenes.c.o
  /workspaces/miniRT/include/lens.h
  /workspaces/miniRT/include/random.h
  /workspaces/miniRT/include/render/aabb.h
+ /workspaces/miniRT/include/render/bvh.h
  /workspaces/miniRT/include/render/color.h
  /workspaces/miniRT/include/render/hit_record.h
  /workspaces/miniRT/include/render/hittable.h
  /workspaces/miniRT/include/render/hittable_list.h
+ /workspaces/miniRT/include/render/hittable_shared.h
  /workspaces/miniRT/include/render/material.h
+ /workspaces/miniRT/include/render/material_shared.h
  /workspaces/miniRT/include/render/ray.h
  /workspaces/miniRT/include/render/utils.h
  /workspaces/miniRT/include/render/vec3.h
