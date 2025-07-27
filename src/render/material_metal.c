@@ -14,7 +14,7 @@ typedef struct metal_s
     double      fuzz;
 } metal_t;
 
-static bool     mt_metal_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered);
+static bool     mt_metal_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered, double *pdf_value);
 
 static void     mt_metal_delete(material_t *material);
 
@@ -24,7 +24,7 @@ material_t      *mt_metal_new(color_t albedo, double fuzz) {
         return (NULL);
     material->albedo = albedo;
     material->fuzz = fuzz < 1 ? fuzz : 1;
-    material_base_innit(&material->base, MATERIAL_TYPE_METAL, mt_metal_scatter, NULL, mt_metal_delete);
+    material_base_innit(&material->base, MATERIAL_TYPE_METAL, mt_metal_scatter, NULL, mt_metal_delete, NULL);
 
     return (material_t *)material;
 }

@@ -11,6 +11,8 @@
 int save_image_to_png(mlx_image_t* image, const char* filename);
 
 
+void keep_alive_hook(void *param) {}
+
 void    render_pixel_chunk(void *param) {
     render_context_t *render = (render_context_t *)param;
     
@@ -53,6 +55,9 @@ int main(void) {
     image = mlx_new_image(mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
     if (!image || mlx_image_to_window(mlx, image, 0, 0) < 0)
         return(1);
+    
+    mlx_image_to_window(mlx, image, 0, 0);
+    mlx_loop_hook(mlx, keep_alive_hook, NULL);
 
     render_context_t    *render; 
 
@@ -64,7 +69,7 @@ int main(void) {
 
     // choose scene
     // TODO render_context_new and different scenes should have same vars values
-    scene_id_t scene_id = SCENE_QUAD;
+    scene_id_t scene_id = SCENE_CORNELL_BOX_STANDARD;
     switch(scene_id) {
         case SCENE_BOUNCING_SPHERES:
             render->camera.samples_per_pixel = 10;
@@ -97,7 +102,7 @@ int main(void) {
         case SCENE_CORNELL_BOX_STANDARD:
             render->image.aspect_ratio      = 1.0;
             render->image.image_width       = 600;
-            render->camera.samples_per_pixel = 200;
+            render->camera.samples_per_pixel = 20;
             render->camera.max_depth         = 50;
 
             render->pov.vfov        = 40;
@@ -247,7 +252,7 @@ int main(void) {
     render = render_context_new(render, mlx, image);
     // init threads
     
-    int             num_threads = 2;
+    int             num_threads = 8;
     pthread_mutex_t      *process_mutex = malloc(sizeof(pthread_mutex_t));
     pthread_mutex_init(process_mutex, NULL);
     thread_pool_t   *pool = thread_pool_init(num_threads);
@@ -307,8 +312,9 @@ int main(void) {
 
     pthread_mutex_destroy(process_mutex);
     free(process_mutex);
-    // mlx_image_to_window(mlx, image, 0, 0);
-    // mlx_loop(mlx);
+
+    mlx_loop(mlx);
+
     mlx_terminate(mlx);
 
     return(0);

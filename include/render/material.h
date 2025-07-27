@@ -6,7 +6,9 @@
 
 typedef struct material_s material_t;
 
-bool    material_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered);
+bool    material_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered, double pdf_value);
+
+double    material_scatter_pdf(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, const ray_t *scattered);
 
 color_t     material_emmit(const material_t *material, double u, double v, const point3_t *point);
 

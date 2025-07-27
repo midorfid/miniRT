@@ -23,15 +23,19 @@ typedef color_t (*material_emmit_met)(const material_t *material, double u, doub
 
 typedef void (*material_delete_met)(material_t *material);
 
+typedef double (*material_scatter_pdf_met)(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, const ray_t *scattered);
+
 struct material_s {
     material_type_t     type;
     int                 refcount;
 
-    material_scatter_met    scatter;
-    material_emmit_met      emmit;
-    material_delete_met     delete;
+    material_scatter_met        scatter;
+    material_emmit_met          emmit;
+    material_delete_met         delete;
+    material_scatter_pdf_met    scatter_pdf;
 };
 
-void    material_base_innit(material_t *material_base, material_type_t type, material_scatter_met scatter, material_emmit_met emmit, material_delete_met delete);
+void    material_base_innit(material_t *material_base, material_type_t type, material_scatter_met scatter, 
+                            material_emmit_met emmit, material_delete_met delete, material_scatter_pdf_met scatter_pdf);
 
 #endif

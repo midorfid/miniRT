@@ -1,23 +1,36 @@
 #include "../include/render_context.h"
 
+static inline vec3_t random_cosine_direction() {
+    double r1 = random_double(0.0, 1.0);
+    double r2 = random_double(0.0, 1.0);
+
+    double phi = 2 * PI * r1;
+    double x = cos(phi) * sqrt(r2);
+    double y = sin(phi) * sqrt(r2);
+    double z = sqrt(1 - r2);
+
+    return vec3(x,y,z);
+}
+
 color_t     ray_color(const ray_t *r, const hittable_list_t *world, int depth) {
     hit_record_t    rec;
 
     if (depth <= 0)
         return vec3(0.0, 0.0, 0.0);
-    // printf("ray origin: %f, %f, %f\n", r->orig.x, r->orig.y, r->orig.z);
-    // printf("ray dir: %f, %f, %f\n", r->dir.x, r->dir.y, r->dir.z);
-    fflush(stdout);
     if (hittable_list_hit_test(r, world, 0.001, INFINITY, &rec)) {
         
         ray_t       scattered;
         color_t     attenuation;
         color_t     color_from_emmision = material_emmit(rec.mat, rec.u, rec.v, &rec.p);
-        if (material_scatter(rec.mat, r, &rec, &attenuation, &scattered)) {
-            color_t color_from_scatter = vec3_multi(ray_color(&scattered, world, depth-1), attenuation); 
+        if (material_scatter(rec.mat, r, &rec, &attenuation, &scattered, pdf_value)) {
+            double      scatter_pdf = material_scatter_pdf(rec.mat, r, &rec, &scattered);
+            double      pdf_value = scatter_pdf;
+
+            vec3_t a = vec3_scaled_return(attenuation, scatter_pdf);
+            vec3_t b = vec3_multi(a, ray_color(&scattered, world, depth-1));
+            color_t color_from_scatter = vec3_multi(b, 1.0 / pdf_value); 
             return vec3_sum(color_from_emmision, color_from_scatter);
         }
-        // printf("color x: %f, y: %f, z: %f\n", color_from_emmision.x, color_from_emmision.y, color_from_emmision.z);
         return (color_from_emmision);
     }
     vec3_t  unit_direction = vec3_normalize(r->dir);

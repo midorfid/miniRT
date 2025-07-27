@@ -1,6 +1,6 @@
 #include "../../include/render/material_isotropic.h"
 
-static bool         isotropic_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered) {
+static bool         isotropic_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered, double *pdf_value) {
     if (material == NULL || material->type != MATERIAL_TYPE_ISOTROPIC) {
         printf("isotropic_scatter() failed");
         return false;
@@ -8,6 +8,7 @@ static bool         isotropic_scatter(const material_t *material, const ray_t *r
     isotropic_t *iso = (isotropic_t *)material;
     *scattered = ray(rec->p, vec3_random_unit_vec(), ray_in->time);
     *attenuation = texture_t_get_value(iso->albedo, rec->u, rec->v, &rec->p);
+    *pdf_value = 1.0 / (4.0 * PI);
 
     return true;
 }
@@ -22,6 +23,16 @@ static void         isotropic_delete(material_t *mat) {
     free(todelete);
 }
 
+static double iso_scatter_pdf(const material_t *mat, const ray_t *ray_in, const hit_record_t *rec, const ray_t *scattered) {
+    if (mat == NULL || mat->type != MATERIAL_TYPE_ISOTROPIC) {
+        printf("iso_scatter_pdf() failed");
+        return 0.0;
+    }
+
+    return 1.0 / (4.0 * PI);
+}
+
+
 material_t          *isotropic_new_with_tex(texture_t *tex) {
     isotropic_t *new = calloc(1, sizeof(isotropic_t));
     if (new == NULL) {
@@ -29,7 +40,7 @@ material_t          *isotropic_new_with_tex(texture_t *tex) {
         return NULL;
     }
     new->albedo = tex;
-    material_base_innit(&new->base, MATERIAL_TYPE_ISOTROPIC, isotropic_scatter, NULL, isotropic_delete);
+    material_base_innit(&new->base, MATERIAL_TYPE_ISOTROPIC, isotropic_scatter, NULL, isotropic_delete, iso_scatter_pdf);
     return (material_t *)new;
 }
 

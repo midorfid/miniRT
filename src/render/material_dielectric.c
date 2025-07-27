@@ -22,7 +22,7 @@ material_t      *mt_dielectric_new(double refraction_index) {
     if (material == NULL)
         return (NULL);
     material->refraction_index = refraction_index;
-    material_base_innit(&material->base, MATERIAL_TYPE_DIELECTRIC, mt_dielectric_scatter, NULL, mt_dielectric_delete);
+    material_base_innit(&material->base, MATERIAL_TYPE_DIELECTRIC, mt_dielectric_scatter, NULL, mt_dielectric_delete, NULL);
 
     return (material_t *)material;
 }
@@ -33,7 +33,7 @@ static double reflectance(double cosine, double refraction_index) {
     return (r0 + (1-r0)*pow((1 - cosine),5));
 }
 
-static bool     mt_dielectric_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered) {
+static bool     mt_dielectric_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered, double *pdf_value) {
     (void)ray_in;
 
     dielectric_t    *dielectric = (dielectric_t *)material;
