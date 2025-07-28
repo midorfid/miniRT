@@ -1,8 +1,8 @@
 #include "../../include/render/matrix3.h"
 
-void        matrix_default(matrix3_t *matrix) {
-    matrix[0].matrix[0][0] = matrix[0].matrix[1][1] = matrix[0].matrix[2][2] = 1;
-    matrix[1].matrix[0][0] = matrix[1].matrix[1][1] = matrix[1].matrix[2][2] = 1;
+void        matrix_default(matrix3_t matrix) {
+    matrix3_t result = {0};
+    result.matrix[0][0] = result.matrix[1][1] = result.matrix[2][2] = 1;
 }
 
 matrix3_t     matrix_rotation_y(double angle) {

@@ -4,17 +4,14 @@
 #include "hittable_shared.h"
 #include "matrix3.h"
 
-#define RAY 0
-#define BB 1
-
 typedef struct instance_s {
     hittable_t  base;
 
     hittable_t  *hittable;
 
     vec3_t      offset;          
-    matrix3_t   rotate_transform_m[2];
-    matrix3_t   scale_transform_m[2];
+    matrix3_t   transform_matrix_ray;
+    matrix3_t   transform_matrix_bb;
 
     aabb_t      bbox;
 } instance_t;
@@ -31,8 +28,8 @@ void            instance_translate(hittable_t *hittable, vec3_t offset);
 
 void            instance_rotate_y(hittable_t *hittable, double angle);
 
-void            instance_uniform_scale(hittable_t *hittable, double uniform_scale);
-
-void            instance_scale(hittable_t *hittable, vec3_t scale_vector);
+// void            instance_uniform_scale(hittable_t *hittable, double uniform_scale);
+// 
+// void            instance_scale(hittable_t *hittable, vec3_t scale_vector);
 
 #endif

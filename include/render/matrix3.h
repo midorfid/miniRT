@@ -10,7 +10,7 @@ typedef union matrix3_s {
 } matrix3_t;
 
 
-void            matrix_default(matrix3_t *matrix);
+void            matrix_default(matrix3_t matrix);
 
 matrix3_t        matrix_rotation_y(double angle);
 

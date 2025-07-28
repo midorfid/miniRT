@@ -190,16 +190,16 @@ hittable_list_t         *cornell_box_standard() {
     hittable_list_add(world, quad_new(point3(0,0,555), vec3(555,0,0), vec3(0,555,0), material_claim(white)));
     hittable_list_add(world, quad_new(point3(343, 554, 332), vec3(-130,0,0), vec3(0,0,-105), light));
 
-    // hittable_t *box1 = instance_new(box_new(point3(0,0,0), point3(165,330,165), material_claim(white)));
-    hittable_t *box1 = box_new(point3(130, 0, 65), point3(295, 165, 230), material_claim(white));
-    // instance_rotate_y(box1, 15);
-    // instance_translate(box1, vec3(265,0,295));
+    hittable_t *box1 = instance_new(box_new(point3(0,0,0), point3(165,330,165), material_claim(white)));
+    // hittable_t *box1 = box_new(point3(130, 0, 65), point3(295, 165, 230), material_claim(white));
+    instance_rotate_y(box1, 15);
+    instance_translate(box1, vec3(265,0,295));
     hittable_list_add(world, box1);
 
-    // hittable_t *box2 = instance_new(box_new(point3(0,0,0), point3(165,165,165), material_claim(white)));
-    hittable_t *box2 = box_new(point3(265, 0, 295), point3(430, 330, 460), material_claim(white));
-    // instance_rotate_y(box2, -18);
-    // instance_translate(box2, vec3(130,0,65));
+    hittable_t *box2 = instance_new(box_new(point3(0,0,0), point3(165,165,165), material_claim(white)));
+    // hittable_t *box2 = box_new(point3(265, 0, 295), point3(430, 330, 460), material_claim(white));
+    instance_rotate_y(box2, -18);
+    instance_translate(box2, vec3(130,0,65));
     hittable_list_add(world, box2);
 
     hittable_list_t *result = hittable_list_innit(1);

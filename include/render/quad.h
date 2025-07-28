@@ -14,6 +14,8 @@ typedef struct my_quad_s {
 
     vec3_t      w; // cached vector for calculating planar coords alpha, beta.
 
+    double      u_len_squared, v_len_squared;
+
     material_t *material;
 } my_quad_t;
 
