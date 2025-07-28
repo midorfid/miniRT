@@ -15,11 +15,11 @@ typedef struct lambertian_s
     texture_t   *texture;
 } lambertian_t;
 
-static bool     mt_lambertian_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered, double *pdf);
+static bool     mt_lambertian_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered);
 
 static void     mt_lambertian_delete(material_t *material);
 
-static double   mt_lambertian_scatter_pdf(const ray_t *ray_in, const hit_record *rec, const ray_t *scattered);
+static double   mt_lambertian_scatter_pdf(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, const ray_t *scattered);
 
 material_t      *mt_lambertian_new_with_tex(texture_t *tex) {
     lambertian_t    *material = calloc(1, sizeof(lambertian_t));
@@ -35,7 +35,7 @@ material_t      *mt_lambertian_new_with_colour(color_t colour) {
     return mt_lambertian_new_with_tex(solid_colour_new_with_components(colour.x, colour.y, colour.z));
 }
 
-static bool     mt_lambertian_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered, double *pdf) {
+static bool     mt_lambertian_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered) {
     (void)ray_in;
 
     onb_t   uvw;
@@ -44,11 +44,12 @@ static bool     mt_lambertian_scatter(const material_t *material, const ray_t *r
 
     uvw = onb_init(&rec->normal);
 
-    vec3_t scatter_dir = onb_transform(&random_cosine_direction(), &uvw);
+    vec3_t random_cos_dir = random_cosine_direction();
+    vec3_t scatter_dir = onb_transform(&random_cos_dir, &uvw);
 
     *scattered = ray(rec->p, vec3_normalize(scatter_dir), ray_in->time);
     *attenuation = texture_t_get_value(diffuse->texture, rec->u, rec->v, &rec->p);
-    *pdf = vec3_dot(uvw.axis[W], scattered->dir) / PI;
+    // *pdf = vec3_dot(uvw.axis[W], scattered->dir) / PI;
 
     return (true);
 }

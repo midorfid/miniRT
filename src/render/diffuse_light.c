@@ -34,7 +34,7 @@ material_t      *diffuse_light_new_with_tex(texture_t *texture) {
     }
     diff_light_new->texture = texture;
     // diff_light_new->intensity = intensity;        
-    material_base_innit(&diff_light_new->base, MATERIAL_TYPE_DIFFUSE_LIGHT, NULL, diffuse_light_emmit, diffuse_light_delete);
+    material_base_innit(&diff_light_new->base, MATERIAL_TYPE_DIFFUSE_LIGHT, NULL, diffuse_light_emmit, diffuse_light_delete, NULL);
 
     return (material_t *)diff_light_new;
 }

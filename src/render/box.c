@@ -38,14 +38,14 @@ static hittable_list_t     *box_sides_init(point3_t a, point3_t b, material_t *m
     point3_t min = vec3(fmin(a.x, b.x), fmin(a.y, b.y), fmin(a.z, b.z));
     point3_t max = vec3(fmax(a.x, b.x), fmax(a.y, b.y), fmax(a.z, b.z));
 
-    vec3_t  dx = vec3((max.x, min.x), 0.0, 0.0);
-    vec3_t  dy = vec3(0.0, (max.y, min.y), 0.0);
-    vec3_t  dz = vec3(0.0, 0.0, (max.z, min.z));
+    vec3_t  dx = vec3((max.x - min.x), 0.0, 0.0);
+    vec3_t  dy = vec3(0.0, (max.y - min.y), 0.0);
+    vec3_t  dz = vec3(0.0, 0.0, (max.z - min.z));
 
-    hittable_list_add(sides, quad_new(vec3(min.x, min.y, max.z), dx, dy, material)); // front
+    hittable_list_add(sides, quad_new(vec3(min.x, min.y, max.z), dy, dx, material)); // front
     hittable_list_add(sides, quad_new(vec3(max.x, min.y, max.z), vec3_negative(&dz), dy, material)); // right side
     hittable_list_add(sides, quad_new(vec3(min.x, min.y, min.z), dz, dy, material)); // left side
-    hittable_list_add(sides, quad_new(vec3(max.x, min.y, min.z), vec3_negative(&dx), dy, material)); // back
+    hittable_list_add(sides, quad_new(vec3(max.x, min.y, min.z), dy, vec3_negative(&dx), material)); // back
     hittable_list_add(sides, quad_new(vec3(min.x, min.y, min.z), dx, dz, material)); // bottom
     hittable_list_add(sides, quad_new(vec3(min.x, max.y, max.z), dx, vec3_negative(&dz), material)); // top
 
@@ -53,11 +53,11 @@ static hittable_list_t     *box_sides_init(point3_t a, point3_t b, material_t *m
 }
 
 static my_box_t        box_innit(point3_t a, point3_t b, material_t *material) {
-    my_box_t    box = 
-    {
-        .min = a,
-        .max = b,
-    };
+    my_box_t    box;
+    
+    box.min = a;
+    box.max = b;
+
     box.sides = box_sides_init(a, b, material); 
 
     hittable_innit(&box.base, HITTABLE_TYPE_BOX, box_hit, box_bb, box_delete);

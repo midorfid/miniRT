@@ -80,6 +80,12 @@ aabb.h
 material_shared.h
 /workspaces/miniRT/include/render/material_shared.h
 
+/workspaces/miniRT/include/render/instance.h
+hittable_shared.h
+/workspaces/miniRT/include/render/hittable_shared.h
+matrix3.h
+/workspaces/miniRT/include/render/matrix3.h
+
 /workspaces/miniRT/include/render/material.h
 color.h
 /workspaces/miniRT/include/render/color.h
@@ -95,6 +101,10 @@ color.h
 /workspaces/miniRT/include/render/color.h
 material.h
 /workspaces/miniRT/include/render/material.h
+
+/workspaces/miniRT/include/render/matrix3.h
+vec3.h
+/workspaces/miniRT/include/render/vec3.h
 
 /workspaces/miniRT/include/render/moving_sphere.h
 sphere.h
@@ -192,21 +202,19 @@ time.h
 ../include/render/material.h
 /workspaces/miniRT/include/render/material.h
 
-/workspaces/miniRT/include/stb_image_write.h
-stdlib.h
--
-stdio.h
--
-stdarg.h
--
-stdlib.h
--
-string.h
--
-math.h
--
-assert.h
--
+/workspaces/miniRT/include/textures/checker_pattern.h
+texture.h
+/workspaces/miniRT/include/textures/texture.h
+solid_colour.h
+/workspaces/miniRT/include/textures/solid_colour.h
+
+/workspaces/miniRT/include/textures/perlin.h
+texture_shared.h
+/workspaces/miniRT/include/textures/texture_shared.h
+
+/workspaces/miniRT/include/textures/solid_colour.h
+texture_shared.h
+/workspaces/miniRT/include/textures/texture_shared.h
 
 /workspaces/miniRT/include/textures/texture.h
 ../render/color.h
@@ -226,15 +234,25 @@ stdint.h
 stdbool.h
 -
 
-/workspaces/miniRT/src/main.c
+/workspaces/miniRT/src/render_context.c
 ../include/render_context.h
 /workspaces/miniRT/include/render_context.h
-pthread.h
--
-../include/stb_image_write.h
-/workspaces/miniRT/include/stb_image_write.h
-unistd.h
--
+
+/workspaces/miniRT/src/scenes.c
+../include/render/hittable_list.h
+/workspaces/miniRT/include/render/hittable_list.h
+../include/scenes.h
+/workspaces/miniRT/include/scenes.h
+../include/render/hittable.h
+/workspaces/miniRT/include/render/hittable.h
+../include/textures/checker_pattern.h
+/workspaces/miniRT/include/textures/checker_pattern.h
+../include/textures/perlin.h
+/workspaces/miniRT/include/textures/perlin.h
+../include/render/bvh.h
+/workspaces/miniRT/include/render/bvh.h
+../include/render/instance.h
+/workspaces/miniRT/include/render/instance.h
 
 /workspaces/miniRT/src/threads/thread.h
 

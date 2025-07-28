@@ -142,6 +142,18 @@ static inline vec3_t refract(const vec3_t *uv, const vec3_t *n, double eta_over_
     return(vec3_sum(r_out_perp, r_out_parallel));
 }
 
+static inline vec3_t random_cosine_direction() {
+    double r1 = random_double(0.0, 1.0);
+    double r2 = random_double(0.0, 1.0);
+
+    double phi = 2 * PI * r1;
+    double x = cos(phi) * sqrt(r2);
+    double y = sin(phi) * sqrt(r2);
+    double z = sqrt(1 - r2);
+
+    return vec3(x,y,z);
+}
+
 // Point layer for vec3_t
 typedef vec3_t point3_t;
 #define point3(x, y ,z) vec3((x), (y), (z))

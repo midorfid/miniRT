@@ -33,7 +33,7 @@ static double reflectance(double cosine, double refraction_index) {
     return (r0 + (1-r0)*pow((1 - cosine),5));
 }
 
-static bool     mt_dielectric_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered, double *pdf_value) {
+static bool     mt_dielectric_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered) {
     (void)ray_in;
 
     dielectric_t    *dielectric = (dielectric_t *)material;

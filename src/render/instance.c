@@ -74,12 +74,23 @@ static bool     instance_hit(const hittable_t *hittable, const ray_t *ray, doubl
     offset_ray.dir = vec3_multi_by_matrix(&offset_ray.dir, &local_transform_m);
     if (!hittable_t_hit(instance->hittable, &offset_ray, tmin, tmax, rec))
         return false;
-    // if hits change the intersection point from object space to world space by inverse of the scale and rotation matrices
+    // matrix3_t forward_point_transform = instance->scale_transform_m[BB];
+    // matrix_multi_by_matrix(&forward_point_transform, instance->rotate_transform_m[BB]);
+    
+    // rec->p = vec3_multi_by_matrix(&rec->p, &forward_point_transform);
+    // vec3_add(&rec->p, instance->offset);
+    
+    // matrix3_t inversed_normal_transform = instance->scale_transform_m[RAY];
+    // matrix_multi_by_matrix(&inversed_normal_transform, instance->rotate_transform_m[RAY]);
+
+    // rec->normal = vec3_multi_by_matrix(&rec->normal, &inversed_normal_transform);
+    
     rec->p = vec3_multi_by_matrix(&rec->p, &local_transform_m);
     vec3_add(&rec->p, instance->offset);
     matrix3_t inversed_scale = matrix_inverse_scale(&instance->scale_transform_m[BB]);
     matrix_multi_by_matrix(&inversed_scale, instance->rotate_transform_m[BB]);
     rec->normal = vec3_multi_by_matrix(&rec->normal, &inversed_scale);
+
     set_front_face(ray, &rec->normal, rec);
 
     return true;
@@ -96,7 +107,7 @@ static bool     instance_bb(const hittable_t *hittable, double time0, double tim
     if (!hittable_t_bb(instance->hittable, time0, time1, &hittable_bb)) {
         return false;
     }
-    //scale && rotate
+      //scale && rotate
     vec3_t min = hittable_bb.min;
     vec3_t max = hittable_bb.max;
     matrix3_t   local_matrix = instance->scale_transform_m[BB];
@@ -115,8 +126,32 @@ static bool     instance_bb(const hittable_t *hittable, double time0, double tim
             }
         }
     }
-    //translate
     *out_bbox = aabb_two_points(vec3_sum(min, instance->offset), vec3_sum(max, instance->offset));
+    // matrix3_t   local_matrix = instance->scale_transform_m[BB];
+    // matrix_multi_by_matrix(&local_matrix, instance->rotate_transform_m[BB]);
+// 
+    // point3_t    first_corner = vec3(hittable_bb.min.x, hittable_bb.min.y, hittable_bb.min.z);
+    // vec3_t      transformed_first = vec3_multi_by_matrix(&first_corner, &local_matrix);
+// 
+    // vec3_t min_transformed_box = transformed_first;
+    // vec3_t max_transformed_box = transformed_first;
+// 
+    // for (int i = 0; i < 2; ++i) {
+        // for (int j = 0; j < 2; ++j) {
+            // for (int k = 0; k < 2; ++k) {
+                // point3_t p = vec3(i ? hittable_bb.max.x : hittable_bb.min.x,
+                                // j ? hittable_bb.max.y : hittable_bb.min.y,
+                                // k ? hittable_bb.max.z : hittable_bb.min.z);
+                // vec3_t test = vec3_multi_by_matrix(&p, &local_matrix);
+                // for (int c = 0; c < 3; ++c) {
+                    // min_transformed_box.components[c] = fmin(test.components[c], min_transformed_box.components[c]);
+                    // max_transformed_box.components[c] = fmax(test.components[c], max_transformed_box.components[c]);
+                // }
+            // }
+        // }
+    // }
+    //translate
+    // *out_bbox = aabb_two_points(vec3_sum(min_transformed_box, instance->offset), vec3_sum(max_transformed_box, instance->offset));
 
     return true;
 }

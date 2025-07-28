@@ -1,50 +1,54 @@
-
-# Consider dependencies only in project.
-set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
-
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
+  "C"
+  )
+# The set of files for implicit dependencies of each language:
+set(CMAKE_DEPENDS_CHECK_C
+  "/workspaces/miniRT/src/image_save.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/image_save.c.o"
+  "/workspaces/miniRT/src/main.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/main.c.o"
+  "/workspaces/miniRT/src/random.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/random.c.o"
+  "/workspaces/miniRT/src/render/aabb.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/aabb.c.o"
+  "/workspaces/miniRT/src/render/box.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/box.c.o"
+  "/workspaces/miniRT/src/render/bvh.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/bvh.c.o"
+  "/workspaces/miniRT/src/render/color.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/color.c.o"
+  "/workspaces/miniRT/src/render/constant_medium.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/constant_medium.c.o"
+  "/workspaces/miniRT/src/render/diffuse_light.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o"
+  "/workspaces/miniRT/src/render/hit_record.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/hit_record.c.o"
+  "/workspaces/miniRT/src/render/hittable.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/hittable.c.o"
+  "/workspaces/miniRT/src/render/hittable_list.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/hittable_list.c.o"
+  "/workspaces/miniRT/src/render/instance.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/instance.c.o"
+  "/workspaces/miniRT/src/render/material.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/material.c.o"
+  "/workspaces/miniRT/src/render/material_dielectric.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/material_dielectric.c.o"
+  "/workspaces/miniRT/src/render/material_isotropic.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/material_isotropic.c.o"
+  "/workspaces/miniRT/src/render/material_lambertian.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/material_lambertian.c.o"
+  "/workspaces/miniRT/src/render/material_metal.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/material_metal.c.o"
+  "/workspaces/miniRT/src/render/matrix3.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/matrix3.c.o"
+  "/workspaces/miniRT/src/render/moving_sphere.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/moving_sphere.c.o"
+  "/workspaces/miniRT/src/render/quad.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/quad.c.o"
+  "/workspaces/miniRT/src/render/sphere.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/sphere.c.o"
+  "/workspaces/miniRT/src/render_context.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render_context.c.o"
+  "/workspaces/miniRT/src/scenes.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/scenes.c.o"
+  "/workspaces/miniRT/src/textures/checker_pattern.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/textures/checker_pattern.c.o"
+  "/workspaces/miniRT/src/textures/perlin.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/textures/perlin.c.o"
+  "/workspaces/miniRT/src/textures/solid_colour.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/textures/solid_colour.c.o"
+  "/workspaces/miniRT/src/textures/texture.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/textures/texture.c.o"
+  "/workspaces/miniRT/src/threads/thread_pool.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/threads/thread_pool.c.o"
+  )
+set(CMAKE_C_COMPILER_ID "GNU")
+
+# The include file search paths:
+set(CMAKE_C_TARGET_INCLUDE_PATH
+  "include"
+  "lib/Libft/include"
+  "lib/MLX42/include"
+  "lib/get_next_line/include"
   )
 
-# The set of dependency files which are needed:
-set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/anton/projects/miniRT/src/image_save.c" "CMakeFiles/miniRT.dir/src/image_save.c.o" "gcc" "CMakeFiles/miniRT.dir/src/image_save.c.o.d"
-  "/home/anton/projects/miniRT/src/main.c" "CMakeFiles/miniRT.dir/src/main.c.o" "gcc" "CMakeFiles/miniRT.dir/src/main.c.o.d"
-  "/home/anton/projects/miniRT/src/random.c" "CMakeFiles/miniRT.dir/src/random.c.o" "gcc" "CMakeFiles/miniRT.dir/src/random.c.o.d"
-  "/home/anton/projects/miniRT/src/render/aabb.c" "CMakeFiles/miniRT.dir/src/render/aabb.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/aabb.c.o.d"
-  "/home/anton/projects/miniRT/src/render/box.c" "CMakeFiles/miniRT.dir/src/render/box.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/box.c.o.d"
-  "/home/anton/projects/miniRT/src/render/bvh.c" "CMakeFiles/miniRT.dir/src/render/bvh.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/bvh.c.o.d"
-  "/home/anton/projects/miniRT/src/render/color.c" "CMakeFiles/miniRT.dir/src/render/color.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/color.c.o.d"
-  "/home/anton/projects/miniRT/src/render/constant_medium.c" "CMakeFiles/miniRT.dir/src/render/constant_medium.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/constant_medium.c.o.d"
-  "/home/anton/projects/miniRT/src/render/diffuse_light.c" "CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o.d"
-  "/home/anton/projects/miniRT/src/render/hit_record.c" "CMakeFiles/miniRT.dir/src/render/hit_record.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/hit_record.c.o.d"
-  "/home/anton/projects/miniRT/src/render/hittable.c" "CMakeFiles/miniRT.dir/src/render/hittable.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/hittable.c.o.d"
-  "/home/anton/projects/miniRT/src/render/hittable_list.c" "CMakeFiles/miniRT.dir/src/render/hittable_list.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/hittable_list.c.o.d"
-  "/home/anton/projects/miniRT/src/render/instance.c" "CMakeFiles/miniRT.dir/src/render/instance.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/instance.c.o.d"
-  "/home/anton/projects/miniRT/src/render/material.c" "CMakeFiles/miniRT.dir/src/render/material.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/material.c.o.d"
-  "/home/anton/projects/miniRT/src/render/material_dielectric.c" "CMakeFiles/miniRT.dir/src/render/material_dielectric.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/material_dielectric.c.o.d"
-  "/home/anton/projects/miniRT/src/render/material_isotropic.c" "CMakeFiles/miniRT.dir/src/render/material_isotropic.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/material_isotropic.c.o.d"
-  "/home/anton/projects/miniRT/src/render/material_lambertian.c" "CMakeFiles/miniRT.dir/src/render/material_lambertian.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/material_lambertian.c.o.d"
-  "/home/anton/projects/miniRT/src/render/material_metal.c" "CMakeFiles/miniRT.dir/src/render/material_metal.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/material_metal.c.o.d"
-  "/home/anton/projects/miniRT/src/render/matrix3.c" "CMakeFiles/miniRT.dir/src/render/matrix3.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/matrix3.c.o.d"
-  "/home/anton/projects/miniRT/src/render/moving_sphere.c" "CMakeFiles/miniRT.dir/src/render/moving_sphere.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/moving_sphere.c.o.d"
-  "/home/anton/projects/miniRT/src/render/quad.c" "CMakeFiles/miniRT.dir/src/render/quad.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/quad.c.o.d"
-  "/home/anton/projects/miniRT/src/render/sphere.c" "CMakeFiles/miniRT.dir/src/render/sphere.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render/sphere.c.o.d"
-  "/home/anton/projects/miniRT/src/render_context.c" "CMakeFiles/miniRT.dir/src/render_context.c.o" "gcc" "CMakeFiles/miniRT.dir/src/render_context.c.o.d"
-  "/home/anton/projects/miniRT/src/scenes.c" "CMakeFiles/miniRT.dir/src/scenes.c.o" "gcc" "CMakeFiles/miniRT.dir/src/scenes.c.o.d"
-  "/home/anton/projects/miniRT/src/textures/checker_pattern.c" "CMakeFiles/miniRT.dir/src/textures/checker_pattern.c.o" "gcc" "CMakeFiles/miniRT.dir/src/textures/checker_pattern.c.o.d"
-  "/home/anton/projects/miniRT/src/textures/perlin.c" "CMakeFiles/miniRT.dir/src/textures/perlin.c.o" "gcc" "CMakeFiles/miniRT.dir/src/textures/perlin.c.o.d"
-  "/home/anton/projects/miniRT/src/textures/solid_colour.c" "CMakeFiles/miniRT.dir/src/textures/solid_colour.c.o" "gcc" "CMakeFiles/miniRT.dir/src/textures/solid_colour.c.o.d"
-  "/home/anton/projects/miniRT/src/textures/texture.c" "CMakeFiles/miniRT.dir/src/textures/texture.c.o" "gcc" "CMakeFiles/miniRT.dir/src/textures/texture.c.o.d"
-  "/home/anton/projects/miniRT/src/threads/thread_pool.c" "CMakeFiles/miniRT.dir/src/threads/thread_pool.c.o" "gcc" "CMakeFiles/miniRT.dir/src/threads/thread_pool.c.o.d"
-  )
-
-# Targets to which this target links which contain Fortran sources.
-set(CMAKE_Fortran_TARGET_LINKED_INFO_FILES
-  )
-
-# Targets to which this target links which contain Fortran sources.
-set(CMAKE_Fortran_TARGET_FORWARD_LINKED_INFO_FILES
+# Targets to which this target links.
+set(CMAKE_TARGET_LINKED_INFO_FILES
+  "/workspaces/miniRT/lib/Libft/CMakeFiles/ft.dir/DependInfo.cmake"
+  "/workspaces/miniRT/lib/MLX42/CMakeFiles/mlx42.dir/DependInfo.cmake"
+  "/workspaces/miniRT/lib/get_next_line/CMakeFiles/get_next_line.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

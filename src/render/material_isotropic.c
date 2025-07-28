@@ -1,6 +1,6 @@
 #include "../../include/render/material_isotropic.h"
 
-static bool         isotropic_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered, double *pdf_value) {
+static bool         isotropic_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered) {
     if (material == NULL || material->type != MATERIAL_TYPE_ISOTROPIC) {
         printf("isotropic_scatter() failed");
         return false;
@@ -8,7 +8,7 @@ static bool         isotropic_scatter(const material_t *material, const ray_t *r
     isotropic_t *iso = (isotropic_t *)material;
     *scattered = ray(rec->p, vec3_random_unit_vec(), ray_in->time);
     *attenuation = texture_t_get_value(iso->albedo, rec->u, rec->v, &rec->p);
-    *pdf_value = 1.0 / (4.0 * PI);
+    // *pdf_value = 1.0 / (4.0 * PI);
 
     return true;
 }

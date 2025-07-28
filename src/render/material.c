@@ -1,7 +1,7 @@
 #include "../../include/render/material_shared.h"
 #include "../../include/render/material.h"
 
-bool    material_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered, double *pdf_value) {
+bool    material_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered) {
     if (material == NULL) {
         printf("cannot proceed, material is unknown");
         return (false);
@@ -56,8 +56,8 @@ static void delete_base(material_t *material) {
     free(material);
 }
 
-static double scattering_pdf_base(const material_t *material, const ray_t *ray_in, const hit_record *rec, const ray_t *scattered) {
-    return 0;
+static double scattering_pdf_base(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, const ray_t *scattered) {
+    return 0.0;
 }
 
 

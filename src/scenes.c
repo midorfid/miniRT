@@ -4,6 +4,7 @@
 #include "../include/textures/checker_pattern.h"
 #include "../include/textures/perlin.h"
 #include "../include/render/bvh.h"
+#include "../include/render/instance.h"
 
 hittable_list_t     *earth() {
     // auto earth_texture = make_shared<image_texture>("earthmap.jpg");
@@ -15,7 +16,7 @@ hittable_list_t     *earth() {
 hittable_list_t         *quads() {
     hittable_list_t     *world;
 
-    world = hittable_list_innit(5);
+    world = hittable_list_innit(6);
 
     // Materials
     material_t *left_red = mt_lambertian_new_with_colour(color_in(1.0, 0.2, 0.2)); 
@@ -24,6 +25,7 @@ hittable_list_t         *quads() {
     material_t *upper_orange = mt_lambertian_new_with_colour(color_in(1.0, 0.5, 0.0)); 
     material_t *lower_teal = mt_lambertian_new_with_colour(color_in(0.2, 0.8, 0.8)); 
 
+    material_t *light_material = diffuse_light_new_with_colour(color_in(15, 15, 15)); // Bright white light
 
     // Quads
     hittable_list_add(world, quad_new(point3(-3,-2, 5), vec3(0, 0,-4), vec3(0, 4, 0), left_red));
@@ -32,6 +34,8 @@ hittable_list_t         *quads() {
     hittable_list_add(world, quad_new(point3(-2, 3, 1), vec3(4, 0, 0), vec3(0, 0, 4), upper_orange));
     hittable_list_add(world, quad_new(point3(-2,-3, 5), vec3(4, 0, 0), vec3(0, 0,-4), lower_teal));
 
+    hittable_list_add(world, quad_new(point3(0, 2.99, 2), vec3(1, 0, 0), vec3(0, 0, -1), light_material)); // Example position
+    
     return world;
 }
 
@@ -172,22 +176,36 @@ hittable_list_t     *cornell_box_empty() {
 }
 
 hittable_list_t         *cornell_box_standard() {
-    hittable_list_t *world = hittable_list_innit(3);
+    hittable_list_t *world = hittable_list_innit(8);
 
-    material_t *white = diffuse_light_new_with_colour(color(4, 4, 4));
+    material_t *red   = mt_lambertian_new_with_colour(color(.65, .05, .05));
+    material_t *white = mt_lambertian_new_with_colour(color(.73, .73, .73));
+    material_t *green = mt_lambertian_new_with_colour(color(.12, .45, .15));
+    material_t *light = diffuse_light_new_with_colour(color(4, 4, 4));
 
-    hittable_list_add(world, quad_new(point3(0,0,555), vec3(555,0,0), vec3(0,555,0), white));
+    hittable_list_add(world, quad_new(point3(555,0,0), vec3(0,555,0), vec3(0,0,555), green));
+    hittable_list_add(world, quad_new(point3(0,0,0), vec3(0,555,0), vec3(0,0,555), red));
+    hittable_list_add(world, quad_new(point3(0,0,0), vec3(555,0,0), vec3(0,0,555), white));
+    hittable_list_add(world, quad_new(point3(555,555,555), vec3(-555,0,0), vec3(0,0,-555), material_claim(white)));
+    hittable_list_add(world, quad_new(point3(0,0,555), vec3(555,0,0), vec3(0,555,0), material_claim(white)));
+    hittable_list_add(world, quad_new(point3(343, 554, 332), vec3(-130,0,0), vec3(0,0,-105), light));
 
-    // hittable_t *box1 = box_new(point3(0,0,0), point3(165,330,165), white);
-    // box1 = make_shared<rotate_y>(box1, 15);
-    // box1 = make_shared<translate>(box1, vec3(265,0,295));
-    // hittable_list_add(world, box1);
-// 
-    // hittable_t *box2 = box_new(point3(0,0,0), point3(165,165,165), white);
-    // box2 = make_shared<rotate_y>(box2, -18);
-    // box2 = make_shared<translate>(box2, vec3(130,0,65));
-    // hittable_list_add(world, box2);
-    return NULL;
+    // hittable_t *box1 = instance_new(box_new(point3(0,0,0), point3(165,330,165), material_claim(white)));
+    hittable_t *box1 = box_new(point3(130, 0, 65), point3(295, 165, 230), material_claim(white));
+    // instance_rotate_y(box1, 15);
+    // instance_translate(box1, vec3(265,0,295));
+    hittable_list_add(world, box1);
+
+    // hittable_t *box2 = instance_new(box_new(point3(0,0,0), point3(165,165,165), material_claim(white)));
+    hittable_t *box2 = box_new(point3(265, 0, 295), point3(430, 330, 460), material_claim(white));
+    // instance_rotate_y(box2, -18);
+    // instance_translate(box2, vec3(130,0,65));
+    hittable_list_add(world, box2);
+
+    hittable_list_t *result = hittable_list_innit(1);
+    hittable_list_add(result, bvh_node_new(world, 0.0, 1.0));
+
+    return result;
 }
 
 hittable_list_t     *checkered_spheres() {
@@ -286,5 +304,5 @@ hittable_list_t     *bouncing_spheres() {
 
     hittable_list_t *result = hittable_list_innit(1);
     hittable_list_add(result, bvh_node_new(world, 0.0, 1.0));
-    return world;
+    return result;
 }

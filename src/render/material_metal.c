@@ -14,7 +14,7 @@ typedef struct metal_s
     double      fuzz;
 } metal_t;
 
-static bool     mt_metal_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered, double *pdf_value);
+static bool     mt_metal_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered);
 
 static void     mt_metal_delete(material_t *material);
 

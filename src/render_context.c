@@ -1,41 +1,47 @@
 #include "../include/render_context.h"
 
-static inline vec3_t random_cosine_direction() {
-    double r1 = random_double(0.0, 1.0);
-    double r2 = random_double(0.0, 1.0);
-
-    double phi = 2 * PI * r1;
-    double x = cos(phi) * sqrt(r2);
-    double y = sin(phi) * sqrt(r2);
-    double z = sqrt(1 - r2);
-
-    return vec3(x,y,z);
-}
-
 color_t     ray_color(const ray_t *r, const hittable_list_t *world, int depth) {
     hit_record_t    rec;
 
     if (depth <= 0)
         return vec3(0.0, 0.0, 0.0);
     if (hittable_list_hit_test(r, world, 0.001, INFINITY, &rec)) {
-        
+
         ray_t       scattered;
         color_t     attenuation;
         color_t     color_from_emmision = material_emmit(rec.mat, rec.u, rec.v, &rec.p);
-        if (material_scatter(rec.mat, r, &rec, &attenuation, &scattered, pdf_value)) {
-            double      scatter_pdf = material_scatter_pdf(rec.mat, r, &rec, &scattered);
-            double      pdf_value = scatter_pdf;
+        if (material_scatter(rec.mat, r, &rec, &attenuation, &scattered)) {
+            point3_t    on_light = point3(random_double(213,343), 554, random_double(227,332));
+            vec3_t      to_light = vec3_sub_return(on_light, rec.p);
+            double      light_dist_squared = vec3_len_squared(to_light);
+            
+            to_light = vec3_normalize(to_light);
+            if (vec3_dot(to_light, rec.normal) < 0.0)
+                return color_from_emmision;
+            double      light_area = (343-213)*(332-227);
+            double      light_cos = fabs(to_light.y);
+            if (light_cos < 0.000001)
+                return color_from_emmision;
+            double pdf_value = light_dist_squared / (light_area * light_cos);
+            scattered = ray(rec.p, to_light, r->time);
 
+            double scatter_pdf = material_scatter_pdf(rec.mat, r, &rec, &scattered);
+            // double      scatter_pdf = material_scatter_pdf(rec.mat, r, &rec, &scattered);
+            // double      pdf_value = scatter_pdf;
+            // if (pdf_value == 0.0) {
+            //     return color_from_emmision;
+            // }
             vec3_t a = vec3_scaled_return(attenuation, scatter_pdf);
             vec3_t b = vec3_multi(a, ray_color(&scattered, world, depth-1));
-            color_t color_from_scatter = vec3_multi(b, 1.0 / pdf_value); 
+            color_t color_from_scatter = vec3_scaled_return(b, 1.0 / pdf_value); 
             return vec3_sum(color_from_emmision, color_from_scatter);
         }
         return (color_from_emmision);
     }
-    vec3_t  unit_direction = vec3_normalize(r->dir);
-    double  a = 0.5 * (unit_direction.y + 1.0);
-    return(vec3_sum(vec3_scaled_return(vec3(1.0,1.0,1.0), 1.0-a), vec3_scaled_return(vec3(0.5,0.7,1.0), a)));
+    // vec3_t  unit_direction = vec3_normalize(r->dir);
+    // double  a = 0.5 * (unit_direction.y + 1.0);
+    // return(vec3_sum(vec3_scaled_return(vec3(1.0,1.0,1.0), 1.0-a), vec3_scaled_return(vec3(0.5,0.7,1.0), a)));
+    return vec3(0.0, 0.0, 0.0);
 }
 
 render_context_t        *render_context_new(render_context_t *render_contxt, mlx_t *mlx, mlx_image_t *mlx_img) {

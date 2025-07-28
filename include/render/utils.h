@@ -31,8 +31,6 @@ static inline int my_random_int(int min, int max) {
     return (int)(random_double(min, max+1));
 }
 
-static inline vec3_t random_cosine_direction();
-
 static inline double clamp(double x, double min, double max)
 {
     if (x < min)

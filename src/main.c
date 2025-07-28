@@ -56,8 +56,8 @@ int main(void) {
     if (!image || mlx_image_to_window(mlx, image, 0, 0) < 0)
         return(1);
     
-    mlx_image_to_window(mlx, image, 0, 0);
-    mlx_loop_hook(mlx, keep_alive_hook, NULL);
+    // mlx_image_to_window(mlx, image, 0, 0);
+    // mlx_loop_hook(mlx, keep_alive_hook, NULL);
 
     render_context_t    *render; 
 
@@ -252,7 +252,7 @@ int main(void) {
     render = render_context_new(render, mlx, image);
     // init threads
     
-    int             num_threads = 8;
+    int             num_threads = 2;
     pthread_mutex_t      *process_mutex = malloc(sizeof(pthread_mutex_t));
     pthread_mutex_init(process_mutex, NULL);
     thread_pool_t   *pool = thread_pool_init(num_threads);
@@ -313,7 +313,7 @@ int main(void) {
     pthread_mutex_destroy(process_mutex);
     free(process_mutex);
 
-    mlx_loop(mlx);
+    // mlx_loop(mlx);
 
     mlx_terminate(mlx);
 
