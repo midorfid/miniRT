@@ -36,6 +36,11 @@ static bool         quad_hit(const hittable_t *hittable, const ray_t *ray, doubl
     my_quad_t *quad = (my_quad_t *)hittable;
     
     double  denom = vec3_dot(quad->normal, ray->dir);
+    // printf("DENOM: %f \n", denom);
+    // printf("X: %f \n", ray->dir.x);
+    // printf("Y: %f \n", ray->dir.y);
+    // printf("Z: %f \n", ray->dir.z);
+    // fflush(stdout);
     // if ray is 0 or close to zero, then it never intersects. fabs() in case if ray intersects from opposite side of normal
     if (fabs(denom) < 1e-8)
         return false;
@@ -50,10 +55,10 @@ static bool         quad_hit(const hittable_t *hittable, const ray_t *ray, doubl
     double beta = vec3_dot(planar_hitpt_vector, quad->v) / quad->v_len_squared;
 
     if (!is_interior(alpha, beta, rec)) {
-        // puts("interior");
-        // fflush(stdout);
         return false;
     }
+    // puts("interior");
+    // fflush(stdout);
     rec->t = t;
     rec->p = intersection;
     rec->mat = quad->material;

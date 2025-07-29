@@ -19,7 +19,7 @@ double    material_scatter_pdf(const material_t *material, const ray_t *ray_in, 
 
 static bool scatter_base(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered);
 
-static color_t emmit_base(const material_t *material, double u, double v, const point3_t *p);
+static color_t emmit_base(const material_t *material, double u, double v, const point3_t *p, const hit_record_t *rec);
 
 static void delete_base(material_t *material);
 
@@ -48,7 +48,7 @@ static bool scatter_base(const material_t *material, const ray_t *ray_in, const 
     return (false);
 }
 
-static color_t emmit_base(const material_t *material, double u, double v, const point3_t *p) {
+static color_t emmit_base(const material_t *material, double u, double v, const point3_t *p, const hit_record_t *rec) {
     return (color_in(0.0, 0.0, 0.0));
 }
 
@@ -70,13 +70,13 @@ void    material_delete(material_t *material) {
     return material->delete(material);
 }
 
-color_t     material_emmit(const material_t *material, double u, double v, const point3_t *point) {
+color_t     material_emmit(const material_t *material, double u, double v, const point3_t *point, const hit_record_t *rec) {
     if (material == NULL) {
         printf("material_emmit() failed");
         return color_in(0, 0, 0);
     }
     
-    return material->emmit(material, u, v, point);
+    return material->emmit(material, u, v, point, rec);
 }
 
 material_t      *material_claim(material_t *material) {

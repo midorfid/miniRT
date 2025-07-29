@@ -10,12 +10,11 @@ bool    material_scatter(const material_t *material, const ray_t *ray_in, const 
 
 double    material_scatter_pdf(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, const ray_t *scattered);
 
-color_t     material_emmit(const material_t *material, double u, double v, const point3_t *point);
+color_t     material_emmit(const material_t *material, double u, double v, const point3_t *point, const hit_record_t *rec);
 
 void    material_delete(material_t *material);
 
 material_t      *material_claim(material_t *material);
-
 
 material_t      *mt_metal_new(color_t albedo, double fuzz);
 

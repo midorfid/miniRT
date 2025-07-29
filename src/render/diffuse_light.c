@@ -5,13 +5,14 @@ bool    diffuse_light_scatter(const material_t *material, const ray_t *ray_in, c
     return false;
 }
 
-color_t    diffuse_light_emmit(const material_t *material, double u, double v, const point3_t *point) {
+color_t    diffuse_light_emmit(const material_t *material, double u, double v, const point3_t *point, const hit_record_t *rec) {
     if (material == NULL || material->type != MATERIAL_TYPE_DIFFUSE_LIGHT) {
         printf("diffuse_light_emmit() failed");
         return color_in(0, 0, 0);
     }
     diffuse_light_t *diff_light = (diffuse_light_t *)material;
-
+    if (!rec->front_face)
+        return color_in(0,0,0);
     return diff_light->texture->get_value(diff_light->texture, u, v, point);
 }
 

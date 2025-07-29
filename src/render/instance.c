@@ -20,8 +20,8 @@ hittable_t      *instance_new(hittable_t *hittable) {
     new_instance->hittable = hittable;
     hittable_innit(&new_instance->base, HITTABLE_TYPE_INSTANCE, instance_hit, instance_bb, instance_delete);
     new_instance->offset = vec3(0.0, 0.0, 0.0);
-    matrix_default(new_instance->transform_matrix_bb);
-    matrix_default(new_instance->transform_matrix_ray);
+    new_instance->transform_matrix_bb = matrix_default();
+    new_instance->transform_matrix_ray = matrix_default();
 
     return (hittable_t *)new_instance;
 }
@@ -41,9 +41,9 @@ void        instance_rotate_y(hittable_t *hittable, double angle) {
             return ;
     }
     instance_t  *instance = (instance_t *)hittable;
+
     matrix_multi_by_matrix(&instance->transform_matrix_ray, matrix_rotation_y(-DEG_TO_RAD(angle)));
     matrix_multi_by_matrix(&instance->transform_matrix_bb, matrix_rotation_y(DEG_TO_RAD(angle)));
-
 }
 
 vec3_t          vec3_multi_by_matrix(const vec3_t *a, const matrix3_t *matrix) {
@@ -72,7 +72,6 @@ static bool     instance_hit(const hittable_t *hittable, const ray_t *r, double 
 
     if (!hittable_t_hit(instance->hittable, &transformed_ray, tmin, tmax, rec))
         return false;
-    
     rec->p = vec3_multi_by_matrix(&rec->p, &instance->transform_matrix_bb);
     vec3_add(&rec->p, instance->offset);
     

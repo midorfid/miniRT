@@ -10,7 +10,12 @@ typedef union matrix3_s {
 } matrix3_t;
 
 
-void            matrix_default(matrix3_t matrix);
+static inline matrix3_t            matrix_default(void) {
+    matrix3_t result = {0};
+    result.matrix[0][0] = result.matrix[1][1] = result.matrix[2][2] = 1;
+    return result;
+}
+
 
 matrix3_t        matrix_rotation_y(double angle);
 

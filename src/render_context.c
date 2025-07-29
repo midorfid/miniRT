@@ -9,7 +9,7 @@ color_t     ray_color(const ray_t *r, const hittable_list_t *world, int depth) {
 
         ray_t       scattered;
         color_t     attenuation;
-        color_t     color_from_emmision = material_emmit(rec.mat, rec.u, rec.v, &rec.p);
+        color_t     color_from_emmision = material_emmit(rec.mat, rec.u, rec.v, &rec.p, &rec);
         if (material_scatter(rec.mat, r, &rec, &attenuation, &scattered)) {
             point3_t    on_light = point3(random_double(213,343), 554, random_double(227,332));
             vec3_t      to_light = vec3_sub_return(on_light, rec.p);
