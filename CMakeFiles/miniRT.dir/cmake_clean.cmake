@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/miniRT.dir/src/image_save.c.o"
   "CMakeFiles/miniRT.dir/src/main.c.o"
+  "CMakeFiles/miniRT.dir/src/pdf.c.o"
   "CMakeFiles/miniRT.dir/src/random.c.o"
   "CMakeFiles/miniRT.dir/src/render/aabb.c.o"
   "CMakeFiles/miniRT.dir/src/render/box.c.o"

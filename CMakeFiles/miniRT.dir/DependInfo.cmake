@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_C
   "/workspaces/miniRT/src/image_save.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/image_save.c.o"
   "/workspaces/miniRT/src/main.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/main.c.o"
+  "/workspaces/miniRT/src/pdf.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/pdf.c.o"
   "/workspaces/miniRT/src/random.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/random.c.o"
   "/workspaces/miniRT/src/render/aabb.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/aabb.c.o"
   "/workspaces/miniRT/src/render/box.c" "/workspaces/miniRT/CMakeFiles/miniRT.dir/src/render/box.c.o"

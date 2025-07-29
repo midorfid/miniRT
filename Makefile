@@ -262,6 +262,33 @@ src/main.c.s:
 	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/main.c.s
 .PHONY : src/main.c.s
 
+src/pdf.o: src/pdf.c.o
+
+.PHONY : src/pdf.o
+
+# target to build an object file
+src/pdf.c.o:
+	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/pdf.c.o
+.PHONY : src/pdf.c.o
+
+src/pdf.i: src/pdf.c.i
+
+.PHONY : src/pdf.i
+
+# target to preprocess a source file
+src/pdf.c.i:
+	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/pdf.c.i
+.PHONY : src/pdf.c.i
+
+src/pdf.s: src/pdf.c.s
+
+.PHONY : src/pdf.s
+
+# target to generate assembly for a file
+src/pdf.c.s:
+	$(MAKE) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/pdf.c.s
+.PHONY : src/pdf.c.s
+
 src/random.o: src/random.c.o
 
 .PHONY : src/random.o
@@ -1013,6 +1040,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/pdf.o"
+	@echo "... src/pdf.i"
+	@echo "... src/pdf.s"
 	@echo "... src/random.o"
 	@echo "... src/random.i"
 	@echo "... src/random.s"

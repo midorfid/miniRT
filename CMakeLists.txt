@@ -35,7 +35,8 @@ set (SRCS
     src/render/material_lambertian.c
     src/render/material_metal.c
     src/threads/thread_pool.c 
-    src/image_save.c )
+    src/image_save.c
+    src/pdf.c )
 
 set (EXEC_NAME miniRT)
 

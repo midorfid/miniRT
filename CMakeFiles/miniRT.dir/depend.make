@@ -34,6 +34,13 @@ CMakeFiles/miniRT.dir/src/main.c.o: src/main.c
 CMakeFiles/miniRT.dir/src/main.c.o: src/threads/thread.h
 CMakeFiles/miniRT.dir/src/main.c.o: src/threads/thread_pool.h
 
+CMakeFiles/miniRT.dir/src/pdf.c.o: include/pdfs/pdf.h
+CMakeFiles/miniRT.dir/src/pdf.c.o: include/pdfs/pdf_shared.h
+CMakeFiles/miniRT.dir/src/pdf.c.o: include/random.h
+CMakeFiles/miniRT.dir/src/pdf.c.o: include/render/utils.h
+CMakeFiles/miniRT.dir/src/pdf.c.o: include/render/vec3.h
+CMakeFiles/miniRT.dir/src/pdf.c.o: src/pdf.c
+
 CMakeFiles/miniRT.dir/src/random.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/random.c.o: src/random.c
 CMakeFiles/miniRT.dir/src/random.c.o: src/threads/thread.h
