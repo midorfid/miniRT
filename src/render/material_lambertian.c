@@ -41,13 +41,12 @@ static bool     mt_lambertian_scatter(const material_t *material, const ray_t *r
     lambertian_t    *diffuse = (lambertian_t *)material;
 
     uvw = onb_init(&rec->normal);
+    
     vec3_t random_cos_dir = random_cosine_direction();
     vec3_t scatter_dir = onb_transform(&random_cos_dir, &uvw);
 
     *scattered = ray(rec->p, vec3_normalize(scatter_dir), ray_in->time);
     *attenuation = texture_t_get_value(diffuse->texture, rec->u, rec->v, &rec->p);
-    puts("hello");
-    fflush(stdout);
     // *pdf = vec3_dot(uvw.axis[W], scattered->dir) / PI;
 
     return (true);

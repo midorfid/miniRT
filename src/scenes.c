@@ -184,7 +184,7 @@ hittable_list_t         *cornell_box_standard(hittable_list_t **lights) {
     material_t *green = mt_lambertian_new_with_colour(color(.12, .45, .15));
     material_t *light = diffuse_light_new_with_colour(color(4, 4, 4));
 
-    hittable_list_add(*lights, quad_new(point3(343, 554, 332), vec3(-130,0,0), vec3(0,0,-105), material_claim(light)));
+    hittable_list_add(*lights, quad_new(point3(343, 554, 332), vec3(-130,0,0), vec3(0,0,-105), light));
 
     hittable_list_add(world, quad_new(point3(555,0,0), vec3(0,555,0), vec3(0,0,555), green));
     hittable_list_add(world, quad_new(point3(0,0,0), vec3(0,555,0), vec3(0,0,555), red));

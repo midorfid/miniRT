@@ -10,7 +10,6 @@ color_t     ray_color(const ray_t *r, const hittable_list_t *world, const hittab
         ray_t       scattered;
         color_t     attenuation;
         color_t     color_from_emmision = material_emmit(rec.mat, rec.u, rec.v, &rec.p, &rec);
-        puts("after that");
         if (material_scatter(rec.mat, r, &rec, &attenuation, &scattered)) {
             pdf_t       *light_pdf = hittable_pdf_new(lights, &rec.normal);
             scattered = ray(rec.p, light_pdf->generate(light_pdf), r->time);

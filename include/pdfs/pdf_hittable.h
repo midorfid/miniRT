@@ -15,7 +15,8 @@ static inline vec3_t                  hittable_pdf_generate(const pdf_t *pdf) {
     pdf_hittable_t *hittable_pdf = (pdf_hittable_t *)pdf;
 
     int upper_bound = (int)hittable_pdf->objects->size;
-    int random_hittable = my_random_int(0, upper_bound);
+    int random_hittable = my_random_int(0, upper_bound - 1);
+
     hittable_t *chosen = hittable_pdf->objects->hittables[random_hittable];
 
     return chosen->random(chosen, &hittable_pdf->origin);
