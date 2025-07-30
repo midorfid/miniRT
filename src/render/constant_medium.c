@@ -68,7 +68,7 @@ hittable_t  *const_medium_new_with_tex(hittable_t *boundary, double density, tex
     medium->boundary = boundary;
     medium->inv_neg_density = -1.0 / density;
     // medium->phase_function = TODO
-    hittable_innit(&medium->base, HITTABLE_TYPE_CONST_MEDIUM, const_medium_hit, const_medium_bb, const_medium_delete);
+    hittable_innit(&medium->base, HITTABLE_TYPE_CONST_MEDIUM, const_medium_hit, const_medium_bb, const_medium_delete, NULL, NULL);
 
     return (hittable_t *)medium;
 }

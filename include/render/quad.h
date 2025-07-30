@@ -15,6 +15,7 @@ typedef struct my_quad_s {
     vec3_t      w; // cached vector for calculating planar coords alpha, beta.
 
     double      u_len_squared, v_len_squared;
+    double      area;
 
     material_t *material;
 } my_quad_t;
@@ -28,6 +29,10 @@ hittable_t          *quad_new(point3_t Q, vec3_t u, vec3_t v, material_t *materi
 void                quad_delete(hittable_t *hittable);
 
 bool                quad_bb(const hittable_t *hittable, double time0, double time1, aabb_t *out_box);
+
+double              quad_pdf_value(const hittable_t *hittable, const point3_t *origin, const vec3_t *dir);
+
+vec3_t              quad_random(const hittable_t *hittable, const point3_t *origin);
 
 static bool         is_interior(double a, double b, hit_record_t *rec);
 

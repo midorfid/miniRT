@@ -6,12 +6,12 @@
 
 #IncludeRegexTransform: 
 
-/workspaces/miniRT/include/pdfs/pdf.h
+/workspaces/miniRT/include/ONB.h
+render/vec3.h
+/workspaces/miniRT/include/render/vec3.h
 
-/workspaces/miniRT/include/pdfs/pdf_shared.h
-pdf.h
-/workspaces/miniRT/include/pdfs/pdf.h
-../render/vec3.h
+/workspaces/miniRT/include/lens.h
+./render/vec3.h
 /workspaces/miniRT/include/render/vec3.h
 
 /workspaces/miniRT/include/random.h
@@ -23,6 +23,42 @@ limits.h
 -
 math.h
 -
+
+/workspaces/miniRT/include/render/color.h
+vec3.h
+/workspaces/miniRT/include/render/vec3.h
+
+/workspaces/miniRT/include/render/hit_record.h
+vec3.h
+/workspaces/miniRT/include/render/vec3.h
+ray.h
+/workspaces/miniRT/include/render/ray.h
+stdbool.h
+-
+
+/workspaces/miniRT/include/render/material.h
+color.h
+/workspaces/miniRT/include/render/color.h
+../textures/texture_shared.h
+/workspaces/miniRT/include/textures/texture_shared.h
+
+/workspaces/miniRT/include/render/material_shared.h
+ray.h
+/workspaces/miniRT/include/render/ray.h
+hit_record.h
+/workspaces/miniRT/include/render/hit_record.h
+color.h
+/workspaces/miniRT/include/render/color.h
+material.h
+/workspaces/miniRT/include/render/material.h
+
+/workspaces/miniRT/include/render/ray.h
+vec3.h
+/workspaces/miniRT/include/render/vec3.h
+../render_plane.h
+/workspaces/miniRT/include/render_plane.h
+../lens.h
+/workspaces/miniRT/include/lens.h
 
 /workspaces/miniRT/include/render/utils.h
 stdlib.h
@@ -46,7 +82,35 @@ utils.h
 stdbool.h
 -
 
-/workspaces/miniRT/src/pdf.c
-../include/pdfs/pdf_shared.h
-/workspaces/miniRT/include/pdfs/pdf_shared.h
+/workspaces/miniRT/include/render_plane.h
+./render/vec3.h
+/workspaces/miniRT/include/render/vec3.h
+
+/workspaces/miniRT/include/textures/solid_colour.h
+texture_shared.h
+/workspaces/miniRT/include/textures/texture_shared.h
+
+/workspaces/miniRT/include/textures/texture.h
+../render/color.h
+/workspaces/miniRT/include/render/color.h
+
+/workspaces/miniRT/include/textures/texture_shared.h
+texture.h
+/workspaces/miniRT/include/textures/texture.h
+../render/color.h
+/workspaces/miniRT/include/render/color.h
+
+/workspaces/miniRT/src/render/material_lambertian.c
+../../include/render/hit_record.h
+/workspaces/miniRT/include/render/hit_record.h
+../../include/render/ray.h
+/workspaces/miniRT/include/render/ray.h
+../../include/render/material_shared.h
+/workspaces/miniRT/include/render/material_shared.h
+../../include/render/material.h
+/workspaces/miniRT/include/render/material.h
+../../include/textures/solid_colour.h
+/workspaces/miniRT/include/textures/solid_colour.h
+../../include/ONB.h
+/workspaces/miniRT/include/ONB.h
 

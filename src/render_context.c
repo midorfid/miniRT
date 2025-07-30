@@ -1,6 +1,6 @@
 #include "../include/render_context.h"
 
-color_t     ray_color(const ray_t *r, const hittable_list_t *world, int depth) {
+color_t     ray_color(const ray_t *r, const hittable_list_t *world, const hittable_list_t *lights, int depth) {
     hit_record_t    rec;
 
     if (depth <= 0)
@@ -10,30 +10,22 @@ color_t     ray_color(const ray_t *r, const hittable_list_t *world, int depth) {
         ray_t       scattered;
         color_t     attenuation;
         color_t     color_from_emmision = material_emmit(rec.mat, rec.u, rec.v, &rec.p, &rec);
+        puts("after that");
         if (material_scatter(rec.mat, r, &rec, &attenuation, &scattered)) {
-            point3_t    on_light = point3(random_double(213,343), 554, random_double(227,332));
-            vec3_t      to_light = vec3_sub_return(on_light, rec.p);
-            double      light_dist_squared = vec3_len_squared(to_light);
-            
-            to_light = vec3_normalize(to_light);
-            if (vec3_dot(to_light, rec.normal) < 0.0)
-                return color_from_emmision;
-            double      light_area = (343-213)*(332-227);
-            double      light_cos = fabs(to_light.y);
-            if (light_cos < 0.000001)
-                return color_from_emmision;
-            double pdf_value = light_dist_squared / (light_area * light_cos);
-            scattered = ray(rec.p, to_light, r->time);
+            pdf_t       *light_pdf = hittable_pdf_new(lights, &rec.normal);
+            scattered = ray(rec.p, light_pdf->generate(light_pdf), r->time);
+            double      pdf_value = light_pdf->get_value(light_pdf, &scattered.dir);
 
-            double scatter_pdf = material_scatter_pdf(rec.mat, r, &rec, &scattered);
-            // double      scatter_pdf = material_scatter_pdf(rec.mat, r, &rec, &scattered);
-            // double      pdf_value = scatter_pdf;
-            // if (pdf_value == 0.0) {
-            //     return color_from_emmision;
-            // }
+            double      scatter_pdf = material_scatter_pdf(rec.mat, r, &rec, &scattered);
+            if (pdf_value == 0.0) {
+                light_pdf->delete_pdf(light_pdf);
+                return color_from_emmision;
+            }
             vec3_t a = vec3_scaled_return(attenuation, scatter_pdf);
-            vec3_t b = vec3_multi(a, ray_color(&scattered, world, depth-1));
+            vec3_t b = vec3_multi(a, ray_color(&scattered, world, lights, depth-1));
             color_t color_from_scatter = vec3_scaled_return(b, 1.0 / pdf_value); 
+            light_pdf->delete_pdf(light_pdf);
+
             return vec3_sum(color_from_emmision, color_from_scatter);
         }
         return (color_from_emmision);

@@ -36,19 +36,18 @@ material_t      *mt_lambertian_new_with_colour(color_t colour) {
 }
 
 static bool     mt_lambertian_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered) {
-    (void)ray_in;
-
     onb_t   uvw;
     
     lambertian_t    *diffuse = (lambertian_t *)material;
 
     uvw = onb_init(&rec->normal);
-
     vec3_t random_cos_dir = random_cosine_direction();
     vec3_t scatter_dir = onb_transform(&random_cos_dir, &uvw);
 
     *scattered = ray(rec->p, vec3_normalize(scatter_dir), ray_in->time);
     *attenuation = texture_t_get_value(diffuse->texture, rec->u, rec->v, &rec->p);
+    puts("hello");
+    fflush(stdout);
     // *pdf = vec3_dot(uvw.axis[W], scattered->dir) / PI;
 
     return (true);

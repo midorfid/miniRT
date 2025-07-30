@@ -23,7 +23,7 @@ void    render_pixel_chunk(void *param) {
             for (int s_i = 0; s_i < render->camera.sqrt_spp; ++s_i) {
                 for (int s_j = 0; s_j < render->camera.sqrt_spp; ++s_j) {
                     ray_t r = get_ray(i, j, s_i, s_j, &render->render_p, render->camera.camera_center, &render->camera.lens, render->camera.rec1p_sqrt_spp); 
-                    color = vec3_sum(color, ray_color(&r, render->world, render->camera.max_depth));
+                    color = vec3_sum(color, ray_color(&r, render->world, render->lights, render->camera.max_depth));
                 }
             }
             color = vec3_scaled_return(color, render->camera.pixel_sample_scale);
@@ -111,7 +111,11 @@ int main(void) {
             render->camera.vup      = vec3(0,1,0);
 
             render->camera.lens.defocus_angle = 0;
-            render->world = cornell_box_standard();
+            render->world = cornell_box_standard(&render->lights);
+            if (render->lights == NULL) {
+                puts("lox");
+                fflush(stdout);
+            }
             break;
 
         case SCENE_TOUCHING_SPHERES:
@@ -276,6 +280,7 @@ int main(void) {
             arg->camera = render->camera;
             arg->render_p = render->render_p;
             arg->world = render->world;
+            arg->lights = render->lights;
             arg->process_mutex = process_mutex;
             arg->processed_chunks = &processed_chunks;
             arg->total_chunks = total_chunks;

@@ -17,6 +17,11 @@ bool            hittable_t_bb(const hittable_t *hittable, double time0, double t
 
 void            hittable_delete(hittable_t *hittable);
 
+double          hittable_pdf_value(const hittable_t *hittable, const point3_t *origin, const vec3_t *dir);
+
+vec3_t          hittable_random(const hittable_t *hittable, const point3_t *origin);
+
+
 static bool     hit_base(const hittable_t *hittable, const ray_t *ray, double tmin, double tmax, hit_record_t *rec) {
     return false;
 }
@@ -27,6 +32,14 @@ static void     delete_base(hittable_t *hittable) {
 
 static bool     bb_base(const hittable_t *hittable, double time0, double time1, aabb_t *bbox) {
     return false;
+}
+
+static double   pdf_value_base(const hittable_t *hittable, const point3_t *origin, const vec3_t *dir) {
+    return 0.0;
+}
+
+static vec3_t   random_base(const hittable_t *hittable, const point3_t *origin) {
+    return vec3(1,0,0);
 }
 
 hittable_t                  *sphere_new(point3_t center, double radius, material_t *material);

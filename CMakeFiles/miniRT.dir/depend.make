@@ -5,7 +5,12 @@ CMakeFiles/miniRT.dir/src/image_save.c.o: include/stb_image_write.h
 CMakeFiles/miniRT.dir/src/image_save.c.o: lib/MLX42/include/MLX42/MLX42.h
 CMakeFiles/miniRT.dir/src/image_save.c.o: src/image_save.c
 
+CMakeFiles/miniRT.dir/src/main.c.o: include/ONB.h
 CMakeFiles/miniRT.dir/src/main.c.o: include/lens.h
+CMakeFiles/miniRT.dir/src/main.c.o: include/pdfs/pdf.h
+CMakeFiles/miniRT.dir/src/main.c.o: include/pdfs/pdf_cosine.h
+CMakeFiles/miniRT.dir/src/main.c.o: include/pdfs/pdf_hittable.h
+CMakeFiles/miniRT.dir/src/main.c.o: include/pdfs/pdf_shared.h
 CMakeFiles/miniRT.dir/src/main.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/main.c.o: include/render/aabb.h
 CMakeFiles/miniRT.dir/src/main.c.o: include/render/box.h
@@ -327,7 +332,12 @@ CMakeFiles/miniRT.dir/src/render/sphere.c.o: include/textures/texture.h
 CMakeFiles/miniRT.dir/src/render/sphere.c.o: include/textures/texture_shared.h
 CMakeFiles/miniRT.dir/src/render/sphere.c.o: src/render/sphere.c
 
+CMakeFiles/miniRT.dir/src/render_context.c.o: include/ONB.h
 CMakeFiles/miniRT.dir/src/render_context.c.o: include/lens.h
+CMakeFiles/miniRT.dir/src/render_context.c.o: include/pdfs/pdf.h
+CMakeFiles/miniRT.dir/src/render_context.c.o: include/pdfs/pdf_cosine.h
+CMakeFiles/miniRT.dir/src/render_context.c.o: include/pdfs/pdf_hittable.h
+CMakeFiles/miniRT.dir/src/render_context.c.o: include/pdfs/pdf_shared.h
 CMakeFiles/miniRT.dir/src/render_context.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/render_context.c.o: include/render/aabb.h
 CMakeFiles/miniRT.dir/src/render_context.c.o: include/render/box.h

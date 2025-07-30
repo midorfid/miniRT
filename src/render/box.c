@@ -60,7 +60,7 @@ static my_box_t        box_innit(point3_t a, point3_t b, material_t *material) {
 
     box.sides = box_sides_init(a, b, material); 
 
-    hittable_innit(&box.base, HITTABLE_TYPE_BOX, box_hit, box_bb, box_delete);
+    hittable_innit(&box.base, HITTABLE_TYPE_BOX, box_hit, box_bb, box_delete, NULL, NULL);
     return box;
 }
 

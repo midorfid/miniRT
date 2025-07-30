@@ -75,7 +75,7 @@ static hittable_t   *bvh_make_node(hittable_t **hittables, size_t start, size_t 
         return NULL;
     }
     result->box = aabb_surrounding_bbox(box_left, box_right);
-    hittable_innit(&result->base, HITTABLE_TYPE_BVH_NODE, bvh_node_hit, bvh_node_bb, bvh_node_delete);
+    hittable_innit(&result->base, HITTABLE_TYPE_BVH_NODE, bvh_node_hit, bvh_node_bb, bvh_node_delete, NULL, NULL);
 }
 
 bool                bvh_node_bb(const hittable_t *hittable, double time0, double time1, aabb_t *out_box) {

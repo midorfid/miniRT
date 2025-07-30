@@ -2,7 +2,6 @@
 #define PDF_SHARED_H
 
 #include "pdf.h"
-#include "../render/vec3.h"
 
 typedef void        (*pdf_delete_fn)(pdf_t *pdf);
 typedef double      (*pdf_value_fn)(const pdf_t *pdf, const vec3_t *dir);
@@ -11,6 +10,7 @@ typedef vec3_t      (*pdf_generate_fn)(const pdf_t *pdf);
 typedef enum pdf_type_e {
     PDF_SPHERE,
     PDF_COSINE,
+    PDF_HITTABLE,
 } pdf_type_t;
 
 

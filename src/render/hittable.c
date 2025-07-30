@@ -1,11 +1,25 @@
 #include "../../include/render/hittable_shared.h"
 
-void    hittable_innit(hittable_t *hittable, hittable_type_t type, hittable_t_hit_met hit, hittable_t_bb_met bb, hittable_t_delete_met delete) {
+void    hittable_innit(hittable_t *hittable, hittable_type_t type, hittable_t_hit_met hit, hittable_t_bb_met bb, 
+                    hittable_t_delete_met delete, hittable_t_pdf_value_met pdf_value, hittable_t_random_met random) {
     hittable->type = type;
     hittable->refcount = 1;
+
+    if (hit == NULL)
+        hit = hit_base;
     hittable->hit = hit;
+    if (bb == NULL)
+        bb = bb_base;
     hittable->bb = bb;
+    if (delete == NULL)
+        delete = delete_base;
     hittable->delete = delete;
+    if (pdf_value == NULL)
+        pdf_value = pdf_value_base;
+    hittable->pdf_value = pdf_value;
+    if (random == NULL)
+        random = random_base;
+    hittable->random = random;
 }
 
 bool    hittable_t_hit(const hittable_t *hittable, const ray_t *ray, double tmin, double tmax, hit_record_t *rec) {
@@ -25,6 +39,17 @@ bool hittable_t_bb(const hittable_t *hittable, double time0, double time1, aabb_
     }
     return hittable->bb(hittable, time0, time1, bbox);
 }
+
+double          hittable_pdf_value(const hittable_t *hittable, const point3_t *origin, const vec3_t *dir) {
+    return hittable->pdf_value(hittable, origin, dir);
+}
+
+vec3_t          hittable_random(const hittable_t *hittable, const point3_t *origin) {
+    return hittable->random(hittable, origin);
+}
+
+
+
 // A negative integer if the element pointed to by a should come before the element pointed to by b.
 int                box_x_compare(const void *a, const void *b) {
     aabb_t a_bbox,b_bbox;

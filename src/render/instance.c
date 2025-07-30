@@ -18,7 +18,7 @@ hittable_t      *instance_new(hittable_t *hittable) {
         return NULL;
     }
     new_instance->hittable = hittable;
-    hittable_innit(&new_instance->base, HITTABLE_TYPE_INSTANCE, instance_hit, instance_bb, instance_delete);
+    hittable_innit(&new_instance->base, HITTABLE_TYPE_INSTANCE, instance_hit, instance_bb, instance_delete, NULL, NULL);
     new_instance->offset = vec3(0.0, 0.0, 0.0);
     new_instance->transform_matrix_bb = matrix_default();
     new_instance->transform_matrix_ray = matrix_default();

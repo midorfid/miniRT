@@ -23,11 +23,11 @@ pdf_t                   *sphere_pdf_new() {
     pdf_sphere_t    *new_pdf = calloc(1, sizeof(pdf_sphere_t);
     if (new_pdf == NULL) {
         printf("sphere_pdf_new failed");
-        return new_pdf;
+        return NULL;
     }
     pdf_innit(&new_pdf->base, PDF_SPHERE, sphere_pdf_delete, sphere_pdf_get_value, sphere_pdf_generate);
 
-    return new_pdf;
+    return (pdf_t *)new_pdf;
 }
 
 #endif

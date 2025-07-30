@@ -21,6 +21,9 @@
 #include "../include/lens.h"
 #include "../src/threads/thread.h"
 #include "../src/threads/thread_pool.h"
+#include "./pdfs/pdf_cosine.h"
+#include "./pdfs/pdf_hittable.h"
+
 
 typedef struct image_s {
     double      aspect_ratio;
@@ -62,6 +65,7 @@ typedef struct render_context_s {
 
     // scene objects
     hittable_list_t     *world;
+    hittable_list_t     *lights;
 
     // threads
     pthread_mutex_t          *process_mutex;
@@ -91,6 +95,6 @@ static void        render_plane_init(render_plane_t *render_p, vec3_t upper_left
 
 static void        render_context_init(render_context_t *render);
 
-color_t            ray_color(const ray_t *r, const hittable_list_t *world, int depth);
+color_t            ray_color(const ray_t *r, const hittable_list_t *world, const hittable_list_t *lights, int depth);
 
 #endif

@@ -57,7 +57,7 @@ bool sphere_hit_test_generic(point3_t center, double radius, material_t *materia
 static  sphere_t  sphere_init(point3_t center, double radius, material_t *material) {
     sphere_t    result = {.center = center, .radius = radius, .material = material};
 
-    hittable_innit(&result.base, HITTABLE_TYPE_SHPERE, sphere_hit, sphere_bb, sphere_delete);
+    hittable_innit(&result.base, HITTABLE_TYPE_SHPERE, sphere_hit, sphere_bb, sphere_delete, NULL, NULL);
     return (result);
 }
 

@@ -12,10 +12,13 @@ static my_quad_t       quad_init(point3_t Q, vec3_t u, vec3_t v, material_t *mat
    result.normal = vec3_normalize(n);
    result.D = vec3_dot(result.normal, result.Q);
    result.w = vec3_scaled_return(n, 1 / vec3_dot(n,n));
+   
+   result.area = vec3_len(n);
+
    result.u_len_squared = vec3_len_squared(u);
    result.v_len_squared = vec3_len_squared(v);
 
-   hittable_innit(&result.base, HITTABLE_TYPE_QUAD, quad_hit, quad_bb, quad_delete);
+   hittable_innit(&result.base, HITTABLE_TYPE_QUAD, quad_hit, quad_bb, quad_delete, quad_pdf_value, quad_random);
 
    return result;
 }
@@ -109,4 +112,34 @@ bool                quad_bb(const hittable_t *hittable, double time0, double tim
     *out_box = aabb_surrounding_bbox(diagonal1, diagonal2);
 
     return true;
+}
+
+double              quad_pdf_value(const hittable_t *hittable, const point3_t *origin, const vec3_t *dir) {
+    if (hittable == NULL || hittable->type != HITTABLE_TYPE_QUAD) {
+        printf("quad_pdf_value() failed");
+        return 0.0;
+    }
+    my_quad_t *quad = (my_quad_t *)hittable;
+    hit_record_t    rec;
+    ray_t     r = ray(*origin, *dir, 0.0);
+
+    if (!hittable_t_hit(hittable, &r, 0.001, INFINITY, &rec))
+        return 0;
+    
+    double dist_squared = rec.t * rec.t * vec3_len_squared(*dir);
+    double cosine = fabs(vec3_dot(*dir, rec.normal) / vec3_len(*dir));
+
+    return dist_squared / (cosine * quad->area);
+}
+
+vec3_t              quad_random(const hittable_t *hittable, const point3_t *origin) {
+    if (hittable == NULL || hittable->type != HITTABLE_TYPE_QUAD) {
+        printf("quad_random() failed");
+        return vec3(0,0,0);
+    }
+    my_quad_t *quad = (my_quad_t *)hittable;
+    // p = Q + v * r1 + u * r2;
+    point3_t p = vec3_sum(vec3_sum(quad->Q, vec3_scaled_return(quad->u, random_double_nolimits())), vec3_scaled_return(quad->v, random_double_nolimits())); 
+
+    return vec3_sub_return(p, *origin);
 }
