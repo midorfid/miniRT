@@ -1,7 +1,7 @@
 #include "material_diffuse_light.h"
 #include "../../include/textures/solid_colour.h"
 
-bool    diffuse_light_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered) {
+bool    diffuse_light_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec) {
     return false;
 }
 

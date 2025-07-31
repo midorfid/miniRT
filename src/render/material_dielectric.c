@@ -13,7 +13,7 @@ typedef struct dielectric_s
     double      refraction_index;
 } dielectric_t;
 
-static bool     mt_dielectric_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered);
+static bool     mt_dielectric_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec);
 
 static void     mt_dielectric_delete(material_t *material);
 
@@ -33,12 +33,13 @@ static double reflectance(double cosine, double refraction_index) {
     return (r0 + (1-r0)*pow((1 - cosine),5));
 }
 
-static bool     mt_dielectric_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered) {
-    (void)ray_in;
+static bool     mt_dielectric_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec) {
+    srec->attenuation = vec3(1.0,1.0,1.0);
+    srec->pdf_ptr = NULL;
+    srec->skip_pdf = true;
 
     dielectric_t    *dielectric = (dielectric_t *)material;
 
-    *attenuation = color_in(1.0, 1.0, 1.0);
     double ri = rec->front_face ? (1.0/dielectric->refraction_index) : dielectric->refraction_index;
 
     vec3_t unit_direction = vec3_normalize(ray_in->dir);
@@ -55,7 +56,7 @@ static bool     mt_dielectric_scatter(const material_t *material, const ray_t *r
         vec3_t direction = refract(&unit_direction, &rec->normal, ri); 
     }
 
-    *scattered = ray(rec->p, direction, ray_in->time);
+    srec->skip_pdf_ray = ray(rec->p, direction, ray_in->time);
     return (true);
 }
 

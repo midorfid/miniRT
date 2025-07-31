@@ -20,7 +20,7 @@ void                    sphere_pdf_delete(pdf_t *pdf) {
 }
 
 pdf_t                   *sphere_pdf_new() {
-    pdf_sphere_t    *new_pdf = calloc(1, sizeof(pdf_sphere_t);
+    pdf_sphere_t    *new_pdf = calloc(1, sizeof(pdf_sphere_t));
     if (new_pdf == NULL) {
         printf("sphere_pdf_new failed");
         return NULL;

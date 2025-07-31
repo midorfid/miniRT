@@ -1,14 +1,19 @@
 #include "../../include/render/material_isotropic.h"
+#include "../../include/pdfs/pdf_sphere.h"
 
-static bool         isotropic_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered) {
+static bool         isotropic_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec) {
     if (material == NULL || material->type != MATERIAL_TYPE_ISOTROPIC) {
         printf("isotropic_scatter() failed");
         return false;
     }
     isotropic_t *iso = (isotropic_t *)material;
-    *scattered = ray(rec->p, vec3_random_unit_vec(), ray_in->time);
-    *attenuation = texture_t_get_value(iso->albedo, rec->u, rec->v, &rec->p);
-    // *pdf_value = 1.0 / (4.0 * PI);
+    
+    srec->attenuation = iso->albedo->get_value(iso->albedo, rec->u, rec->v, &rec->p);
+    srec->pdf_ptr = sphere_pdf_new();
+    srec->skip_pdf = false;
+
+    // *scattered = ray(rec->p, vec3_random_unit_vec(), ray_in->time);
+    // *attenuation = texture_t_get_value(iso->albedo, rec->u, rec->v, &rec->p);
 
     return true;
 }

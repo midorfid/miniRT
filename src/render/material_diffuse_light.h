@@ -13,7 +13,7 @@ typedef struct diffuse_light_s {
     // double      intensity;
 } diffuse_light_t;
 
-bool    diffuse_light_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered);
+bool    diffuse_light_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec);
 
 color_t    diffuse_light_emmit(const material_t *material, double u, double v, const point3_t *point, const hit_record_t *rec);
 

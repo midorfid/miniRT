@@ -61,6 +61,8 @@ CMakeFiles/miniRT.dir/src/render/aabb.c.o: include/render_plane.h
 CMakeFiles/miniRT.dir/src/render/aabb.c.o: src/render/aabb.c
 
 CMakeFiles/miniRT.dir/src/render/box.c.o: include/lens.h
+CMakeFiles/miniRT.dir/src/render/box.c.o: include/pdfs/pdf.h
+CMakeFiles/miniRT.dir/src/render/box.c.o: include/pdfs/pdf_shared.h
 CMakeFiles/miniRT.dir/src/render/box.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/render/box.c.o: include/render/aabb.h
 CMakeFiles/miniRT.dir/src/render/box.c.o: include/render/box.h
@@ -81,6 +83,8 @@ CMakeFiles/miniRT.dir/src/render/box.c.o: include/textures/texture_shared.h
 CMakeFiles/miniRT.dir/src/render/box.c.o: src/render/box.c
 
 CMakeFiles/miniRT.dir/src/render/bvh.c.o: include/lens.h
+CMakeFiles/miniRT.dir/src/render/bvh.c.o: include/pdfs/pdf.h
+CMakeFiles/miniRT.dir/src/render/bvh.c.o: include/pdfs/pdf_shared.h
 CMakeFiles/miniRT.dir/src/render/bvh.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/render/bvh.c.o: include/render/aabb.h
 CMakeFiles/miniRT.dir/src/render/bvh.c.o: include/render/bvh.h
@@ -106,6 +110,8 @@ CMakeFiles/miniRT.dir/src/render/color.c.o: include/render/vec3.h
 CMakeFiles/miniRT.dir/src/render/color.c.o: src/render/color.c
 
 CMakeFiles/miniRT.dir/src/render/constant_medium.c.o: include/lens.h
+CMakeFiles/miniRT.dir/src/render/constant_medium.c.o: include/pdfs/pdf.h
+CMakeFiles/miniRT.dir/src/render/constant_medium.c.o: include/pdfs/pdf_shared.h
 CMakeFiles/miniRT.dir/src/render/constant_medium.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/render/constant_medium.c.o: include/render/aabb.h
 CMakeFiles/miniRT.dir/src/render/constant_medium.c.o: include/render/color.h
@@ -124,6 +130,8 @@ CMakeFiles/miniRT.dir/src/render/constant_medium.c.o: include/textures/texture_s
 CMakeFiles/miniRT.dir/src/render/constant_medium.c.o: src/render/constant_medium.c
 
 CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/lens.h
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/pdfs/pdf.h
+CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/pdfs/pdf_shared.h
 CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/render/color.h
 CMakeFiles/miniRT.dir/src/render/diffuse_light.c.o: include/render/hit_record.h
@@ -149,6 +157,8 @@ CMakeFiles/miniRT.dir/src/render/hit_record.c.o: include/render_plane.h
 CMakeFiles/miniRT.dir/src/render/hit_record.c.o: src/render/hit_record.c
 
 CMakeFiles/miniRT.dir/src/render/hittable.c.o: include/lens.h
+CMakeFiles/miniRT.dir/src/render/hittable.c.o: include/pdfs/pdf.h
+CMakeFiles/miniRT.dir/src/render/hittable.c.o: include/pdfs/pdf_shared.h
 CMakeFiles/miniRT.dir/src/render/hittable.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/render/hittable.c.o: include/render/aabb.h
 CMakeFiles/miniRT.dir/src/render/hittable.c.o: include/render/color.h
@@ -180,6 +190,8 @@ CMakeFiles/miniRT.dir/src/render/hittable_list.c.o: include/textures/texture.h
 CMakeFiles/miniRT.dir/src/render/hittable_list.c.o: src/render/hittable_list.c
 
 CMakeFiles/miniRT.dir/src/render/instance.c.o: include/lens.h
+CMakeFiles/miniRT.dir/src/render/instance.c.o: include/pdfs/pdf.h
+CMakeFiles/miniRT.dir/src/render/instance.c.o: include/pdfs/pdf_shared.h
 CMakeFiles/miniRT.dir/src/render/instance.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/render/instance.c.o: include/render/aabb.h
 CMakeFiles/miniRT.dir/src/render/instance.c.o: include/render/color.h
@@ -199,6 +211,8 @@ CMakeFiles/miniRT.dir/src/render/instance.c.o: include/textures/texture_shared.h
 CMakeFiles/miniRT.dir/src/render/instance.c.o: src/render/instance.c
 
 CMakeFiles/miniRT.dir/src/render/material.c.o: include/lens.h
+CMakeFiles/miniRT.dir/src/render/material.c.o: include/pdfs/pdf.h
+CMakeFiles/miniRT.dir/src/render/material.c.o: include/pdfs/pdf_shared.h
 CMakeFiles/miniRT.dir/src/render/material.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/render/material.c.o: include/render/color.h
 CMakeFiles/miniRT.dir/src/render/material.c.o: include/render/hit_record.h
@@ -213,6 +227,8 @@ CMakeFiles/miniRT.dir/src/render/material.c.o: include/textures/texture_shared.h
 CMakeFiles/miniRT.dir/src/render/material.c.o: src/render/material.c
 
 CMakeFiles/miniRT.dir/src/render/material_dielectric.c.o: include/lens.h
+CMakeFiles/miniRT.dir/src/render/material_dielectric.c.o: include/pdfs/pdf.h
+CMakeFiles/miniRT.dir/src/render/material_dielectric.c.o: include/pdfs/pdf_shared.h
 CMakeFiles/miniRT.dir/src/render/material_dielectric.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/render/material_dielectric.c.o: include/render/color.h
 CMakeFiles/miniRT.dir/src/render/material_dielectric.c.o: include/render/hit_record.h
@@ -227,6 +243,9 @@ CMakeFiles/miniRT.dir/src/render/material_dielectric.c.o: include/textures/textu
 CMakeFiles/miniRT.dir/src/render/material_dielectric.c.o: src/render/material_dielectric.c
 
 CMakeFiles/miniRT.dir/src/render/material_isotropic.c.o: include/lens.h
+CMakeFiles/miniRT.dir/src/render/material_isotropic.c.o: include/pdfs/pdf.h
+CMakeFiles/miniRT.dir/src/render/material_isotropic.c.o: include/pdfs/pdf_shared.h
+CMakeFiles/miniRT.dir/src/render/material_isotropic.c.o: include/pdfs/pdf_sphere.h
 CMakeFiles/miniRT.dir/src/render/material_isotropic.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/render/material_isotropic.c.o: include/render/color.h
 CMakeFiles/miniRT.dir/src/render/material_isotropic.c.o: include/render/hit_record.h
@@ -244,6 +263,9 @@ CMakeFiles/miniRT.dir/src/render/material_isotropic.c.o: src/render/material_iso
 
 CMakeFiles/miniRT.dir/src/render/material_lambertian.c.o: include/ONB.h
 CMakeFiles/miniRT.dir/src/render/material_lambertian.c.o: include/lens.h
+CMakeFiles/miniRT.dir/src/render/material_lambertian.c.o: include/pdfs/pdf.h
+CMakeFiles/miniRT.dir/src/render/material_lambertian.c.o: include/pdfs/pdf_cosine.h
+CMakeFiles/miniRT.dir/src/render/material_lambertian.c.o: include/pdfs/pdf_shared.h
 CMakeFiles/miniRT.dir/src/render/material_lambertian.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/render/material_lambertian.c.o: include/render/color.h
 CMakeFiles/miniRT.dir/src/render/material_lambertian.c.o: include/render/hit_record.h
@@ -259,6 +281,8 @@ CMakeFiles/miniRT.dir/src/render/material_lambertian.c.o: include/textures/textu
 CMakeFiles/miniRT.dir/src/render/material_lambertian.c.o: src/render/material_lambertian.c
 
 CMakeFiles/miniRT.dir/src/render/material_metal.c.o: include/lens.h
+CMakeFiles/miniRT.dir/src/render/material_metal.c.o: include/pdfs/pdf.h
+CMakeFiles/miniRT.dir/src/render/material_metal.c.o: include/pdfs/pdf_shared.h
 CMakeFiles/miniRT.dir/src/render/material_metal.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/render/material_metal.c.o: include/render/color.h
 CMakeFiles/miniRT.dir/src/render/material_metal.c.o: include/render/hit_record.h
@@ -280,6 +304,8 @@ CMakeFiles/miniRT.dir/src/render/matrix3.c.o: src/render/matrix3.c
 
 CMakeFiles/miniRT.dir/src/render/moving_sphere.c.o: src/render/moving_sphere.c
 CMakeFiles/miniRT.dir/src/render/moving_sphere.c.o: include/lens.h
+CMakeFiles/miniRT.dir/src/render/moving_sphere.c.o: include/pdfs/pdf.h
+CMakeFiles/miniRT.dir/src/render/moving_sphere.c.o: include/pdfs/pdf_shared.h
 CMakeFiles/miniRT.dir/src/render/moving_sphere.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/render/moving_sphere.c.o: include/render/aabb.h
 CMakeFiles/miniRT.dir/src/render/moving_sphere.c.o: include/render/color.h
@@ -298,6 +324,8 @@ CMakeFiles/miniRT.dir/src/render/moving_sphere.c.o: include/textures/texture.h
 CMakeFiles/miniRT.dir/src/render/moving_sphere.c.o: include/textures/texture_shared.h
 
 CMakeFiles/miniRT.dir/src/render/quad.c.o: include/lens.h
+CMakeFiles/miniRT.dir/src/render/quad.c.o: include/pdfs/pdf.h
+CMakeFiles/miniRT.dir/src/render/quad.c.o: include/pdfs/pdf_shared.h
 CMakeFiles/miniRT.dir/src/render/quad.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/render/quad.c.o: include/render/aabb.h
 CMakeFiles/miniRT.dir/src/render/quad.c.o: include/render/color.h
@@ -316,6 +344,8 @@ CMakeFiles/miniRT.dir/src/render/quad.c.o: include/textures/texture_shared.h
 CMakeFiles/miniRT.dir/src/render/quad.c.o: src/render/quad.c
 
 CMakeFiles/miniRT.dir/src/render/sphere.c.o: include/lens.h
+CMakeFiles/miniRT.dir/src/render/sphere.c.o: include/pdfs/pdf.h
+CMakeFiles/miniRT.dir/src/render/sphere.c.o: include/pdfs/pdf_shared.h
 CMakeFiles/miniRT.dir/src/render/sphere.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/render/sphere.c.o: include/render/aabb.h
 CMakeFiles/miniRT.dir/src/render/sphere.c.o: include/render/color.h
@@ -368,6 +398,8 @@ CMakeFiles/miniRT.dir/src/render_context.c.o: src/threads/thread.h
 CMakeFiles/miniRT.dir/src/render_context.c.o: src/threads/thread_pool.h
 
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/lens.h
+CMakeFiles/miniRT.dir/src/scenes.c.o: include/pdfs/pdf.h
+CMakeFiles/miniRT.dir/src/scenes.c.o: include/pdfs/pdf_shared.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/render/aabb.h
 CMakeFiles/miniRT.dir/src/scenes.c.o: include/render/bvh.h

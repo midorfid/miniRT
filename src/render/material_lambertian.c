@@ -7,6 +7,7 @@
 #include "../../include/render/material.h"
 #include "../../include/textures/solid_colour.h"
 #include "../../include/ONB.h"
+#include "../../include/pdfs/pdf_cosine.h"
 
 typedef struct lambertian_s
 {
@@ -15,7 +16,7 @@ typedef struct lambertian_s
     texture_t   *texture;
 } lambertian_t;
 
-static bool     mt_lambertian_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered);
+static bool     mt_lambertian_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec);
 
 static void     mt_lambertian_delete(material_t *material);
 
@@ -35,19 +36,22 @@ material_t      *mt_lambertian_new_with_colour(color_t colour) {
     return mt_lambertian_new_with_tex(solid_colour_new_with_components(colour.x, colour.y, colour.z));
 }
 
-static bool     mt_lambertian_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered) {
+static bool     mt_lambertian_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec) {
     onb_t   uvw;
     
     lambertian_t    *diffuse = (lambertian_t *)material;
 
-    uvw = onb_init(&rec->normal);
-    
-    vec3_t random_cos_dir = random_cosine_direction();
-    vec3_t scatter_dir = onb_transform(&random_cos_dir, &uvw);
+    srec->attenuation = diffuse->texture->get_value(diffuse->texture, rec->u, rec->v, &rec->p);
+    srec->pdf_ptr = cosine_pdf_new(&rec->normal);
+    srec->skip_pdf = false;
 
-    *scattered = ray(rec->p, vec3_normalize(scatter_dir), ray_in->time);
-    *attenuation = texture_t_get_value(diffuse->texture, rec->u, rec->v, &rec->p);
-    // *pdf = vec3_dot(uvw.axis[W], scattered->dir) / PI;
+    // uvw = onb_init(&rec->normal);
+    
+    // vec3_t random_cos_dir = random_cosine_direction();
+    // vec3_t scatter_dir = onb_transform(&random_cos_dir, &uvw);
+
+    // *scattered = ray(rec->p, vec3_normalize(scatter_dir), ray_in->time);
+    // *attenuation = texture_t_get_value(diffuse->texture, rec->u, rec->v, &rec->p);
 
     return (true);
 }
@@ -70,7 +74,7 @@ static double mt_lambertian_scatter_pdf(const material_t *material, const ray_t 
         return 0.0;
     }
     
-    double cos_theta = vec3_dot(rec->normal, scattered->dir);
+    double cos_theta = vec3_dot(rec->normal, vec3_normalize(scattered->dir));
     return cos_theta < 0.0 ? 0.0 : cos_theta / PI;
 }
 

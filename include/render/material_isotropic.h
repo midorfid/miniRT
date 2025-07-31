@@ -11,7 +11,7 @@ typedef struct isotropic_s {
     texture_t   *albedo;
 } isotropic_t;
 
-static bool         isotropic_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered);
+static bool         isotropic_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec);
 
 static void         isotropic_delete(material_t *mat);
 

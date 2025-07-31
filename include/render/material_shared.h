@@ -17,7 +17,7 @@ typedef enum material_type_e
 } material_type_t;
 
 
-typedef bool (*material_scatter_met)(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered);
+typedef bool (*material_scatter_met)(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec);
 
 typedef color_t (*material_emmit_met)(const material_t *material, double u, double v, const point3_t *p, const hit_record_t *rec);
 

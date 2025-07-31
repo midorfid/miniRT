@@ -3,10 +3,18 @@
 
 #include "color.h"
 #include "../textures/texture_shared.h"
+#include "../pdfs/pdf_shared.h"
 
 typedef struct material_s material_t;
 
-bool    material_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered);
+typedef struct scatter_record_s {
+    color_t     attenuation;
+    pdf_t       *pdf_ptr;
+    bool        skip_pdf;
+    ray_t       skip_pdf_ray;
+} scatter_record_t;
+
+bool    material_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec);
 
 double    material_scatter_pdf(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, const ray_t *scattered);
 

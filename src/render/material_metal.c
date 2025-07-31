@@ -14,7 +14,7 @@ typedef struct metal_s
     double      fuzz;
 } metal_t;
 
-static bool     mt_metal_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered);
+static bool     mt_metal_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec);
 
 static void     mt_metal_delete(material_t *material);
 
@@ -29,17 +29,19 @@ material_t      *mt_metal_new(color_t albedo, double fuzz) {
     return (material_t *)material;
 }
 
-static bool     mt_metal_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered) {
-    // (void)ray_in;
-
+static bool     mt_metal_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec) {
     metal_t    *diffuse = (metal_t *)material;
+
+    srec->attenuation = diffuse->albedo;
+    srec->pdf_ptr = NULL;
+    srec->skip_pdf = true;
 
     vec3_t reflected = reflect(&ray_in->dir, &rec->normal);
     reflected = vec3_sum(vec3_normalize(reflected), vec3_scaled_return(vec3_random_unit_vec(), diffuse->fuzz));
-    *scattered = ray(rec->p, reflected, ray_in->time);
-    *attenuation = diffuse->albedo;
 
-    return (vec3_dot(scattered->dir, rec->normal) > 0);
+    srec->skip_pdf_ray = ray(rec->p, reflected, ray_in->time);
+
+    return true;
 }
 
 static void     mt_metal_delete(material_t *material) {

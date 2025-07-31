@@ -1,12 +1,12 @@
 #include "../../include/render/material_shared.h"
 #include "../../include/render/material.h"
 
-bool    material_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered) {
+bool    material_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec) {
     if (material == NULL) {
         printf("cannot proceed, material is unknown");
         return (false);
     }
-    return material->scatter(material, ray_in, rec, attenuation, scattered);
+    return material->scatter(material, ray_in, rec, srec);
 }
 
 double    material_scatter_pdf(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, const ray_t *scattered) {
@@ -17,7 +17,7 @@ double    material_scatter_pdf(const material_t *material, const ray_t *ray_in, 
     return material->scatter_pdf(material, ray_in, rec, scattered);
 }
 
-static bool scatter_base(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered);
+static bool scatter_base(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec);
 
 static color_t emmit_base(const material_t *material, double u, double v, const point3_t *p, const hit_record_t *rec);
 
@@ -44,7 +44,7 @@ void    material_base_innit(material_t *material_base, material_type_t type, mat
     material_base->scatter_pdf = scattering_pdf_met;    
 }
 
-static bool scatter_base(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, color_t *attenuation, ray_t *scattered) {
+static bool scatter_base(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec) {
     return (false);
 }
 
