@@ -30,6 +30,10 @@ pdf_shared.h
 ../render/hittable_list.h
 /workspaces/miniRT/include/render/hittable_list.h
 
+/workspaces/miniRT/include/pdfs/pdf_mixtures.h
+pdf_shared.h
+/workspaces/miniRT/include/pdfs/pdf_shared.h
+
 /workspaces/miniRT/include/pdfs/pdf_shared.h
 pdf.h
 /workspaces/miniRT/include/pdfs/pdf.h
@@ -209,6 +213,8 @@ time.h
 /workspaces/miniRT/include/pdfs/pdf_cosine.h
 ./pdfs/pdf_hittable.h
 /workspaces/miniRT/include/pdfs/pdf_hittable.h
+./pdfs/pdf_mixtures.h
+/workspaces/miniRT/include/pdfs/pdf_mixtures.h
 
 /workspaces/miniRT/include/render_plane.h
 ./render/vec3.h
@@ -263,10 +269,6 @@ pthread.h
 /workspaces/miniRT/include/stb_image_write.h
 unistd.h
 -
-
-/workspaces/miniRT/src/render_context.c
-../include/render_context.h
-/workspaces/miniRT/include/render_context.h
 
 /workspaces/miniRT/src/threads/thread.h
 

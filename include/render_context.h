@@ -23,6 +23,7 @@
 #include "../src/threads/thread_pool.h"
 #include "./pdfs/pdf_cosine.h"
 #include "./pdfs/pdf_hittable.h"
+#include "./pdfs/pdf_mixtures.h"
 
 
 typedef struct image_s {

@@ -10,20 +10,28 @@ color_t     ray_color(const ray_t *r, const hittable_list_t *world, const hittab
         ray_t       scattered;
         color_t     attenuation;
         color_t     color_from_emmision = material_emmit(rec.mat, rec.u, rec.v, &rec.p, &rec);
+        // printf("ray ORGIN: %f %f %f\n", r->orig.x, r->orig.y, r->orig.z);
+        // printf("ray DIR: %f %f %f\n", r->dir.x, r->dir.y, r->dir.z);
+        // fflush(stdout);
         if (material_scatter(rec.mat, r, &rec, &attenuation, &scattered)) {
-            pdf_t       *light_pdf = hittable_pdf_new(lights, &rec.normal);
-            scattered = ray(rec.p, light_pdf->generate(light_pdf), r->time);
-            double      pdf_value = light_pdf->get_value(light_pdf, &scattered.dir);
+            // printf("render_context rec.p: %f %f %f\n", rec.p.x, rec.p.y, rec.p.z);
+            // fflush(stdout);
+            pdf_t       *light_pdf = hittable_pdf_new(lights, &rec.p);
+            pdf_t       *cosine_pdf = cosine_pdf_new(&rec.normal);
+            pdf_t       *mixture_pdf = mixture_pdf_new(light_pdf, cosine_pdf);
+
+            scattered = ray(rec.p, mixture_pdf->generate(mixture_pdf), r->time);
+            double      pdf_value = mixture_pdf->get_value(mixture_pdf, &scattered.dir);
 
             double      scatter_pdf = material_scatter_pdf(rec.mat, r, &rec, &scattered);
             if (pdf_value == 0.0) {
-                light_pdf->delete_pdf(light_pdf);
+                mixture_pdf->delete_pdf(mixture_pdf);
                 return color_from_emmision;
             }
             vec3_t a = vec3_scaled_return(attenuation, scatter_pdf);
             vec3_t b = vec3_multi(a, ray_color(&scattered, world, lights, depth-1));
             color_t color_from_scatter = vec3_scaled_return(b, 1.0 / pdf_value); 
-            light_pdf->delete_pdf(light_pdf);
+            mixture_pdf->delete_pdf(mixture_pdf);
 
             return vec3_sum(color_from_emmision, color_from_scatter);
         }

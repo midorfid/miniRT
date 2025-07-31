@@ -10,6 +10,7 @@ CMakeFiles/miniRT.dir/src/main.c.o: include/lens.h
 CMakeFiles/miniRT.dir/src/main.c.o: include/pdfs/pdf.h
 CMakeFiles/miniRT.dir/src/main.c.o: include/pdfs/pdf_cosine.h
 CMakeFiles/miniRT.dir/src/main.c.o: include/pdfs/pdf_hittable.h
+CMakeFiles/miniRT.dir/src/main.c.o: include/pdfs/pdf_mixtures.h
 CMakeFiles/miniRT.dir/src/main.c.o: include/pdfs/pdf_shared.h
 CMakeFiles/miniRT.dir/src/main.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/main.c.o: include/render/aabb.h
@@ -337,6 +338,7 @@ CMakeFiles/miniRT.dir/src/render_context.c.o: include/lens.h
 CMakeFiles/miniRT.dir/src/render_context.c.o: include/pdfs/pdf.h
 CMakeFiles/miniRT.dir/src/render_context.c.o: include/pdfs/pdf_cosine.h
 CMakeFiles/miniRT.dir/src/render_context.c.o: include/pdfs/pdf_hittable.h
+CMakeFiles/miniRT.dir/src/render_context.c.o: include/pdfs/pdf_mixtures.h
 CMakeFiles/miniRT.dir/src/render_context.c.o: include/pdfs/pdf_shared.h
 CMakeFiles/miniRT.dir/src/render_context.c.o: include/random.h
 CMakeFiles/miniRT.dir/src/render_context.c.o: include/render/aabb.h

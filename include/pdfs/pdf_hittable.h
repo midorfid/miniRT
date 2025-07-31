@@ -41,14 +41,14 @@ static inline void                    hittable_pdf_delete(pdf_t *pdf) {
     free(pdf);
 }
 
-static inline pdf_t                   *hittable_pdf_new(const hittable_list_t *objects, const vec3_t *w) {
+static inline pdf_t                   *hittable_pdf_new(const hittable_list_t *objects, const point3_t *p) {
     pdf_hittable_t    *new_pdf = calloc(1, sizeof(pdf_hittable_t));
     if (new_pdf == NULL) {
         printf("hittable_pdf_new failed");
         return NULL;
     }
     new_pdf->objects = objects;
-    new_pdf->origin = *w;
+    new_pdf->origin = *p;
     
     pdf_innit(&new_pdf->base, PDF_HITTABLE, hittable_pdf_delete, hittable_pdf_get_value, hittable_pdf_generate);
 

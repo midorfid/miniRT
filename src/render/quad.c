@@ -47,6 +47,9 @@ static bool         quad_hit(const hittable_t *hittable, const ray_t *ray, doubl
     // if ray is 0 or close to zero, then it never intersects. fabs() in case if ray intersects from opposite side of normal
     if (fabs(denom) < 1e-8)
         return false;
+    // printf("quad->normal:%f %f %f\n", ray->dir.x, ray->dir.y, ray->dir.z);
+    // printf("denom:%f\n", denom);
+    // fflush(stdout);
     double t = (quad->D - vec3_dot(quad->normal, ray->orig)) / denom;
     // intersection is not within the valid segment of the ray
     if (t < tmin || t > tmax)
@@ -60,8 +63,7 @@ static bool         quad_hit(const hittable_t *hittable, const ray_t *ray, doubl
     if (!is_interior(alpha, beta, rec)) {
         return false;
     }
-    // puts("interior");
-    // fflush(stdout);
+    // printf("ray_orig:%f %f %f\n", ray->dir.x, ray->dir.y, ray->dir.z);
     rec->t = t;
     rec->p = intersection;
     rec->mat = quad->material;
@@ -121,14 +123,15 @@ double              quad_pdf_value(const hittable_t *hittable, const point3_t *o
     }
     my_quad_t *quad = (my_quad_t *)hittable;
     hit_record_t    rec;
-    ray_t     r = ray(*origin, *dir, 0.0);
+    ray_t     r = ray(*origin, *dir, random_double_nolimits());
 
     if (!hittable_t_hit(hittable, &r, 0.001, INFINITY, &rec))
-        return 0;
+        return 0.0;
     
     double dist_squared = rec.t * rec.t * vec3_len_squared(*dir);
     double cosine = fabs(vec3_dot(*dir, rec.normal) / vec3_len(*dir));
-
+    if (cosine < 1e-8)
+        return 0.0;
     return dist_squared / (cosine * quad->area);
 }
 
@@ -140,6 +143,9 @@ vec3_t              quad_random(const hittable_t *hittable, const point3_t *orig
     my_quad_t *quad = (my_quad_t *)hittable;
     // p = Q + v * r1 + u * r2;
     point3_t p = vec3_sum(vec3_sum(quad->Q, vec3_scaled_return(quad->u, random_double_nolimits())), vec3_scaled_return(quad->v, random_double_nolimits())); 
+    vec3_t dir_to_light = vec3_sub_return(p, *origin);
+    if (vec3_near_zero(&dir_to_light))
+        return vec3(0,0,1);
 
-    return vec3_sub_return(p, *origin);
+    return vec3_normalize(dir_to_light);
 }

@@ -17,8 +17,8 @@
 static inline double random_double_nolimits(void)
 {
     // return 0.5;
-    // return (double)rt_random() / (double)UINT64_MAX;
-    return rt_random() / (RANDOM_MAX + 0.0);
+    return (double)rt_random() / (double)UINT64_MAX;
+    // return rt_random() / (RANDOM_MAX + 0.0);
 }
 
 static inline double random_double(double min, double max)

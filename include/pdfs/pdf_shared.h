@@ -11,6 +11,7 @@ typedef enum pdf_type_e {
     PDF_SPHERE,
     PDF_COSINE,
     PDF_HITTABLE,
+    PDF_MIXTURE,
 } pdf_type_t;
 
 

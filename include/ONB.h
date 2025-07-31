@@ -15,7 +15,7 @@ static inline onb_t   onb_init(const vec3_t *n) {
     onb_t   uvw;
 
     uvw.axis[2] = vec3_normalize(*n);
-    vec3_t a = fabs(uvw.axis[2].x > 0.9) ? vec3(0,1,0) : vec3(1,0,0);
+    vec3_t a = fabs(uvw.axis[2].x) > 0.9 ? vec3(0,1,0) : vec3(1,0,0);
     uvw.axis[1] = vec3_normalize(vec3_cross(uvw.axis[2], a));
     uvw.axis[0] = vec3_cross(uvw.axis[2], uvw.axis[1]);
 

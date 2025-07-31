@@ -143,8 +143,11 @@ static inline vec3_t refract(const vec3_t *uv, const vec3_t *n, double eta_over_
 }
 
 static inline vec3_t random_cosine_direction() {
-    double r1 = random_double(0.0, 1.0);
-    double r2 = random_double(0.0, 1.0);
+    double r1 = random_double_nolimits();
+    double r2 = random_double_nolimits();
+
+    r2 = fmin(r2, 0.9999999999999999);
+    r2 = fmax(r2, 0.0);
 
     double phi = 2 * PI * r1;
     double x = cos(phi) * sqrt(r2);

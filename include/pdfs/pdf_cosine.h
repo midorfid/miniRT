@@ -14,14 +14,20 @@ static inline vec3_t                  cosine_pdf_generate(const pdf_t *pdf) {
     pdf_cosine_t *cos_pdf = (pdf_cosine_t *)pdf;
 
     vec3_t temp = random_cosine_direction();
+    vec3_t res = onb_transform(&temp, &cos_pdf->uvw);
+    // printf("random_cos: %f %f %f\n", res.x, res.y, res.z);
+    // fflush(stdout);
 
-    return onb_transform(&temp, &cos_pdf->uvw);
+    return res;
 }
 
 static inline double                  cosine_pdf_get_value(const pdf_t *pdf, const vec3_t *dir) {
     pdf_cosine_t *cos_pdf = (pdf_cosine_t *)pdf;
 
-    double cos_theta = vec3_dot(cos_pdf->uvw.axis[W], *dir);
+    // printf("W: %f %f %f\n dir: %f %f %f\n", cos_pdf->uvw.axis[W].x, cos_pdf->uvw.axis[W].y, cos_pdf->uvw.axis[W].z,
+        // vec3_normalize(*dir).x, vec3_normalize(*dir).y, vec3_normalize(*dir).z);
+    // fflush(stdout);
+    double cos_theta = vec3_dot(cos_pdf->uvw.axis[W], vec3_normalize(*dir));
     return fmax(0.0, cos_theta / PI);
 
 }
