@@ -23,8 +23,9 @@ static inline onb_t   onb_init(const vec3_t *n) {
 }
 
 static inline vec3_t  onb_transform(const vec3_t *v, const onb_t *uvw) {
-    vec3_t temp = vec3_sum(vec3_multi(v[0], uvw->axis[0]), vec3_multi(v[1], uvw->axis[1]));
-    return vec3_sum(temp, vec3_multi(v[2], uvw->axis[2]));
+    vec3_t temp = vec3_sum(vec3_scaled_return(uvw->axis[0], v->x), vec3_scaled_return(uvw->axis[1], v->y));
+    return vec3_sum(temp, vec3_scaled_return(uvw->axis[2], v->z));
+
 }
 
 #endif
