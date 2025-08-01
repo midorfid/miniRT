@@ -26,4 +26,8 @@ bool                     sphere_bb(const hittable_t *hittable, double time0, dou
 
 void                    sphere_delete(hittable_t *hittable);
 
+double                  sphere_pdf_value(const hittable_t *hittable, const point3_t *origin, const vec3_t *dir);
+
+vec3_t                  sphere_random(const hittable_t *hittable, const point3_t *origin);
+
 #endif

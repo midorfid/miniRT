@@ -137,8 +137,12 @@ static inline vec3_t reflect(const vec3_t *v, const vec3_t *n) {
     eta * sin(theta) = eta prime * sin(theta prime)*/
 static inline vec3_t refract(const vec3_t *uv, const vec3_t *n, double eta_over_etap) {
     double cos_theta = fmin(vec3_dot(vec3_negative(uv), *n), 1);
+    double sin_theta_squared = 1 - cos_theta * cos_theta;
+    double discriminant = 1.0 - eta_over_etap * eta_over_etap * sin_theta_squared;
+
     vec3_t r_out_perp = vec3_scaled_return(vec3_sum(*uv, vec3_scaled_return(*n, cos_theta)), eta_over_etap);
-    vec3_t r_out_parallel = vec3_scaled_return(*n, -1 * sqrt(fabs(1 - vec3_len_squared(r_out_perp))));
+    vec3_t r_out_parallel = vec3_scaled_return(*n, -1.0 * sqrt(discriminant));
+    
     return(vec3_sum(r_out_perp, r_out_parallel));
 }
 
@@ -156,6 +160,22 @@ static inline vec3_t random_cosine_direction() {
 
     return vec3(x,y,z);
 }
+
+static inline vec3_t random_to_sphere(double radius, double dist_squared) {
+    double r1 = random_double_nolimits();
+    double r2 = random_double_nolimits();
+
+    r2 = fmin(r2, 0.9999999999999999);
+    r2 = fmax(r2, 0.0);
+
+    double phi = 2 * PI * r1;
+    double z = 1 + r2 * sqrt(1.0 - radius * radius / dist_squared) - 1;
+    double x = cos(phi) * sqrt(1-z*z);
+    double y = sin(phi) * sqrt(1-z*z);
+
+    return vec3(x,y,z);
+}
+
 
 // Point layer for vec3_t
 typedef vec3_t point3_t;

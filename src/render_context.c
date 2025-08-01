@@ -2,7 +2,7 @@
 
 color_t     ray_color(const ray_t *r, const hittable_list_t *world, const hittable_list_t *lights, int depth) {
     hit_record_t    rec;
-
+    (void)lights;
     if (depth <= 0)
         return vec3(0.0, 0.0, 0.0);
     if (hittable_list_hit_test(r, world, 0.001, INFINITY, &rec)) {
@@ -13,8 +13,8 @@ color_t     ray_color(const ray_t *r, const hittable_list_t *world, const hittab
         if (material_scatter(rec.mat, r, &rec, &srec)) {
             if (srec.skip_pdf)
                 return vec3_sum(srec.attenuation, ray_color(&srec.skip_pdf_ray, world, lights, depth-1));
-            pdf_t       *light_pdf = hittable_pdf_new(lights, &rec.p);
-            pdf_t       *mixture_pdf = mixture_pdf_new(light_pdf, srec.pdf_ptr);
+            // pdf_t       *light_pdf = hittable_pdf_new(lights, &rec.p);
+            pdf_t       *mixture_pdf = mixture_pdf_new(NULL, srec.pdf_ptr);
 
             ray_t scattered = ray(rec.p, mixture_pdf->generate(mixture_pdf), r->time);
             double      pdf_value = mixture_pdf->get_value(mixture_pdf, &scattered.dir);

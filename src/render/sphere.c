@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include "../../include/render/ray.h"
+#include "../../include/ONB.h"
 
 // p: a given point on the sphere of radius one, centered at the origin.
         // u: returned value [0,1] of angle around the Y axis from X=-1.
@@ -57,7 +58,7 @@ bool sphere_hit_test_generic(point3_t center, double radius, material_t *materia
 static  sphere_t  sphere_init(point3_t center, double radius, material_t *material) {
     sphere_t    result = {.center = center, .radius = radius, .material = material};
 
-    hittable_innit(&result.base, HITTABLE_TYPE_SHPERE, sphere_hit, sphere_bb, sphere_delete, NULL, NULL);
+    hittable_innit(&result.base, HITTABLE_TYPE_SHPERE, sphere_hit, sphere_bb, sphere_delete, sphere_pdf_value, sphere_random);
     return (result);
 }
 
@@ -102,4 +103,41 @@ void    sphere_delete(hittable_t *hittable) {
 
     material_delete(delete_sphere->material);
     free(delete_sphere);
+}
+
+double                  sphere_pdf_value(const hittable_t *hittable, const point3_t *origin, const vec3_t *dir) {
+    if (hittable == NULL || hittable->type != HITTABLE_TYPE_SHPERE) {
+        printf("sphere_pdf_value() failed");
+        return 0.0;
+    }
+    sphere_t        *sphere = (sphere_t *)hittable;
+    hit_record_t    rec;
+    ray_t           hit_ray = ray(*origin, *dir, 0.0);
+
+    if (!hittable_t_hit(hittable, &hit_ray, 0.001, INFINITY, &rec))
+        return 0.0;
+
+    vec3_t dir_to_sphere = vec3_sub_return(sphere->center, *origin);
+    double dist_to_sphere_squared = vec3_len_squared(dir_to_sphere);
+
+    double cos_theta_max = sqrt(1.0 - sphere->radius * sphere->radius / dist_to_sphere_squared);
+    double solid_angle = 2*PI * (1.0 - cos_theta_max);
+
+    return 1.0 / solid_angle;
+}
+
+vec3_t                  sphere_random(const hittable_t *hittable, const point3_t *origin) {
+    if (hittable == NULL || hittable->type != HITTABLE_TYPE_SHPERE) {
+        printf("sphere_random() failed");
+        return vec3(0,0,0);
+    }
+    sphere_t    *sphere = (sphere_t *)hittable;
+
+    vec3_t dir_to_sphere = vec3_sub_return(sphere->center, *origin);
+    double dist_to_sphere_squared = vec3_len_squared(dir_to_sphere);
+
+    onb_t uvw = onb_init(&dir_to_sphere);
+    vec3_t rand_to_sphere = random_to_sphere(sphere->radius, dist_to_sphere_squared);
+
+    return onb_transform(&rand_to_sphere, &uvw);
 }

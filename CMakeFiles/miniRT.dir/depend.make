@@ -343,6 +343,7 @@ CMakeFiles/miniRT.dir/src/render/quad.c.o: include/textures/texture.h
 CMakeFiles/miniRT.dir/src/render/quad.c.o: include/textures/texture_shared.h
 CMakeFiles/miniRT.dir/src/render/quad.c.o: src/render/quad.c
 
+CMakeFiles/miniRT.dir/src/render/sphere.c.o: include/ONB.h
 CMakeFiles/miniRT.dir/src/render/sphere.c.o: include/lens.h
 CMakeFiles/miniRT.dir/src/render/sphere.c.o: include/pdfs/pdf.h
 CMakeFiles/miniRT.dir/src/render/sphere.c.o: include/pdfs/pdf_shared.h

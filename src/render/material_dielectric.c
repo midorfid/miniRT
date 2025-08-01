@@ -53,7 +53,7 @@ static bool     mt_dielectric_scatter(const material_t *material, const ray_t *r
         direction = reflect(&ray_in->dir, &rec->normal);
     }
     else {
-        vec3_t direction = refract(&unit_direction, &rec->normal, ri); 
+        vec3_t direction = refract(&unit_direction, &rec->normal, ri);
     }
 
     srec->skip_pdf_ray = ray(rec->p, direction, ray_in->time);

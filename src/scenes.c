@@ -177,15 +177,15 @@ hittable_list_t     *cornell_box_empty() {
 
 hittable_list_t         *cornell_box_standard(hittable_list_t **lights) {
     hittable_list_t *world = hittable_list_innit(8);
-    *lights = hittable_list_innit(1);
+    // *lights = hittable_list_innit(1);
 
     material_t *red   = mt_lambertian_new_with_colour(color(.65, .05, .05));
     material_t *white = mt_lambertian_new_with_colour(color(.73, .73, .73));
     material_t *green = mt_lambertian_new_with_colour(color(.12, .45, .15));
     material_t *light = diffuse_light_new_with_colour(color(4, 4, 4));
-    material_t *aluminum = mt_metal_new(color(0.8, 0.85, 0.88), 0.0);
+    // material_t *aluminum = mt_metal_new(color(0.8, 0.85, 0.88), 0.0);
     
-    hittable_list_add(*lights, quad_new(point3(343, 554, 332), vec3(-130,0,0), vec3(0,0,-105), light));
+    // hittable_list_add(*lights, quad_new(point3(343, 554, 332), vec3(-130,0,0), vec3(0,0,-105), light));
 
     hittable_list_add(world, quad_new(point3(555,0,0), vec3(0,555,0), vec3(0,0,555), green));
     hittable_list_add(world, quad_new(point3(0,0,0), vec3(0,555,0), vec3(0,0,555), red));
@@ -194,17 +194,18 @@ hittable_list_t         *cornell_box_standard(hittable_list_t **lights) {
     hittable_list_add(world, quad_new(point3(0,0,555), vec3(555,0,0), vec3(0,555,0), material_claim(white)));
     hittable_list_add(world, quad_new(point3(343, 554, 332), vec3(-130,0,0), vec3(0,0,-105), material_claim(light)));
     
-    hittable_t *box1 = instance_new(box_new(point3(0,0,0), point3(165,330,165), aluminum));
-    // hittable_t *box1 = box_new(point3(130, 0, 65), point3(295, 165, 230), material_claim(white));
+    hittable_t *box1 = instance_new(box_new(point3(0,0,0), point3(165,330,165), material_claim(white)));
     instance_rotate_y(box1, -18);
     instance_translate(box1, vec3(265,0,295));
     hittable_list_add(world, box1);
 
-    hittable_t *box2 = instance_new(box_new(point3(0,0,0), point3(165,165,165), material_claim(white)));
-    // hittable_t *box2 = box_new(point3(265, 0, 295), point3(430, 330, 460), material_claim(white));
-    instance_rotate_y(box2, 15);
-    instance_translate(box2, vec3(130,0,65));
-    hittable_list_add(world, box2);
+    material_t *glass = mt_dielectric_new(1.5);
+    hittable_list_add(world, sphere_new(point3(190,90,190), 90, glass));
+
+    // hittable_t *box2 = instance_new(box_new(point3(0,0,0), point3(165,165,165), material_claim(white)));
+    // instance_rotate_y(box2, 15);
+    // instance_translate(box2, vec3(130,0,65));
+    // hittable_list_add(world, box2);
 
     hittable_list_t *result = hittable_list_innit(1);
     hittable_list_add(result, bvh_node_new(world, 0.0, 1.0));

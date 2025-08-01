@@ -17,7 +17,8 @@ static inline void        mixture_pdf_delete(pdf_t *mix_pdf) {
     mixture_pdf_t   *to_delete = (mixture_pdf_t *)mix_pdf;
 
     for (int i = 0; i < 2; ++i) {
-        to_delete->pdf[i]->delete_pdf(to_delete->pdf[i]);
+        if (to_delete->pdf[i] != NULL)
+            to_delete->pdf[i]->delete_pdf(to_delete->pdf[i]);
     }
     free(to_delete);
 }
@@ -29,10 +30,9 @@ static inline double      mixture_pdf_get_value(const pdf_t *mix_pdf, const vec3
     }
     mixture_pdf_t   *pdfs = (mixture_pdf_t *)mix_pdf;
     
-    // printf("light_pdf:%f\n", pdfs->pdf[0]->get_value(pdfs->pdf[0],dir));
-    // printf("cosine_pdf:%f\n", pdfs->pdf[1]->get_value(pdfs->pdf[1],dir));
-    // fflush(stdout);
-    
+    if (pdfs->pdf[0] == NULL)
+        return pdfs->pdf[1]->get_value(pdfs->pdf[1], dir);
+
     return 0.5 * pdfs->pdf[0]->get_value(pdfs->pdf[0], dir) + 0.5 * pdfs->pdf[1]->get_value(pdfs->pdf[1], dir); 
 }
 
@@ -42,6 +42,9 @@ static inline vec3_t      mixture_pdf_generate(const pdf_t *mix_pdf) {
         return vec3(1,0,0);
     }
     mixture_pdf_t   *pdfs = (mixture_pdf_t *)mix_pdf;
+
+    if (pdfs->pdf[0] == NULL)
+        return pdfs->pdf[1]->generate(pdfs->pdf[1]);
 
     if (random_double_nolimits() < 0.5)
         return pdfs->pdf[0]->generate(pdfs->pdf[0]);

@@ -7,10 +7,18 @@ double  linear_to_gamma(double linear_component) {
     return (0);
 }
 
+static inline double reinhard_tone_map(double value) {
+    return value / (value + 1.0);
+}
 int     return_color(color_t pixel_color) {
-    double r = linear_to_gamma(pixel_color.x);
-    double g = linear_to_gamma(pixel_color.y);
-    double b = linear_to_gamma(pixel_color.z);
+    double x = reinhard_tone_map(pixel_color.x);
+    double y = reinhard_tone_map(pixel_color.y);
+    double z = reinhard_tone_map(pixel_color.z);
+
+    
+    double r = linear_to_gamma(x);
+    double g = linear_to_gamma(y);
+    double b = linear_to_gamma(z);
     
     
     int ir = (int)(256 * clamp(r, 0.000, 0.999));

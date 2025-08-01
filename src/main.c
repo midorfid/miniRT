@@ -102,7 +102,7 @@ int main(void) {
         case SCENE_CORNELL_BOX_STANDARD:
             render->image.aspect_ratio      = 1.0;
             render->image.image_width       = 600;
-            render->camera.samples_per_pixel = 100;
+            render->camera.samples_per_pixel = 50;
             render->camera.max_depth         = 50;
 
             render->pov.vfov        = 40;
@@ -112,10 +112,6 @@ int main(void) {
 
             render->camera.lens.defocus_angle = 0;
             render->world = cornell_box_standard(&render->lights);
-            if (render->lights == NULL) {
-                puts("lox");
-                fflush(stdout);
-            }
             break;
 
         case SCENE_TOUCHING_SPHERES:

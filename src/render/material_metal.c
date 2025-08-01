@@ -36,12 +36,13 @@ static bool     mt_metal_scatter(const material_t *material, const ray_t *ray_in
     srec->pdf_ptr = NULL;
     srec->skip_pdf = true;
 
-    vec3_t reflected = reflect(&ray_in->dir, &rec->normal);
+    vec3_t normalized_dir = vec3_normalize(ray_in->dir);
+    vec3_t reflected = reflect(&normalized_dir, &rec->normal);
     reflected = vec3_sum(vec3_normalize(reflected), vec3_scaled_return(vec3_random_unit_vec(), diffuse->fuzz));
 
     srec->skip_pdf_ray = ray(rec->p, reflected, ray_in->time);
 
-    return true;
+    return vec3_dot(rec->normal, srec->skip_pdf_ray.dir) > 0;
 }
 
 static void     mt_metal_delete(material_t *material) {
