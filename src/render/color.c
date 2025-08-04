@@ -11,14 +11,21 @@ static inline double reinhard_tone_map(double value) {
     return value / (value + 1.0);
 }
 int     return_color(color_t pixel_color) {
-    double x = reinhard_tone_map(pixel_color.x);
-    double y = reinhard_tone_map(pixel_color.y);
-    double z = reinhard_tone_map(pixel_color.z);
+    double r = pixel_color.x;
+    double g = pixel_color.y;
+    double b = pixel_color.z;
 
+    if (r != r) r = 0.0;
+    if (g != g) g = 0.0;
+    if (b != b) b = 0.0;
     
-    double r = linear_to_gamma(x);
-    double g = linear_to_gamma(y);
-    double b = linear_to_gamma(z);
+    r = reinhard_tone_map(r);
+    g = reinhard_tone_map(g);
+    b = reinhard_tone_map(b);
+    
+    r = linear_to_gamma(r);
+    g = linear_to_gamma(g);
+    b = linear_to_gamma(b);
     
     
     int ir = (int)(256 * clamp(r, 0.000, 0.999));

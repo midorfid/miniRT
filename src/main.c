@@ -102,7 +102,7 @@ int main(void) {
         case SCENE_CORNELL_BOX_STANDARD:
             render->image.aspect_ratio      = 1.0;
             render->image.image_width       = 600;
-            render->camera.samples_per_pixel = 50;
+            render->camera.samples_per_pixel = 200;
             render->camera.max_depth         = 50;
 
             render->pov.vfov        = 40;

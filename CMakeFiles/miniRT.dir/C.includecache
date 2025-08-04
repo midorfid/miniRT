@@ -170,6 +170,10 @@ texture.h
 ../render/color.h
 /workspaces/miniRT/include/render/color.h
 
+/workspaces/miniRT/src/render/color.c
+../../include/render/color.h
+/workspaces/miniRT/include/render/color.h
+
 /workspaces/miniRT/src/scenes.c
 ../include/render/hittable_list.h
 /workspaces/miniRT/include/render/hittable_list.h

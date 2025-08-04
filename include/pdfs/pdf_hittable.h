@@ -27,9 +27,10 @@ static inline double                  hittable_pdf_get_value(const pdf_t *pdf, c
     
     int lights_count = (int)hittable_pdf->objects->size;
     double sum = 0.0;
+    double weight = 1.0 / lights_count;
     for (int i = 0; i < lights_count; ++i) {
         hittable_t *chosen = hittable_pdf->objects->hittables[i];
-        sum += chosen->pdf_value(chosen, &hittable_pdf->origin, dir);
+        sum += weight * chosen->pdf_value(chosen, &hittable_pdf->origin, dir);
     }
 
     return sum;

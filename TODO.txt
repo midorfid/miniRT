@@ -1,6 +1,6 @@
 jpg to texture
 rotation, translation // done
-light scatter
+light scatter // done
 multi-threading speed up // done
 encapsulate everything
 test torus
@@ -9,3 +9,8 @@ instance scale
 scene management
 inline frequently used funcs (perf)
 optimize passing vars - emmit pass only hit_record
+
+bidirectional and path spaced approaches such as Metropolis
+add a glossy BRDF model
+convert renderer from RGB to spectral
+test 1000 samples
