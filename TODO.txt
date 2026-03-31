@@ -7,10 +7,5 @@ test torus
 
 instance scale
 scene management
-inline frequently used funcs (perf)
+ (perf)
 optimize passing vars - emmit pass only hit_record
-
-bidirectional and path spaced approaches such as Metropolis
-add a glossy BRDF model
-convert renderer from RGB to spectral
-test 1000 samples
