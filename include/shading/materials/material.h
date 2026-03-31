@@ -1,0 +1,39 @@
+#ifndef MATERIAL_H
+#define MATERIAL_H
+
+#include "core/color.h"
+#include "shading/textures/texture_shared.h"
+#include "shading/pdfs/pdf_shared.h"
+
+typedef struct material_s material_t;
+
+typedef struct scatter_record_s {
+    color_t     attenuation;
+    pdf_t       *pdf_ptr;
+    bool        skip_pdf;
+    ray_t       skip_pdf_ray;
+} scatter_record_t;
+
+bool    material_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec);
+
+double    material_scatter_pdf(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, const ray_t *scattered);
+
+color_t     material_emmit(const material_t *material, double u, double v, const point3_t *point, const hit_record_t *rec);
+
+void    material_delete(material_t *material);
+
+material_t      *material_claim(material_t *material);
+
+material_t      *mt_metal_new(color_t albedo, double fuzz);
+
+material_t      *mt_dielectric_new(double refraction_index);
+
+material_t      *mt_lambertian_new_with_tex(texture_t *tex);
+
+material_t      *mt_lambertian_new_with_colour(color_t colour);
+
+material_t      *diffuse_light_new_with_tex(texture_t *texture);
+
+material_t      *diffuse_light_new_with_colour(color_t albedo);
+
+#endif

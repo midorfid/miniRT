@@ -1,0 +1,36 @@
+#ifndef SCENES_H
+#define SCENES_H
+
+#include "geometry/objects/hittable_list.h"
+#include "shading/materials/material.h"
+
+typedef enum scene_id_s {
+    SCENE_NONE = -1,
+    SCENE_BOUNCING_SPHERES,
+    SCENE_CORNELL_BOX_EMPTY,
+    SCENE_CORNELL_BOX_STANDARD,
+    SCENE_TOUCHING_SPHERES,
+    SCENE_QUAD,
+    SCENE_TWO_CHECKERED_SPHERES,
+    SCENE_CORNELL_FOG,
+    SCENE_SIMPLE_LIGHT,
+    SCENE_PERLIN_SPHERES,
+    SCENE_EARTH,
+    SCENE_FINAL,
+    SCENE_FIVE_SPHERES,
+} scene_id_t;
+
+hittable_list_t             *earth();
+hittable_list_t             *quads();
+hittable_list_t             *cornell_smoke();
+hittable_list_t             *final_scene(int image_width, int samples_per_pixel, int max_depth);
+hittable_list_t             *simple_light();
+hittable_list_t             *perlin_spheres();
+hittable_list_t             *cornell_box_empty();
+hittable_list_t             *cornell_box_standard(hittable_list_t **lights);
+hittable_list_t             *checkered_spheres();
+hittable_list_t             *touching_spheres();
+hittable_list_t             *bouncing_spheres();
+hittable_list_t             *five_spheres();
+
+#endif
