@@ -4,7 +4,7 @@
 // This #define should only be in one .c file that includes the header.
 // It creates the implementation of the library.
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "../include/stb_image_write.h"
+#include "renderer/stb_image_write.h"
 
 /*
 ** Saves the content of an mlx_image_t to a PNG file.

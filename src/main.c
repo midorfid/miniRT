@@ -1,6 +1,6 @@
-#include "../include/render_context.h"
+#include "renderer/render_context.h"
 #include <pthread.h>
-#include "../include/stb_image_write.h"
+#include "renderer/stb_image_write.h"
 #include <unistd.h>
 
 #define SCREEN_WIDTH 1000
@@ -56,8 +56,8 @@ int main(void) {
     if (!image || mlx_image_to_window(mlx, image, 0, 0) < 0)
         return(1);
     
-    // mlx_image_to_window(mlx, image, 0, 0);
-    // mlx_loop_hook(mlx, keep_alive_hook, NULL);
+    mlx_image_to_window(mlx, image, 0, 0);
+    mlx_loop_hook(mlx, keep_alive_hook, NULL);
 
     render_context_t    *render; 
 
@@ -69,7 +69,7 @@ int main(void) {
 
     // choose scene
     // TODO render_context_new and different scenes should have same vars values
-    scene_id_t scene_id = SCENE_CORNELL_BOX_STANDARD;
+    scene_id_t scene_id = SCENE_TOUCHING_SPHERES;
     switch(scene_id) {
         case SCENE_BOUNCING_SPHERES:
             render->camera.samples_per_pixel = 10;
@@ -252,7 +252,7 @@ int main(void) {
     render = render_context_new(render, mlx, image);
     // init threads
     
-    int             num_threads = 2;
+    int             num_threads = 4;
     pthread_mutex_t      *process_mutex = malloc(sizeof(pthread_mutex_t));
     pthread_mutex_init(process_mutex, NULL);
     thread_pool_t   *pool = thread_pool_init(num_threads);

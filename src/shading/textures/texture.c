@@ -1,5 +1,5 @@
-#include "../../include/textures/texture.h"
-#include "../../include/textures/texture_shared.h"
+#include "shading/textures/texture.h"
+#include "shading/textures/texture_shared.h"
 
 static void    texture_t_free_default(texture_t *texture) {
     printf("default free for texture");

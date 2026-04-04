@@ -1,14 +1,15 @@
-#include "sync.h"
+#include "renderer/threads/sync.h"
 #include <stdlib.h>
+#include <assert.h>
+#include <stdio.h>
 
 struct my_mutex_s {
     pthread_mutex_t mutex;
 };
 
-struct my_cond_t {
+struct my_cond_s {
     pthread_cond_t  cond;
 };
-
 
 my_mutex_t    *mutex_init(void) {
     my_mutex_t *result = calloc(1, sizeof(my_mutex_t));
@@ -17,8 +18,7 @@ my_mutex_t    *mutex_init(void) {
         printf("mutex_init() failed");
         return NULL;
     }
-    int rc = pthread_mutex_init(&result->mutex, NULL);
-    if (rc == NULL) {
+    if (pthread_mutex_init(&result->mutex, NULL) != 0) {
         printf("mutex_init() failed");
         return NULL;
     }
@@ -32,8 +32,7 @@ my_cond_t    *cond_init(void) {
         printf("cond_init() failed");
         return NULL;
     }
-    int rc = pthread_cond_init(&result->cond, NULL);
-    if (rc == NULL) {
+    if (pthread_cond_init(&result->cond, NULL) != 0) {
         printf("cond_init() failed");
         return NULL;
     }

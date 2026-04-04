@@ -7,36 +7,7 @@ set (SRCS_MAIN
         src/main.c
 )
 
-set (SRCS
-    src/render/color.c
-    src/render/hit_record.c
-    src/render/hittable.c
-    src/render/sphere.c
-    src/render/moving_sphere.c
-    src/render/hittable_list.c
-    src/render/aabb.c
-    src/render/bvh.c
-    src/random.c
-    src/render/material.c
-    src/textures/texture.c
-    src/textures/checker_pattern.c
-    src/textures/solid_colour.c
-    src/textures/perlin.c
-    src/render/quad.c
-    src/render/box.c
-    src/render/matrix3.c
-    src/render/instance.c
-    src/render/constant_medium.c
-    src/render/material_isotropic.c
-    src/render_context.c
-    src/scenes.c
-    src/render/material_dielectric.c
-    src/render/diffuse_light.c
-    src/render/material_lambertian.c
-    src/render/material_metal.c
-    src/threads/thread_pool.c 
-    src/image_save.c
-    src/pdf.c )
+file (GLOB_RECURSE SRCS "src/*.c")
 
 set (EXEC_NAME miniRT)
 

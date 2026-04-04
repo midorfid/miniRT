@@ -1,4 +1,4 @@
-#include "../../include/textures/solid_colour.h"
+#include "shading/textures/solid_colour.h"
 
 void        solid_colour_delete(texture_t *texture) {
     if (texture == NULL) {

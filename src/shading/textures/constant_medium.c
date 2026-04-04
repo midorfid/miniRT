@@ -1,4 +1,4 @@
-#include  "../../include/render/constant_medium.h"
+#include  "shading/textures/constant_medium.h"
 
 bool        const_medium_hit(const hittable_t *hittable, const ray_t *ray, double tmin, double tmax, hit_record_t *rec) {
     if (hittable == NULL || hittable->type != HITTABLE_TYPE_CONST_MEDIUM) {

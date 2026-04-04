@@ -1,4 +1,4 @@
-#include "../../include/textures/perlin.h"
+#include "shading/textures/perlin.h"
 
 static void    perlin_scramble(const texture_t *texture, const point3_t *p) {
     perlin_t *perlin = (perlin_t *)texture;

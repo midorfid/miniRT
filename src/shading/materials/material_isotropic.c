@@ -1,5 +1,5 @@
-#include "../../include/render/material_isotropic.h"
-#include "../../include/pdfs/pdf_sphere.h"
+#include "shading/materials/material_isotropic.h"
+#include "shading/pdfs/pdf_sphere.h"
 
 static bool         isotropic_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec) {
     if (material == NULL || material->type != MATERIAL_TYPE_ISOTROPIC) {

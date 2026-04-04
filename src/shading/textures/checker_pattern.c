@@ -1,5 +1,5 @@
-#include "../../include/textures/checker_pattern.h"
-#include "../../include/textures/texture_shared.h"
+#include "shading/textures/checker_pattern.h"
+#include "shading/textures/texture_shared.h"
 
 void        checker_pat_delete(texture_t *texture) {
     if (texture == NULL) {

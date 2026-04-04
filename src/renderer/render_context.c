@@ -1,4 +1,4 @@
-#include "../include/render_context.h"
+#include "renderer/render_context.h"
 
 color_t     ray_color(const ray_t *r, const hittable_list_t *world, const hittable_list_t *lights, int depth) {
     hit_record_t    rec;

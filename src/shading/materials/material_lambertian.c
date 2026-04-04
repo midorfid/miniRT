@@ -1,13 +1,13 @@
 #ifndef MATERIAL_LAMBERTIAN_H
 #define MATERIAL_LAMBERTIAN_H
 
-#include "../../include/render/hit_record.h"
-#include "../../include/render/ray.h"
-#include "../../include/render/material_shared.h"
-#include "../../include/render/material.h"
-#include "../../include/textures/solid_colour.h"
-#include "../../include/ONB.h"
-#include "../../include/pdfs/pdf_cosine.h"
+#include "core/hit_record.h"
+#include "core/ray.h"
+#include "shading/materials/material_shared.h"
+#include "shading/materials/material.h"
+#include "shading//textures/solid_colour.h"
+#include "math/ONB.h"
+#include "shading//pdfs/pdf_cosine.h"
 
 typedef struct lambertian_s
 {

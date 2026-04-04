@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <assert.h>
-#include "color.h"
+#include "core/color.h"
 #include "core/ray.h"
 #include "core/hit_record.h"
 #include "geometry/objects/sphere.h"

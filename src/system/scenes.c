@@ -1,10 +1,10 @@
-#include "hittable_list.h"
-#include "scenes.h"
-#include "hittable.h"
-#include "checker_pattern.h"
-#include "perlin.h"
-#include "bvh.h"
-#include "instance.h"
+#include "system/scenes.h"
+#include "geometry/objects/hittable_list.h"
+#include "geometry/objects/hittable.h"
+#include "shading/textures/checker_pattern.h"
+#include "shading/textures/perlin.h"
+#include "geometry/bvh.h"
+#include "geometry/objects/instance.h"
 
 hittable_list_t     *earth() {
     // auto earth_texture = make_shared<image_texture>("earthmap.jpg");

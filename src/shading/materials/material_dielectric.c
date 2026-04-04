@@ -1,10 +1,10 @@
 #ifndef MATERIAL_DIELECTRIC_H
 #define MATERIAL_DIELECTRIC_H
 
-#include "../../include/render/hit_record.h"
-#include "../../include/render/ray.h"
-#include "../../include/render/material_shared.h"
-#include "../../include/render/material.h"
+#include "core/hit_record.h"
+#include "core/ray.h"
+#include "shading/materials/material_shared.h"
+#include "shading/materials/material.h"
 
 typedef struct dielectric_s
 {

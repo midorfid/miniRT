@@ -11,7 +11,7 @@
 
 typedef struct my_thread_s my_thread_t;
 
-typedef void (*my_thread_fn_t)(void *params);
+typedef void (my_thread_fn_t)(void *params);
 
 my_thread_t *thread_create(my_thread_fn_t *thread_fn, void *arg);
 

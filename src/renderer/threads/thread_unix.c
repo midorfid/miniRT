@@ -1,5 +1,7 @@
-#include "thread.h"
+#include "renderer/threads/thread.h"
 #include "pthread.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 struct my_thread_s {
     pthread_t   thread_handle;
@@ -18,8 +20,7 @@ my_thread_t     *thread_create(my_thread_fn_t *thread_fn, void *arg) {
         .in = thread_fn,
     };
 
-    int rc = pthread_create(&my_thread->thread_handle, NULL, fn.out, arg);
-    if (rc == 0) {
+    if (pthread_create(&my_thread->thread_handle, NULL, fn.out, arg) != 0) {
         printf("thread_create() failed");
         return NULL;
     }
@@ -29,7 +30,7 @@ my_thread_t     *thread_create(my_thread_fn_t *thread_fn, void *arg) {
 
 void        thread_join(my_thread_t *thread) {
     if (thread != NULL) {
-        pthread_join(&thread->thread_handle, NULL);
+        pthread_join(thread->thread_handle, NULL);
         free(thread);
     }
 }

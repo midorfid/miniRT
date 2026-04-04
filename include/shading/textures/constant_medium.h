@@ -1,8 +1,8 @@
 #ifndef CONSTANT_MEDIUM_H
 #define CONSTANT_MEDIUM_H
 
-#include "hittable_shared.h"
-#include "texture_shared.h"
+#include "geometry/objects/hittable_shared.h"
+#include "shading/textures/texture_shared.h"
 
 typedef struct const_medium_s {
     hittable_t  base;

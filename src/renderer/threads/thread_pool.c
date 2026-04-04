@@ -1,10 +1,10 @@
-#include "thread_pool.h"
+#include "renderer/threads/thread_pool.h"
 #include <sys/queue.h>
-#include "thread.h"
-#include "sync.h"
+#include "renderer/threads/thread.h"
+#include "renderer/threads/sync.h"
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdbool.h>
 
 typedef enum thread_work_type_e {
     THREAD_WORK_TYPE_REGULAR = 0,

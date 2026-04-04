@@ -1,5 +1,5 @@
-#include "../../include/render/material_shared.h"
-#include "../../include/render/material.h"
+#include "shading/materials/material_shared.h"
+#include "shading/materials/material.h"
 
 bool    material_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec) {
     if (material == NULL) {

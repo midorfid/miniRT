@@ -1,4 +1,4 @@
-#include "../../include/render/color.h"
+#include "core/color.h"
 
 double  linear_to_gamma(double linear_component) {
     if (linear_component > 0)
