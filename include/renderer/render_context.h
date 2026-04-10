@@ -1,6 +1,13 @@
 #ifndef RENDER_CONTEXT_H
 #define RENDER_CONTEXT_H
 
+#include <stdatomic.h>
+
+typedef enum render_mode_e {
+    RENDER_MODE_LIT,     // explicit lights drive all illumination; black on ray miss
+    RENDER_MODE_AMBIENT, // no explicit lights; skybox provides environment light
+} render_mode_t;
+
 #include "MLX42.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -29,6 +36,7 @@
 typedef struct image_s {
     double      aspect_ratio;
     int         image_width, image_height;
+    vec3_t      background;
 } image_t;
 
 typedef struct viewpoint_s {
@@ -67,10 +75,11 @@ typedef struct render_context_s {
     // scene objects
     hittable_list_t     *world;
     hittable_list_t     *lights;
+    render_mode_t       render_mode;
 
     // threads
     pthread_mutex_t          *process_mutex;
-    int                 *processed_chunks;
+    _Atomic int         *processed_chunks;
     int                 total_chunks;
     uint64_t            random_seed;
     // render_fn_t         render_function;
@@ -96,6 +105,6 @@ static void        render_plane_init(render_plane_t *render_p, vec3_t upper_left
 
 static void        render_context_init(render_context_t *render);
 
-color_t            ray_color(const ray_t *r, const hittable_list_t *world, const hittable_list_t *lights, int depth);
+color_t            ray_color(const ray_t *r, const hittable_list_t *world, const hittable_list_t *lights, int depth, render_mode_t mode);
 
 #endif

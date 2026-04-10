@@ -48,6 +48,10 @@ static inline pdf_t                   *hittable_pdf_new(const hittable_list_t *o
         printf("hittable_pdf_new failed");
         return NULL;
     }
+    if (objects == NULL) {
+        free(new_pdf);
+        return NULL;
+    }
     new_pdf->objects = objects;
     new_pdf->origin = *p;
     

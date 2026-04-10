@@ -52,6 +52,7 @@ void rt_random_seed(uint64_t seed)
     gs_generator.lower_mask = (1 << gs_generator.r) - 1;
     gs_generator.upper_mask = ~gs_generator.lower_mask;
 
+    free(gs_generator.MT);
     gs_generator.MT = malloc(sizeof(*gs_generator.MT) * gs_generator.n);
     assert(NULL != gs_generator.MT);
 

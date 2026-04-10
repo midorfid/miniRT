@@ -1,21 +1,29 @@
 #include "renderer/render_context.h"
 
-color_t     ray_color(const ray_t *r, const hittable_list_t *world, const hittable_list_t *lights, int depth) {
+static vec3_t skybox_colour(const ray_t *ray) {
+    vec3_t unit_direction = vec3_normalize(ray->dir);
+    double t = 0.5 * (unit_direction.y + 1.0);
+
+    return vec3_sum(
+        vec3_scaled_return(vec3(1.0, 1.0, 1.0), 1.0 - t),
+        vec3_scaled_return(vec3(0.5, 0.7, 1.0), t)
+    );
+}
+color_t     ray_color(const ray_t *r, const hittable_list_t *world, const hittable_list_t *lights, int depth, render_mode_t mode) {
     hit_record_t    rec;
-    (void)lights;
+    
     if (depth <= 0)
         return vec3(0.0, 0.0, 0.0);
     if (hittable_list_hit_test(r, world, 0.001, INFINITY, &rec)) {
-
         color_t             color_from_emmision = material_emmit(rec.mat, rec.u, rec.v, &rec.p, &rec);
+        // printf("emitted: %f %f %f\n", color_from_emmision.x, color_from_emmision.y, color_from_emmision.z);
         scatter_record_t    srec;
 
         if (material_scatter(rec.mat, r, &rec, &srec)) {
             if (srec.skip_pdf)
-                return vec3_multi(srec.attenuation, ray_color(&srec.skip_pdf_ray, world, lights, depth-1));
+                return vec3_multi(srec.attenuation, ray_color(&srec.skip_pdf_ray, world, lights, depth-1, mode));
             pdf_t       *light_pdf = hittable_pdf_new(lights, &rec.p);
             pdf_t       *mixture_pdf = mixture_pdf_new(light_pdf, srec.pdf_ptr);
-
             ray_t scattered = ray(rec.p, mixture_pdf->generate(mixture_pdf), r->time);
             double      pdf_value = mixture_pdf->get_value(mixture_pdf, &scattered.dir);
             if (pdf_value == 0.0) {
@@ -24,17 +32,15 @@ color_t     ray_color(const ray_t *r, const hittable_list_t *world, const hittab
             }
             double      scatter_pdf = material_scatter_pdf(rec.mat, r, &rec, &scattered);
             vec3_t      a = vec3_scaled_return(srec.attenuation, scatter_pdf);
-            vec3_t      b = vec3_multi(a, ray_color(&scattered, world, lights, depth-1));
-            color_t     color_from_scatter = vec3_scaled_return(b, 1.0 / pdf_value); 
+            vec3_t      b = vec3_multi(a, ray_color(&scattered, world, lights, depth-1, mode));
+            color_t     color_from_scatter = vec3_scaled_return(b, 1.0 / pdf_value);
             mixture_pdf->delete_pdf(mixture_pdf);
-
             return vec3_sum(color_from_emmision, color_from_scatter);
         }
         return (color_from_emmision);
     }
-    // vec3_t  unit_direction = vec3_normalize(r->dir);
-    // double  a = 0.5 * (unit_direction.y + 1.0);
-    // return(vec3_sum(vec3_scaled_return(vec3(1.0,1.0,1.0), 1.0-a), vec3_scaled_return(vec3(0.5,0.7,1.0), a)));
+    if (mode == RENDER_MODE_AMBIENT)
+        return skybox_colour(r);
     return vec3(0.0, 0.0, 0.0);
 }
 

@@ -9,6 +9,7 @@ typedef enum texture_type_s {
     TEXTURE_TYPE_SOLID_COLOUR,
     TEXTURE_TYPE_CHECKER_PATTERN,
     TEXTURE_TYPE_PERLIN_NOISE,
+    TEXTURE_TYPE_IMAGE_TEX,
 } texture_type_t;
 
 typedef void (*texture_t_free_met)(texture_t *texture);
@@ -24,5 +25,6 @@ struct texture_s {
 
 void    texture_t_innit(texture_t *base, texture_type_t type, texture_t_free_met free, texture_t_value_met get_value);
 
+texture_t    *image_tex_new(const char *filename);
 
 #endif

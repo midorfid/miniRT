@@ -22,7 +22,7 @@ hittable_list_t     *hittable_list_innit(size_t capacity) {
 }
 
 void    hittable_list_add(hittable_list_t *list, hittable_t *hittable) {
-    if (list->size > list->capacity) {
+    if (list->size >= list->capacity) {
         list->hittables = realloc(list->hittables, list->capacity * 2 * sizeof(hittable_t *));
         if(list->hittables == NULL) {
             printf("Memory allocation failed");

@@ -3,14 +3,20 @@
 #include "geometry/objects/hittable.h"
 #include "shading/textures/checker_pattern.h"
 #include "shading/textures/perlin.h"
+#include "shading/textures/constant_medium.h"
+#include "shading/textures/solid_colour.h"
 #include "geometry/bvh.h"
 #include "geometry/objects/instance.h"
 
-hittable_list_t     *earth() {
-    // auto earth_texture = make_shared<image_texture>("earthmap.jpg");
-    // auto earth_surface = mt_lambertian_new_with_colour(earth_texture);
-    // auto globe = sphere_new(point3(0,0,0), 2, earth_surface);
-    return NULL;
+hittable_list_t     *earth(const char *filepath) {
+    texture_t   *earth_texture = image_tex_new("./assets/earth_projection.jpg");
+    material_t  *earth_surface = mt_lambertian_new_with_tex(earth_texture);
+    hittable_t  *globe = sphere_new(point3(0,0,0), 2, earth_surface);
+
+    hittable_list_t *world = hittable_list_innit(1);
+    hittable_list_add(world, globe);
+
+    return world;
 }
 
 hittable_list_t         *quads() {
@@ -68,8 +74,9 @@ hittable_list_t     *cornell_smoke() {
     return world;
 }
 
-hittable_list_t     *final_scene(int image_width, int samples_per_pixel, int max_depth) {
+hittable_list_t     *final_scene(int image_width, int samples_per_pixel, int max_depth, hittable_list_t **lights) {
     hittable_list_t *boxes1;
+    *lights = hittable_list_innit(1);
     material_t *ground = mt_lambertian_new_with_colour(color(0.48, 0.83, 0.53));
     int boxes_per_side = 20;
     boxes1 = hittable_list_innit(20*20);
@@ -87,12 +94,14 @@ hittable_list_t     *final_scene(int image_width, int samples_per_pixel, int max
         }
     }
 
-    hittable_list_t *world;
+    hittable_list_t *world = hittable_list_innit(10);
     // not sure about time
     hittable_list_add(world, bvh_node_new(boxes1, 0.0, 1.0));
 
-    material_t *light = mt_lambertian_new_with_colour(color(7, 7, 7));
-    hittable_list_add(world, quad_new(point3(123,554,147), vec3(300,0,0), vec3(0,0,265), light));
+    material_t *light = diffuse_light_new_with_colour(color(7, 7, 7));
+    hittable_t *light_quad = quad_new(point3(123,554,147), vec3(300,0,0), vec3(0,0,265), light);
+    hittable_list_add(world, light_quad);
+    hittable_list_add(*lights, light_quad);
 
     point3_t center1 = point3(400, 400, 200);
     point3_t center2 = vec3_sum(center1, vec3(30,0,0));
@@ -101,17 +110,17 @@ hittable_list_t     *final_scene(int image_width, int samples_per_pixel, int max
 
     hittable_list_add(world, sphere_new(point3(260, 150, 45), 50, mt_dielectric_new(1.5)));
     hittable_list_add(world, sphere_new(
-        point3(0, 150, 145), 50, mt_metal_new(color(0.8, 0.8, 0.9), 1.0)
+        point3(0, 150, 145), 50, mt_metal_new(color(0.8, 0.8, 0.9), 0.0)
     ));
 
     hittable_t *boundary = sphere_new(point3(360,150,145), 70, mt_dielectric_new(1.5));
     hittable_list_add(world, boundary);
-    hittable_list_add(world, const_medium_new_with_colour(boundary, 0.2, 0.4));
+    hittable_list_add(world, const_medium_new_with_tex(boundary, 0.2, solid_colour_new(color(0.2, 0.4, 0.9))));
     boundary = sphere_new(point3(0,0,0), 5000, mt_dielectric_new(1.5));
     hittable_list_add(world, const_medium_new_with_colour(boundary, .0001, 0.1));
 
-    // material_t *emat = mt_lambertian_new_with_colour(make_shared<image_texture>("earthmap.jpg"));
-    // hittable_list_add(sphere_new(point3(400,200,400), 100, emat));
+    material_t *emat = mt_lambertian_new_with_tex(image_tex_new("./assets/earth_projection.jpg"));
+    hittable_list_add(world, sphere_new(point3(400,200,400), 100, emat));
     material_t *pertext = mt_lambertian_new_with_tex(perlin_new(0.2));
     hittable_list_add(world, sphere_new(point3(220,280,300), 80, pertext));
 
@@ -120,15 +129,12 @@ hittable_list_t     *final_scene(int image_width, int samples_per_pixel, int max
     int ns = 1000;
     boxes2 = hittable_list_innit(ns);
     for (int j = 0; j < ns; j++) {
-        hittable_list_add(boxes2, sphere_new(point3(random_double(0.0, 165.0), random_double(0.0, 165.0), random_double(0.0, 165.0)), 10, white));
-    }
-
-    // hittable_list_add(make_shared<translate>(
-    //     make_shared<rotate_y>(
-    //         make_shared<bvh_node>(boxes2), 15),
-    //         vec3(-100,270,395)
-    //     )
-    // );
+        hittable_t *instance = instance_new(sphere_new(point3(random_double(0.0, 165.0), random_double(0.0, 165.0), random_double(0.0, 165.0)), 10, white));
+        instance_rotate_y(instance, 15);
+        instance_translate(instance, vec3(-100,270,395));
+        hittable_list_add(boxes2, instance);
+    }            
+    hittable_list_add(world, bvh_node_new(boxes2, 0.0, 1.0));
 
     return world;
 }

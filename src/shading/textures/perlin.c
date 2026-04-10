@@ -52,7 +52,7 @@ static double    perlin_noise(const texture_t *texture, const point3_t *p) {
             for (int dk = 0; dk < 2; ++dk) {
                 // assigning pseudo-random vec to each angle of int cube
                 scalar[di][dj][dk] = perlin->randomvec[perlin->x_perm[i + di & 255] ^
-                    perlin->y_perm[j + dj & 255] ^ perlin->z_perm[k + dk] & 255];
+                    perlin->y_perm[j + dj & 255] ^ perlin->z_perm[k + dk] & 255]; // seg fault
             }
         }
     }

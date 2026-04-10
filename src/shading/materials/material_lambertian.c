@@ -38,7 +38,6 @@ material_t      *mt_lambertian_new_with_colour(color_t colour) {
 
 static bool     mt_lambertian_scatter(const material_t *material, const ray_t *ray_in, const hit_record_t *rec, scatter_record_t *srec) {
     onb_t   uvw;
-    
     lambertian_t    *diffuse = (lambertian_t *)material;
 
     srec->attenuation = diffuse->texture->get_value(diffuse->texture, rec->u, rec->v, &rec->p);

@@ -50,10 +50,10 @@ static bool     mt_dielectric_scatter(const material_t *material, const ray_t *r
     vec3_t  direction;
 
     if (cannot_refract || reflectance(cos_theta, ri) > random_double_nolimits()) {
-        direction = reflect(&ray_in->dir, &rec->normal);
+        direction = reflect(&unit_direction, &rec->normal);
     }
     else {
-        vec3_t direction = refract(&unit_direction, &rec->normal, ri);
+        direction = refract(&unit_direction, &rec->normal, ri);
     }
 
     srec->skip_pdf_ray = ray(rec->p, direction, ray_in->time);

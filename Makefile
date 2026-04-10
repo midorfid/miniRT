@@ -573,6 +573,30 @@ src/renderer/image_save.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/renderer/image_save.c.s
 .PHONY : src/renderer/image_save.c.s
 
+src/renderer/mlx_setup.o: src/renderer/mlx_setup.c.o
+.PHONY : src/renderer/mlx_setup.o
+
+# target to build an object file
+src/renderer/mlx_setup.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/renderer/mlx_setup.c.o
+.PHONY : src/renderer/mlx_setup.c.o
+
+src/renderer/mlx_setup.i: src/renderer/mlx_setup.c.i
+.PHONY : src/renderer/mlx_setup.i
+
+# target to preprocess a source file
+src/renderer/mlx_setup.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/renderer/mlx_setup.c.i
+.PHONY : src/renderer/mlx_setup.c.i
+
+src/renderer/mlx_setup.s: src/renderer/mlx_setup.c.s
+.PHONY : src/renderer/mlx_setup.s
+
+# target to generate assembly for a file
+src/renderer/mlx_setup.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/renderer/mlx_setup.c.s
+.PHONY : src/renderer/mlx_setup.c.s
+
 src/renderer/render_context.o: src/renderer/render_context.c.o
 .PHONY : src/renderer/render_context.o
 
@@ -596,6 +620,30 @@ src/renderer/render_context.s: src/renderer/render_context.c.s
 src/renderer/render_context.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/renderer/render_context.c.s
 .PHONY : src/renderer/render_context.c.s
+
+src/renderer/render_launch.o: src/renderer/render_launch.c.o
+.PHONY : src/renderer/render_launch.o
+
+# target to build an object file
+src/renderer/render_launch.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/renderer/render_launch.c.o
+.PHONY : src/renderer/render_launch.c.o
+
+src/renderer/render_launch.i: src/renderer/render_launch.c.i
+.PHONY : src/renderer/render_launch.i
+
+# target to preprocess a source file
+src/renderer/render_launch.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/renderer/render_launch.c.i
+.PHONY : src/renderer/render_launch.c.i
+
+src/renderer/render_launch.s: src/renderer/render_launch.c.s
+.PHONY : src/renderer/render_launch.s
+
+# target to generate assembly for a file
+src/renderer/render_launch.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/renderer/render_launch.c.s
+.PHONY : src/renderer/render_launch.c.s
 
 src/renderer/threads/sync_unix.o: src/renderer/threads/sync_unix.c.o
 .PHONY : src/renderer/threads/sync_unix.o
@@ -885,6 +933,30 @@ src/shading/textures/constant_medium.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/shading/textures/constant_medium.c.s
 .PHONY : src/shading/textures/constant_medium.c.s
 
+src/shading/textures/image_texture.o: src/shading/textures/image_texture.c.o
+.PHONY : src/shading/textures/image_texture.o
+
+# target to build an object file
+src/shading/textures/image_texture.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/shading/textures/image_texture.c.o
+.PHONY : src/shading/textures/image_texture.c.o
+
+src/shading/textures/image_texture.i: src/shading/textures/image_texture.c.i
+.PHONY : src/shading/textures/image_texture.i
+
+# target to preprocess a source file
+src/shading/textures/image_texture.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/shading/textures/image_texture.c.i
+.PHONY : src/shading/textures/image_texture.c.i
+
+src/shading/textures/image_texture.s: src/shading/textures/image_texture.c.s
+.PHONY : src/shading/textures/image_texture.s
+
+# target to generate assembly for a file
+src/shading/textures/image_texture.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/shading/textures/image_texture.c.s
+.PHONY : src/shading/textures/image_texture.c.s
+
 src/shading/textures/perlin.o: src/shading/textures/perlin.c.o
 .PHONY : src/shading/textures/perlin.o
 
@@ -956,6 +1028,30 @@ src/shading/textures/texture.s: src/shading/textures/texture.c.s
 src/shading/textures/texture.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/shading/textures/texture.c.s
 .PHONY : src/shading/textures/texture.c.s
+
+src/system/scene_setup.o: src/system/scene_setup.c.o
+.PHONY : src/system/scene_setup.o
+
+# target to build an object file
+src/system/scene_setup.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/system/scene_setup.c.o
+.PHONY : src/system/scene_setup.c.o
+
+src/system/scene_setup.i: src/system/scene_setup.c.i
+.PHONY : src/system/scene_setup.i
+
+# target to preprocess a source file
+src/system/scene_setup.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/system/scene_setup.c.i
+.PHONY : src/system/scene_setup.c.i
+
+src/system/scene_setup.s: src/system/scene_setup.c.s
+.PHONY : src/system/scene_setup.s
+
+# target to generate assembly for a file
+src/system/scene_setup.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/miniRT.dir/build.make CMakeFiles/miniRT.dir/src/system/scene_setup.c.s
+.PHONY : src/system/scene_setup.c.s
 
 src/system/scenes.o: src/system/scenes.c.o
 .PHONY : src/system/scenes.o
@@ -1042,9 +1138,15 @@ help:
 	@echo "... src/renderer/image_save.o"
 	@echo "... src/renderer/image_save.i"
 	@echo "... src/renderer/image_save.s"
+	@echo "... src/renderer/mlx_setup.o"
+	@echo "... src/renderer/mlx_setup.i"
+	@echo "... src/renderer/mlx_setup.s"
 	@echo "... src/renderer/render_context.o"
 	@echo "... src/renderer/render_context.i"
 	@echo "... src/renderer/render_context.s"
+	@echo "... src/renderer/render_launch.o"
+	@echo "... src/renderer/render_launch.i"
+	@echo "... src/renderer/render_launch.s"
 	@echo "... src/renderer/threads/sync_unix.o"
 	@echo "... src/renderer/threads/sync_unix.i"
 	@echo "... src/renderer/threads/sync_unix.s"
@@ -1081,6 +1183,9 @@ help:
 	@echo "... src/shading/textures/constant_medium.o"
 	@echo "... src/shading/textures/constant_medium.i"
 	@echo "... src/shading/textures/constant_medium.s"
+	@echo "... src/shading/textures/image_texture.o"
+	@echo "... src/shading/textures/image_texture.i"
+	@echo "... src/shading/textures/image_texture.s"
 	@echo "... src/shading/textures/perlin.o"
 	@echo "... src/shading/textures/perlin.i"
 	@echo "... src/shading/textures/perlin.s"
@@ -1090,6 +1195,9 @@ help:
 	@echo "... src/shading/textures/texture.o"
 	@echo "... src/shading/textures/texture.i"
 	@echo "... src/shading/textures/texture.s"
+	@echo "... src/system/scene_setup.o"
+	@echo "... src/system/scene_setup.i"
+	@echo "... src/system/scene_setup.s"
 	@echo "... src/system/scenes.o"
 	@echo "... src/system/scenes.i"
 	@echo "... src/system/scenes.s"
