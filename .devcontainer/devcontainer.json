@@ -1,0 +1,7 @@
+{
+    "image": "mcr.microsoft.com/devcontainers/cpp:1-ubuntu",
+    "features": {
+        "ghcr.io/devcontainers/features/desktop-lite:1": {}
+    },
+    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y cmake xorg-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxi-dev libxinerama-dev libgl1-mesa-dev libglfw3-dev"
+}
