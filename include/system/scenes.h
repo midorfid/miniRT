@@ -23,7 +23,7 @@ typedef enum scene_id_s {
 hittable_list_t             *earth();
 hittable_list_t             *quads();
 hittable_list_t             *cornell_smoke();
-hittable_list_t             *final_scene(int image_width, int samples_per_pixel, int max_depth, hittable_list_t **lights);
+hittable_list_t             *final_scene(hittable_list_t **lights);
 hittable_list_t             *simple_light();
 hittable_list_t             *perlin_spheres();
 hittable_list_t             *cornell_box_empty();

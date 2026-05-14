@@ -32,6 +32,7 @@ int main(void)
     render = render_context_new(render, mlx, image);
 
     render_launch(render, initial_seed);
+    mlx_loop(mlx);
     mlx_terminate(mlx);
     return 0;
 }

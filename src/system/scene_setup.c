@@ -167,7 +167,7 @@ void    setup_scene(render_context_t *render, scene_id_t scene_id)
             render->camera.lookat            = point3(278, 278, 0);
             render->camera.vup               = vec3(0, 1, 0);
             render->camera.lens.defocus_angle = 0;
-            render->world                    = final_scene(400, 50, 50, &render->lights);
+            render->world                    = final_scene(&render->lights);
             render->render_mode              = RENDER_MODE_LIT;
             break;
 

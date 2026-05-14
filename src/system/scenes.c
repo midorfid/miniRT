@@ -74,7 +74,7 @@ hittable_list_t     *cornell_smoke() {
     return world;
 }
 
-hittable_list_t     *final_scene(int image_width, int samples_per_pixel, int max_depth, hittable_list_t **lights) {
+hittable_list_t     *final_scene(hittable_list_t **lights) {
     hittable_list_t *boxes1;
     *lights = hittable_list_innit(1);
     material_t *ground = mt_lambertian_new_with_colour(color(0.48, 0.83, 0.53));
