@@ -20,13 +20,13 @@ typedef enum scene_id_s {
     SCENE_FIVE_SPHERES,
 } scene_id_t;
 
-hittable_list_t             *earth();
-hittable_list_t             *quads();
-hittable_list_t             *cornell_smoke();
+hittable_list_t             *earth(void);
+hittable_list_t             *quads(hittable_list_t **lights);
+hittable_list_t             *cornell_smoke(hittable_list_t **lights);
 hittable_list_t             *final_scene(hittable_list_t **lights);
-hittable_list_t             *simple_light();
+hittable_list_t             *simple_light(hittable_list_t **lights);
 hittable_list_t             *perlin_spheres();
-hittable_list_t             *cornell_box_empty();
+hittable_list_t             *cornell_box_empty(hittable_list_t **lights);
 hittable_list_t             *cornell_box_standard(hittable_list_t **lights);
 hittable_list_t             *checkered_spheres();
 hittable_list_t             *touching_spheres();

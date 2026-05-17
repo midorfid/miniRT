@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <unistd.h>
+#include <time.h>
 
 #include "pthread.h"
 
@@ -11,12 +12,26 @@
 
 int     save_image_to_png(mlx_image_t *image, const char *filename);
 
+static uint64_t mix_seed(uint64_t seed)
+{
+    seed += 0x9e3779b97f4a7c15ULL;
+    seed = (seed ^ (seed >> 30)) * 0xbf58476d1ce4e5b9ULL;
+    seed = (seed ^ (seed >> 27)) * 0x94d049bb133111ebULL;
+    return seed ^ (seed >> 31);
+}
+
+static double elapsed_seconds(struct timespec start, struct timespec end)
+{
+    return (end.tv_sec - start.tv_sec) +
+        (end.tv_nsec - start.tv_nsec) / 1000000000.0;
+}
+
 static void     render_worker_complete(int status, void *args)
 {
     render_context_t    *worker_args = args;
 
     pthread_mutex_lock(worker_args->process_mutex);
-    if (status == 0 && worker_args->preview_chunks)
+    if (status == 0)
     {
         for (int y = 0; y < worker_args->height; ++y)
         {
@@ -68,11 +83,8 @@ static void     render_pixel_chunk(void *param)
                 }
             }
             color = vec3_scaled_return(color, render->camera.pixel_sample_scale);
-            if (render->preview_chunks)
-                render->chunk_buffer[(i - render->y_start) * render->width
-                    + (j - render->x_start)] = color;
-            else
-                mlx_put_pixel(render->mlx_image, j, i, return_color(color));
+            render->chunk_buffer[(i - render->y_start) * render->width
+                + (j - render->x_start)] = color;
         }
     }
 }
@@ -89,7 +101,8 @@ void    render_launch(render_context_t *render, uint64_t initial_seed)
     int chunks_y            = (int)ceil(render->image.image_height / (double)CHUNK);
     int total_chunks        = chunks_x * chunks_y;
 
-    clock_t start = clock();
+    struct timespec start;
+    clock_gettime(CLOCK_MONOTONIC, &start);
     printf("Rendering...\n");
 
     for (int i = 0; i < chunks_y; ++i)
@@ -106,17 +119,15 @@ void    render_launch(render_context_t *render, uint64_t initial_seed)
             arg->process_mutex      = process_mutex;
             arg->processed_chunks   = (_Atomic int *)&processed_chunks;
             arg->total_chunks       = total_chunks;
-            arg->random_seed        = initial_seed + ((uint64_t)i << 32 | (uint64_t)j);
+            arg->random_seed        = mix_seed(initial_seed ^ ((uint64_t)i << 32) ^ (uint64_t)j);
             arg->x_start            = j * CHUNK;
             arg->y_start            = i * CHUNK;
             arg->width  = render->image.image_width  - j * CHUNK < CHUNK
                 ? render->image.image_width  - j * CHUNK : CHUNK;
             arg->height = render->image.image_height - i * CHUNK < CHUNK
                 ? render->image.image_height - i * CHUNK : CHUNK;
-            arg->chunk_buffer = NULL;
-            if (arg->preview_chunks)
-                arg->chunk_buffer = malloc(arg->width * arg->height * sizeof(vec3_t));
-            if (arg->preview_chunks && arg->chunk_buffer == NULL)
+            arg->chunk_buffer = malloc(arg->width * arg->height * sizeof(vec3_t));
+            if (arg->chunk_buffer == NULL)
             {
                 fprintf(stderr, "render_launch: chunk buffer alloc failed\n");
                 free(arg);
@@ -130,8 +141,10 @@ void    render_launch(render_context_t *render, uint64_t initial_seed)
         usleep(100000);
 
     fprintf(stderr, "\n");
+    struct timespec end;
+    clock_gettime(CLOCK_MONOTONIC, &end);
     printf("Rendering complete in %.2f seconds.\n",
-        (double)(clock() - start) / CLOCKS_PER_SEC);
+        elapsed_seconds(start, end));
 
     if (!save_image_to_png(render->mlx_image, "output.png"))
         fprintf(stderr, "Failed to save the output image.\n");

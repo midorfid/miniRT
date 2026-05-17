@@ -8,7 +8,7 @@
 #include "geometry/bvh.h"
 #include "geometry/objects/instance.h"
 
-hittable_list_t     *earth(const char *filepath) {
+hittable_list_t     *earth(void) {
     texture_t   *earth_texture = image_tex_new("./assets/earth_projection.jpg");
     material_t  *earth_surface = mt_lambertian_new_with_tex(earth_texture);
     hittable_t  *globe = sphere_new(point3(0,0,0), 2, earth_surface);
@@ -19,10 +19,11 @@ hittable_list_t     *earth(const char *filepath) {
     return world;
 }
 
-hittable_list_t         *quads() {
+hittable_list_t         *quads(hittable_list_t **lights) {
     hittable_list_t     *world;
 
     world = hittable_list_innit(6);
+    *lights = hittable_list_innit(1);
 
     // Materials
     material_t *left_red = mt_lambertian_new_with_colour(color_in(1.0, 0.2, 0.2)); 
@@ -40,22 +41,27 @@ hittable_list_t         *quads() {
     hittable_list_add(world, quad_new(point3(-2, 3, 1), vec3(4, 0, 0), vec3(0, 0, 4), upper_orange));
     hittable_list_add(world, quad_new(point3(-2,-3, 5), vec3(4, 0, 0), vec3(0, 0,-4), lower_teal));
 
-    hittable_list_add(world, quad_new(point3(0, 2.99, 2), vec3(1, 0, 0), vec3(0, 0, -1), light_material)); // Example position
+    hittable_t *light_quad = quad_new(point3(0, 2.99, 2), vec3(1, 0, 0), vec3(0, 0, -1), light_material);
+    hittable_list_add(world, light_quad); // Example position
+    hittable_list_add(*lights, light_quad);
     
     return world;
 }
 
-hittable_list_t     *cornell_smoke() {
+hittable_list_t     *cornell_smoke(hittable_list_t **lights) {
     hittable_list_t *world = hittable_list_innit(8);
+    *lights = hittable_list_innit(1);
 
     material_t *red   = mt_lambertian_new_with_colour(color(.65, .05, .05));
     material_t *white = mt_lambertian_new_with_colour(color(.73, .73, .73));
     material_t *green = mt_lambertian_new_with_colour(color(.12, .45, .15));
     material_t *light = diffuse_light_new_with_colour(color(7, 7, 7));
+    hittable_t *light_quad = quad_new(point3(113,554,127), vec3(330,0,0), vec3(0,0,305), light);
 
     hittable_list_add(world, quad_new(point3(555,0,0), vec3(0,555,0), vec3(0,0,555), green));
     hittable_list_add(world, quad_new(point3(0,0,0), vec3(0,555,0), vec3(0,0,555), red));
-    hittable_list_add(world, quad_new(point3(113,554,127), vec3(330,0,0), vec3(0,0,305), light));
+    hittable_list_add(world, light_quad);
+    hittable_list_add(*lights, light_quad);
     hittable_list_add(world, quad_new(point3(0,555,0), vec3(555,0,0), vec3(0,0,555), white));
     hittable_list_add(world, quad_new(point3(0,0,0), vec3(555,0,0), vec3(0,0,555), white));
     hittable_list_add(world, quad_new(point3(0,0,555), vec3(555,0,0), vec3(0,555,0), white));
@@ -140,13 +146,16 @@ hittable_list_t     *final_scene(hittable_list_t **lights) {
 }
 
 // world.add(sphere_new(point3(0,7,0), 2, difflight));
-hittable_list_t     *simple_light() {
+hittable_list_t     *simple_light(hittable_list_t **lights) {
     hittable_list_t *world = hittable_list_innit(3);
+    *lights = hittable_list_innit(1);
 
     material_t *pertext = mt_lambertian_new_with_tex(perlin_new(4.0));
     material_t *difflight = diffuse_light_new_with_colour(color(4, 4, 4));
+    hittable_t *light_quad = quad_new(point3(3, 1, -2), vec3(2,0,0), vec3(0,2,0), difflight);
 
-    hittable_list_add(world, quad_new(point3(3, 1, -2), vec3(2,0,0), vec3(0,2,0), difflight));
+    hittable_list_add(world, light_quad);
+    hittable_list_add(*lights, light_quad);
     hittable_list_add(world, sphere_new(point3(0,-1000,0), 1000, pertext));
     hittable_list_add(world, sphere_new(point3(0,2,0), 2, material_claim(pertext)));
 
@@ -163,17 +172,20 @@ hittable_list_t     *perlin_spheres() {
     return world;
 }
 
-hittable_list_t     *cornell_box_empty() {
+hittable_list_t     *cornell_box_empty(hittable_list_t **lights) {
     hittable_list_t *world = hittable_list_innit(6);
+    *lights = hittable_list_innit(1);
 
     material_t *red   = mt_lambertian_new_with_colour(color(.65, .05, .05));
     material_t *white = mt_lambertian_new_with_colour(color(.73, .73, .73));
     material_t *green = mt_lambertian_new_with_colour(color(.12, .45, .15));
     material_t *light = diffuse_light_new_with_colour(color(4, 4, 4));
+    hittable_t *light_quad = quad_new(point3(343, 554, 332), vec3(-130,0,0), vec3(0,0,-105), light);
 
     hittable_list_add(world, quad_new(point3(555,0,0), vec3(0,555,0), vec3(0,0,555), green));
     hittable_list_add(world, quad_new(point3(0,0,0), vec3(0,555,0), vec3(0,0,555), red));
-    hittable_list_add(world, quad_new(point3(343, 554, 332), vec3(-130,0,0), vec3(0,0,-105), light));
+    hittable_list_add(world, light_quad);
+    hittable_list_add(*lights, light_quad);
     hittable_list_add(world, quad_new(point3(0,0,0), vec3(555,0,0), vec3(0,0,555), white));
     hittable_list_add(world, quad_new(point3(555,555,555), vec3(-555,0,0), vec3(0,0,-555), white));
     hittable_list_add(world, quad_new(point3(0,0,555), vec3(555,0,0), vec3(0,555,0), white));

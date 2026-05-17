@@ -5,9 +5,9 @@ void    setup_scene(render_context_t *render, scene_id_t scene_id)
     switch (scene_id)
     {
         case SCENE_BOUNCING_SPHERES:
-            render->image.aspect_ratio       = 1.0;
-            render->camera.samples_per_pixel = 10;
-            render->image.image_width        = 600;
+            render->image.aspect_ratio       = 16.0 / 9.0;
+            render->camera.samples_per_pixel = 100;
+            render->image.image_width        = 400;
             render->camera.max_depth         = 50;
             render->camera.lookfrom          = point3(13, 2, 3);
             render->camera.lookat            = point3(0, 0, 0);
@@ -29,7 +29,7 @@ void    setup_scene(render_context_t *render, scene_id_t scene_id)
             render->camera.lookat            = point3(278, 278, 0);
             render->camera.vup               = vec3(0, 1, 0);
             render->camera.lens.defocus_angle = 0;
-            render->world                    = cornell_box_empty();
+            render->world                    = cornell_box_empty(&render->lights);
             render->render_mode              = RENDER_MODE_LIT;
             break;
 
@@ -82,7 +82,7 @@ void    setup_scene(render_context_t *render, scene_id_t scene_id)
             render->camera.lookfrom          = point3(0, 0, 9);
             render->camera.lookat            = point3(0, 0, 0);
             render->camera.vup               = vec3(0, 1, 0);
-            render->world                    = quads();
+            render->world                    = quads(&render->lights);
             render->render_mode              = RENDER_MODE_LIT;
             break;
 
@@ -125,7 +125,7 @@ void    setup_scene(render_context_t *render, scene_id_t scene_id)
             render->camera.lookat            = point3(278, 278, 0);
             render->camera.vup               = vec3(0, 1, 0);
             render->camera.lens.defocus_angle = 0;
-            render->world                    = cornell_smoke();
+            render->world                    = cornell_smoke(&render->lights);
             render->render_mode              = RENDER_MODE_LIT;
             break;
 
@@ -139,7 +139,7 @@ void    setup_scene(render_context_t *render, scene_id_t scene_id)
             render->camera.lookat            = point3(0, 2, 0);
             render->camera.vup               = vec3(0, 1, 0);
             render->camera.lens.defocus_angle = 0;
-            render->world                    = simple_light();
+            render->world                    = simple_light(&render->lights);
             render->render_mode              = RENDER_MODE_LIT;
             break;
 

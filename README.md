@@ -18,6 +18,27 @@ A high-performance ray tracing renderer implemented in C, featuring advanced ren
 
 The renderer includes several built-in scenes:
 
+| Bouncing Spheres | Cornell Box |
+| --- | --- |
+| ![Bouncing spheres scene](docs/images/bouncing_spheres.png) | ![Cornell box scene](docs/images/cornell_box.png) |
+
+| Perlin Spheres | Final Scene |
+| --- | --- |
+| ![Perlin noise spheres scene](docs/images/perlin_noise.png) | ![Final complex scene](docs/images/final_scene.png) |
+
+Example renders used by this README live in `docs/images/`. Runtime textures, such as the Earth projection, stay in `assets/`.
+
+Approximate wall-clock render times for the example images:
+
+| Scene | Example image | Time |
+| --- | --- | ---: |
+| Bouncing Spheres | `docs/images/bouncing_spheres.png` | ~105 sec (~1 min 45 sec) |
+| Cornell Box | `docs/images/cornell_box.png` | ~41 sec |
+| Perlin Spheres | `docs/images/perlin_noise.png` | ~2 sec |
+| Final Scene | `docs/images/final_scene.png` | ~1375 sec (~23 min) |
+
+These examples were rendered with 12 worker threads. The original filenames were based on process CPU time, which adds time across busy render threads; the values above are approximate wall-clock equivalents. The renderer now reports wall-clock time and uses the number of online CPU cores by default. Render time and image quality can be tuned per scene with `camera.samples_per_pixel` in `src/system/scene_setup.c`: higher values reduce noise and improve quality, but increase render time; lower values render faster with more visible noise.
+
 - **Bouncing Spheres**: Animated spheres with different materials
 - **Cornell Box**: Classic test scene with realistic lighting
 - **Earth**: Texture-mapped sphere rendering the Earth
@@ -74,7 +95,6 @@ The app now behaves like a professional CLI tool: it shows a clear, color-coded 
 - Bidirectional and path space approaches such as Metropolis
 - Add a glossy BRDF model
 - Convert renderer from RGB to spectral
-- Inline frequently used functions
 - Dynamic camera system (flying camera)
 - Add torus as a hittable object
 

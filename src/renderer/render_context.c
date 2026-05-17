@@ -58,8 +58,6 @@ static void        image_settings_init(image_t *image) {
 }
 
 static void        lens_init(defocus_blur_t *lens, vec3_t u, vec3_t v) {
-    lens->defocus_angle = 0; // Variation angle of rays through each pixel
-
     // Calculate camera defocus disk basis vectors
     double      defocus_radius = lens->focus_dist * tan(DEG_TO_RAD(lens->defocus_angle / 2));
     lens->defocus_disk_u = vec3_scaled_return(u, defocus_radius); // defocus disk horizontal radius
@@ -71,7 +69,8 @@ static void        camera_settings_init(camera_t *camera) {
     camera->pixel_sample_scale = 1.0 / (camera->sqrt_spp * camera->sqrt_spp);
     camera->rec1p_sqrt_spp = 1.0 / camera->sqrt_spp; 
     // color_t             background = color_in(0.70, 0.80, 1.00); // TODO
-    camera->lens.focus_dist = vec3_len(vec3_sub_return(camera->lookfrom, camera->lookat)); // Distance from camera lookfrom point to plane of perfect focus
+    if (camera->lens.focus_dist <= 0)
+        camera->lens.focus_dist = vec3_len(vec3_sub_return(camera->lookfrom, camera->lookat)); // Distance from camera lookfrom point to plane of perfect focus
 
     camera->camera_center = camera->lookfrom;
 
