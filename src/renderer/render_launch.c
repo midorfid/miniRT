@@ -16,6 +16,19 @@ static void     render_worker_complete(int status, void *args)
     render_context_t    *worker_args = args;
 
     pthread_mutex_lock(worker_args->process_mutex);
+    if (status == 0 && worker_args->preview_chunks)
+    {
+        for (int y = 0; y < worker_args->height; ++y)
+        {
+            for (int x = 0; x < worker_args->width; ++x)
+            {
+                mlx_put_pixel(worker_args->mlx_image,
+                    worker_args->x_start + x,
+                    worker_args->y_start + y,
+                    return_color(worker_args->chunk_buffer[y * worker_args->width + x]));
+            }
+        }
+    }
 
     int old_processed   = atomic_fetch_add(worker_args->processed_chunks, 1);
     int new_processed   = old_processed + 1;
@@ -55,7 +68,11 @@ static void     render_pixel_chunk(void *param)
                 }
             }
             color = vec3_scaled_return(color, render->camera.pixel_sample_scale);
-            mlx_put_pixel(render->mlx_image, j, i, return_color(color));
+            if (render->preview_chunks)
+                render->chunk_buffer[(i - render->y_start) * render->width
+                    + (j - render->x_start)] = color;
+            else
+                mlx_put_pixel(render->mlx_image, j, i, return_color(color));
         }
     }
 }
@@ -96,8 +113,10 @@ void    render_launch(render_context_t *render, uint64_t initial_seed)
                 ? render->image.image_width  - j * CHUNK : CHUNK;
             arg->height = render->image.image_height - i * CHUNK < CHUNK
                 ? render->image.image_height - i * CHUNK : CHUNK;
-            arg->chunk_buffer = malloc(arg->width * arg->height * sizeof(vec3_t));
-            if (arg->chunk_buffer == NULL)
+            arg->chunk_buffer = NULL;
+            if (arg->preview_chunks)
+                arg->chunk_buffer = malloc(arg->width * arg->height * sizeof(vec3_t));
+            if (arg->preview_chunks && arg->chunk_buffer == NULL)
             {
                 fprintf(stderr, "render_launch: chunk buffer alloc failed\n");
                 free(arg);

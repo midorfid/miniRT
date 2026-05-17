@@ -45,7 +45,12 @@ cmake --build build --parallel
 
 ### Running:
 ```bash
-./miniRT
+./miniRT <scene-id|scene-name>
+```
+
+To watch chunks appear as they finish rendering, enable preview mode:
+```bash
+./miniRT --preview <scene-id|scene-name>
 ```
 
 If you run `./miniRT` with no arguments, the program now prints a terminal-friendly usage guide and exits cleanly instead of rendering a default scene.

@@ -1,10 +1,22 @@
 #include "renderer/mlx_setup.h"
 #include "renderer/render_launch.h"
+#include "renderer/threads/thread.h"
 #include "system/scene_setup.h"
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+
+typedef struct app_options_s {
+    bool        preview;
+    const char  *scene_arg;
+} app_options_t;
+
+typedef struct render_thread_args_s {
+    render_context_t    *render;
+    uint64_t            initial_seed;
+} render_thread_args_t;
 
 static const struct scene_entry_s {
     const char   *name;
@@ -24,11 +36,39 @@ static const struct scene_entry_s {
     {"SCENE_FIVE_SPHERES", SCENE_FIVE_SPHERES},
 };
 
+static void render_in_background(void *param)
+{
+    render_thread_args_t *args = param;
+
+    render_launch(args->render, args->initial_seed);
+}
+
 static void print_scene_list(void)
 {
     puts("Available scenes:");
     for (size_t i = 0; i < sizeof(g_scene_entries) / sizeof(g_scene_entries[0]); ++i)
         printf("  %2zu: %s\n", i, g_scene_entries[i].name);
+}
+
+static void print_usage(const char *program_name)
+{
+    printf("Usage: %s [--preview|-p] <scene-id|scene-name>\n", program_name);
+    print_scene_list();
+}
+
+static int parse_options(int argc, char **argv, app_options_t *options)
+{
+    memset(options, 0, sizeof(*options));
+    for (int i = 1; i < argc; ++i)
+    {
+        if (strcmp(argv[i], "--preview") == 0 || strcmp(argv[i], "-p") == 0)
+            options->preview = true;
+        else if (!options->scene_arg)
+            options->scene_arg = argv[i];
+        else
+            return 0;
+    }
+    return options->scene_arg != NULL;
 }
 
 static scene_id_t parse_scene_arg(const char *arg)
@@ -55,15 +95,17 @@ static scene_id_t parse_scene_arg(const char *arg)
 
 int main(int argc, char **argv)
 {
-    if (argc != 2) {
-        print_scene_list();
+    app_options_t options;
+
+    if (!parse_options(argc, argv, &options)) {
+        print_usage(argv[0]);
         return EXIT_FAILURE;
     }
 
-    scene_id_t scene_id = parse_scene_arg(argv[1]);
+    scene_id_t scene_id = parse_scene_arg(options.scene_arg);
     if (scene_id == SCENE_NONE) {
-        fprintf(stderr, "Invalid scene argument: %s\n", argv[1]);
-        print_scene_list();
+        fprintf(stderr, "Invalid scene argument: %s\n", options.scene_arg);
+        print_usage(argv[0]);
         return EXIT_FAILURE;
     }
 
@@ -88,9 +130,28 @@ int main(int argc, char **argv)
         return 1;
 
     render = render_context_new(render, mlx, image);
+    render->preview_chunks = options.preview;
 
-    render_launch(render, initial_seed);
-    mlx_loop(mlx);
+    if (options.preview) {
+        render_thread_args_t thread_args = {
+            .render = render,
+            .initial_seed = initial_seed,
+        };
+        my_thread_t *render_thread;
+
+        printf("Preview mode enabled: chunks will appear as they finish.\n");
+        render_thread = thread_create(render_in_background, &thread_args);
+        if (!render_thread)
+        {
+            mlx_terminate(mlx);
+            return 1;
+        }
+        mlx_loop(mlx);
+        thread_join(render_thread);
+    } else {
+        render_launch(render, initial_seed);
+        mlx_loop(mlx);
+    }
     mlx_terminate(mlx);
     return 0;
 }

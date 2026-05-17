@@ -160,8 +160,8 @@ void    setup_scene(render_context_t *render, scene_id_t scene_id)
         case SCENE_FINAL:
             render->image.aspect_ratio       = 1.0;
             render->image.image_width        = 400;
-            render->camera.samples_per_pixel = 25;
-            render->camera.max_depth         = 50;
+            render->camera.samples_per_pixel = 100;
+            render->camera.max_depth         = 4;
             render->pov.vfov                 = 40;
             render->camera.lookfrom          = point3(478, 278, -600);
             render->camera.lookat            = point3(278, 278, 0);

@@ -2,6 +2,7 @@
 #define RENDER_CONTEXT_H
 
 #include <stdatomic.h>
+#include <stdbool.h>
 
 typedef enum render_mode_e {
     RENDER_MODE_LIT,     // explicit lights drive all illumination; black on ray miss
@@ -76,6 +77,7 @@ typedef struct render_context_s {
     hittable_list_t     *world;
     hittable_list_t     *lights;
     render_mode_t       render_mode;
+    bool                preview_chunks;
 
     // threads
     pthread_mutex_t          *process_mutex;
